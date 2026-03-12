@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Shafts - Infraestrutura</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 100%;
+            overflow-x: auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .banco-dados-info {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .banco-dados-info h3 {
+            margin-bottom: 10px;
+            color: #2e7d32;
+        }
+        
+        .legenda-status {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .legenda-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .legenda-cor {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            border: 2px solid #333;
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .status-msg {
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        
+        .status-saved {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-unsaved {
+            background: #fff3cd;
+            color: #856404;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        
+        th {
+            background: #1b5e20;
+            color: white;
+            padding: 12px 6px;
+            text-align: center;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border: 1px solid #2e7d32;
+        }
+        
+        th.andar-col {
+            background: #0d3b11;
+            min-width: 50px;
+        }
+        
+        th.shaft-col {
+            background: #2e7d32;
+            min-width: 60px;
+        }
+        
+        th.item-col {
+            background: #388e3c;
+            min-width: 90px;
+        }
+        
+        th.status-geral {
+            background: #1b5e20;
+            min-width: 100px;
+        }
+        
+        th.obs-col {
+            background: #2e7d32;
+            min-width: 150px;
+        }
+        
+        td {
+            padding: 8px 4px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        td.andar {
+            background: #e8f5e9;
+            font-weight: bold;
+            color: #1b5e20;
+            font-size: 14px;
+        }
+        
+        td.shaft {
+            background: #f1f8e9;
+            font-weight: 700;
+            color: #33691e;
+            font-size: 13px;
+        }
+        
+        /* Botões de status */
+        .btn-status {
+            width: 100%;
+            padding: 8px 4px;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        
+        .btn-status:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .btn-status.ok {
+            background: #27ae60;
+            color: white;
+            border-color: #1e8449;
+        }
+        
+        .btn-status.pendente {
+            background: #f1c40f;
+            color: #333;
+            border-color: #d4ac0d;
+        }
+        
+        .btn-status.atencao {
+            background: #e74c3c;
+            color: white;
+            border-color: #c0392b;
+        }
+        
+        /* Status Geral */
+        .status-geral-box {
+            padding: 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+        
+        .status-geral-ok {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .status-geral-pendente {
+            background: #f1c40f;
+            color: #333;
+        }
+        
+        .status-geral-atencao {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        input.obs {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 11px;
+            text-align: left;
+            transition: all 0.3s;
+        }
+        
+        input.obs:focus {
+            border-color: #4caf50;
+            outline: none;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+        }
+        
+        tr:hover {
+            background: #f1f8e9;
+        }
+        
+        .stats {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .stat-box {
+            background: #2e7d32;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 100px;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            font-size: 10px;
+            opacity: 0.9;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-save {
+            background: #27ae60;
+            color: white;
+        }
+        
+        .btn-save:hover {
+            background: #229954;
+            transform: translateY(-2px);
+        }
+        
+        .btn-load {
+            background: #8e44ad;
+            color: white;
+        }
+        
+        .btn-load:hover {
+            background: #7d3c98;
+            transform: translateY(-2px);
+        }
+        
+        .btn-download {
+            background: #2980b9;
+            color: white;
+        }
+        
+        .btn-download:hover {
+            background: #2471a3;
+            transform: translateY(-2px);
+        }
+        
+        .btn-reset {
+            background: #c0392b;
+            color: white;
+        }
+        
+        .btn-reset:hover {
+            background: #a93226;
+            transform: translateY(-2px);
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .last-save {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .modal-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 CONTROLE DE SHAFTS - INFRAESTRUTURA</h1>
+        <p class="subtitle">14 Andares × 2 Shafts (A e B) | Controle de Itens por Shaft</p>
+        
+        <div class="banco-dados-info">
+            <h3>🗄️ Banco de Dados Local</h3>
+            <p>Clique nos botões para alterar o status de cada item:</p>
+            <div class="legenda-status">
+                <div class="legenda-item">
+                    <div class="legenda-cor" style="background: #27ae60;"></div>
+                    <span>✓ OK</span>
+                </div>
+                <div class="legenda-item">
+                    <div class="legenda-cor" style="background: #f1c40f;"></div>
+                    <span>⏳ PENDENTE</span>
+                </div>
+                <div class="legenda-item">
+                    <div class="legenda-cor" style="background: #e74c3c;"></div>
+                    <span>⚠ ATENÇÃO</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="status-bar">
+            <div class="status-msg status-saved" id="statusMsg">
+                💾 Dados salvos no navegador
+            </div>
+        </div>
+        
+        <table id="tabelaShafts">
+            <thead>
+                <tr>
+                    <th class="andar-col">ANDAR</th>
+                    <th class="shaft-col">SHAFT</th>
+                    <th class="item-col">TAP</th>
+                    <th class="item-col">DIVISOR</th>
+                    <th class="item-col">BLOCO BARGO</th>
+                    <th class="item-col">CONECTOR ANTENA</th>
+                    <th class="item-col">CABO OK</th>
+                    <th class="status-geral">STATUS GERAL</th>
+                    <th class="obs-col">OBSERVAÇÃO</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaBody">
+            </tbody>
+        </table>
+        
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number" id="totalShafts">28</div>
+                <div class="stat-label">Total Shafts</div>
+            </div>
+            <div class="stat-box" style="background: #27ae60;">
+                <div class="stat-number" id="okCount">0</div>
+                <div class="stat-label">OK</div>
+            </div>
+            <div class="stat-box" style="background: #f1c40f; color: #333;">
+                <div class="stat-number" id="pendenteCount">0</div>
+                <div class="stat-label">Pendentes</div>
+            </div>
+            <div class="stat-box" style="background: #e74c3c;">
+                <div class="stat-number" id="atencaoCount">0</div>
+                <div class="stat-label">Atenção</div>
+            </div>
+        </div>
+        
+        <div class="btn-group">
+            <button class="btn btn-save" onclick="salvarEmArquivo()">
+                💾 Salvar em Arquivo
+            </button>
+            
+            <div class="file-input-wrapper">
+                <button class="btn btn-load" onclick="document.getElementById('fileInput').click()">
+                    📂 Carregar Arquivo
+                </button>
+                <input type="file" id="fileInput" accept=".json" onchange="carregarDeArquivo(this)">
+            </div>
+            
+            <button class="btn btn-download" onclick="exportarCSV()">
+                📊 Exportar CSV
+            </button>
+            
+            <button class="btn btn-reset" onclick="limparTodos()">
+                🗑️ Limpar Tudo
+            </button>
+        </div>
+        
+        <div class="last-save" id="lastSave">
+            Último salvamento: Nunca
+        </div>
+    </div>
+
+    <!-- Modal de confirmação -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h3>⚠️ Atenção</h3>
+            <p id="modalText">Deseja realmente limpar todos os dados?</p>
+            <div class="modal-buttons">
+                <button class="btn btn-reset" onclick="confirmarAcao()">Sim</button>
+                <button class="btn" style="background: #95a5a6; color: white;" onclick="fecharModal()">Não</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Constantes
+        const STORAGE_KEY = 'controle_shafts_dados_v2';
+        const STORAGE_META = 'controle_shafts_meta_v2';
+        const ITENS = ['tap', 'divisor', 'bloco', 'conector', 'cabo'];
+        
+        // Variáveis globais
+        let houveModificacao = false;
+        let acaoPendente = null;
+        
+        // Inicializar
+        window.onload = function() {
+            gerarTabela();
+            carregarDoNavegador();
+        };
+        
+        // Gerar tabela HTML
+        function gerarTabela() {
+            const tbody = document.getElementById('tabelaBody');
+            
+            for (let andar = 14; andar >= 1; andar--) {
+                const andarStr = andar.toString().padStart(2, '0');
+                
+                ['A', 'B'].forEach((shaft, index) => {
+                    const tr = document.createElement('tr');
+                    const shaftId = `${andarStr}${shaft}`;
+                    
+                    let html = '';
+                    
+                    // Coluna Andar (apenas na primeira linha do andar)
+                    if (index === 0) {
+                        html += `<td class="andar" rowspan="2">${andar}</td>`;
+                    }
+                    
+                    // Coluna Shaft
+                    html += `<td class="shaft">${andar} ${shaft}</td>`;
+                    
+                    // Colunas dos itens (TAP, Divisor, Bloco Bargo, Conector, Cabo)
+                    ITENS.forEach(item => {
+                        const btnId = `${shaftId}_${item}`;
+                        html += `
+                            <td>
+                                <button id="${btnId}" class="btn-status pendente" onclick="alternarStatus('${btnId}')">
+                                    PENDENTE
+                                </button>
+                            </td>
+                        `;
+                    });
+                    
+                    // Status Geral
+                    html += `
+                        <td>
+                            <div id="geral_${shaftId}" class="status-geral-box status-geral-pendente">
+                                PENDENTE
+                            </div>
+                        </td>
+                    `;
+                    
+                    // Observação
+                    html += `
+                        <td>
+                            <input type="text" id="obs_${shaftId}" class="obs" placeholder="Digite observações..." oninput="marcarModificado()">
+                        </td>
+                    `;
+                    
+                    tr.innerHTML = html;
+                    tbody.appendChild(tr);
+                });
+            }
+        }
+        
+        // Alternar status do botão (Pendente → OK → Atenção → Pendente)
+        function alternarStatus(btnId) {
+            const btn = document.getElementById(btnId);
+            const statusAtual = btn.classList.contains('ok') ? 'ok' : 
+                               btn.classList.contains('atencao') ? 'atencao' : 'pendente';
+            
+            let novoStatus;
+            let novoTexto;
+            
+            if (statusAtual === 'pendente') {
+                novoStatus = 'ok';
+                novoTexto = 'OK';
+            } else if (statusAtual === 'ok') {
+                novoStatus = 'atencao';
+                novoTexto = 'ATENÇÃO';
+            } else {
+                novoStatus = 'pendente';
+                novoTexto = 'PENDENTE';
+            }
+            
+            btn.className = `btn-status ${novoStatus}`;
+            btn.textContent = novoTexto;
+            
+            marcarModificado();
+            atualizarStatusGeral(btnId.split('_')[0]);
+            atualizarEstatisticas();
+        }
+        
+        // Atualizar status geral do shaft baseado nos itens
+        function atualizarStatusGeral(shaftId) {
+            const geralEl = document.getElementById(`geral_${shaftId}`);
+            let temAtencao = false;
+            let temPendente = false;
+            let todosOk = true;
+            
+            ITENS.forEach(item => {
+                const btn = document.getElementById(`${shaftId}_${item}`);
+                if (btn.classList.contains('atencao')) {
+                    temAtencao = true;
+                } else if (btn.classList.contains('pendente')) {
+                    temPendente = true;
+                    todosOk = false;
+                } else if (!btn.classList.contains('ok')) {
+                    todosOk = false;
+                }
+            });
+            
+            if (temAtencao) {
+                geralEl.className = 'status-geral-box status-geral-atencao';
+                geralEl.textContent = 'ATENÇÃO';
+            } else if (temPendente) {
+                geralEl.className = 'status-geral-box status-geral-pendente';
+                geralEl.textContent = 'PENDENTE';
+            } else if (todosOk) {
+                geralEl.className = 'status-geral-box status-geral-ok';
+                geralEl.textContent = 'OK';
+            } else {
+                geralEl.className = 'status-geral-box status-geral-pendente';
+                geralEl.textContent = 'PENDENTE';
+            }
+        }
+        
+        // Marcar modificação
+        function marcarModificado() {
+            if (!houveModificacao) {
+                houveModificacao = true;
+                document.getElementById('statusMsg').className = 'status-msg status-unsaved';
+                document.getElementById('statusMsg').textContent = '⚠️ Há alterações não salvas';
+            }
+        }
+        
+        // Coletar dados da tabela
+        function coletarDados() {
+            const dados = {};
+            for (let andar = 14; andar >= 1; andar--) {
+                const andarStr = andar.toString().padStart(2, '0');
+                ['A', 'B'].forEach(shaft => {
+                    const shaftId = `${andarStr}${shaft}`;
+                    const shaftDados = {
+                        itens: {},
+                        obs: document.getElementById(`obs_${shaftId}`).value
+                    };
+                    
+                    ITENS.forEach(item => {
+                        const btn = document.getElementById(`${shaftId}_${item}`);
+                        shaftDados.itens[item] = btn.classList.contains('ok') ? 'ok' : 
+                                                 btn.classList.contains('atencao') ? 'atencao' : 'pendente';
+                    });
+                    
+                    dados[shaftId] = shaftDados;
+                });
+            }
+            return dados;
+        }
+        
+        // Preencher tabela com dados
+        function preencherTabela(dados) {
+            Object.keys(dados).forEach(shaftId => {
+                const shaftDados = dados[shaftId];
+                
+                // Preencher observação
+                const obsEl = document.getElementById(`obs_${shaftId}`);
+                if (obsEl) obsEl.value = shaftDados.obs || '';
+                
+                // Preencher itens
+                if (shaftDados.itens) {
+                    ITENS.forEach(item => {
+                        const btn = document.getElementById(`${shaftId}_${item}`);
+                        if (btn && shaftDados.itens[item]) {
+                            const status = shaftDados.itens[item];
+                            btn.className = `btn-status ${status}`;
+                            btn.textContent = status === 'ok' ? 'OK' : status === 'atencao' ? 'ATENÇÃO' : 'PENDENTE';
+                        }
+                    });
+                }
+                
+                atualizarStatusGeral(shaftId);
+            });
+            atualizarEstatisticas();
+        }
+        
+        // Atualizar estatísticas
+        function atualizarEstatisticas() {
+            let ok = 0, pendente = 0, atencao = 0;
+            
+            for (let andar = 14; andar >= 1; andar--) {
+                const andarStr = andar.toString().padStart(2, '0');
+                ['A', 'B'].forEach(shaft => {
+                    const shaftId = `${andarStr}${shaft}`;
+                    const geralEl = document.getElementById(`geral_${shaftId}`);
+                    
+                    if (geralEl.classList.contains('status-geral-ok')) ok++;
+                    else if (geralEl.classList.contains('status-geral-atencao')) atencao++;
+                    else pendente++;
+                });
+            }
+            
+            document.getElementById('okCount').textContent = ok;
+            document.getElementById('pendenteCount').textContent = pendente;
+            document.getElementById('atencaoCount').textContent = atencao;
+        }
+        
+        // Salvar em arquivo JSON
+        function salvarEmArquivo() {
+            const dados = coletarDados();
+            const meta = {
+                dataCriacao: new Date().toISOString(),
+                versao: '2.0',
+                tipo: 'controle_shafts_detalhado',
+                totalShafts: 28
+            };
+            
+            const arquivo = { meta, dados };
+            
+            const blob = new Blob([JSON.stringify(arquivo, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `controle_shafts_${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            // Backup no localStorage
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(dados));
+            localStorage.setItem(STORAGE_META, JSON.stringify(meta));
+            
+            houveModificacao = false;
+            document.getElementById('statusMsg').className = 'status-msg status-saved';
+            document.getElementById('statusMsg').textContent = '💾 Dados salvos com sucesso';
+            
+            const agora = new Date().toLocaleString('pt-BR');
+            document.getElementById('lastSave').textContent = `Último salvamento: ${agora}`;
+            
+            alert('✅ Arquivo salvo com sucesso!');
+        }
+        
+        // Carregar de arquivo
+        function carregarDeArquivo(input) {
+            const file = input.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const arquivo = JSON.parse(e.target.result);
+                    
+                    if (arquivo.dados) {
+                        preencherTabela(arquivo.dados);
+                        
+                        localStorage.setItem(STORAGE_KEY, JSON.stringify(arquivo.dados));
+                        if (arquivo.meta) {
+                            localStorage.setItem(STORAGE_META, JSON.stringify(arquivo.meta));
+                        }
+                        
+                        houveModificacao = false;
+                        document.getElementById('statusMsg').className = 'status-msg status-saved';
+                        document.getElementById('statusMsg').textContent = '💾 Dados carregados do arquivo';
+                        
+                        const agora = new Date().toLocaleString('pt-BR');
+                        document.getElementById('lastSave').textContent = `Arquivo carregado: ${agora}`;
+                        
+                        alert('✅ Dados carregados com sucesso!');
+                    } else {
+                        alert('❌ Arquivo inválido!');
+                    }
+                } catch (err) {
+                    alert('❌ Erro ao ler arquivo: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+            input.value = '';
+        }
+        
+        // Carregar do navegador
+        function carregarDoNavegador() {
+            const dadosSalvos = localStorage.getItem(STORAGE_KEY);
+            const metaSalva = localStorage.getItem(STORAGE_META);
+            
+            if (dadosSalvos) {
+                try {
+                    const dados = JSON.parse(dadosSalvos);
+                    preencherTabela(dados);
+                    
+                    if (metaSalva) {
+                        const meta = JSON.parse(metaSalva);
+                        const data = new Date(meta.dataCriacao).toLocaleString('pt-BR');
+                        document.getElementById('lastSave').textContent = `Dados do navegador: ${data}`;
+                    }
+                    
+                    document.getElementById('statusMsg').textContent = '💾 Dados carregados do navegador';
+                } catch (err) {
+                    console.error('Erro ao carregar:', err);
+                }
+            }
+        }
+        
+        // Exportar CSV
+        function exportarCSV() {
+            let csv = 'ANDAR;SHAFT;TAP;DIVISOR;BLOCO_BARGO;CONECTOR_ANTENA;CABO_OK;STATUS_GERAL;OBSERVACAO\n';
+            
+            for (let andar = 14; andar >= 1; andar--) {
+                const andarStr = andar.toString().padStart(2, '0');
+                ['A', 'B'].forEach(shaft => {
+                    const shaftId = `${andarStr}${shaft}`;
+                    const linha = [`${andar}`, `${andar} ${shaft}`];
+                    
+                    ITENS.forEach(item => {
+                        const btn = document.getElementById(`${shaftId}_${item}`);
+                        const status = btn.classList.contains('ok') ? 'OK' : 
+                                      btn.classList.contains('atencao') ? 'ATENCAO' : 'PENDENTE';
+                        linha.push(status);
+                    });
+                    
+                    const geralEl = document.getElementById(`geral_${shaftId}`);
+                    const geralStatus = geralEl.textContent;
+                    const obs = document.getElementById(`obs_${shaftId}`).value;
+                    
+                    linha.push(geralStatus, `"${obs}"`);
+                    csv += linha.join(';') + '\n';
+                });
+            }
+            
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `controle_shafts_${new Date().toISOString().slice(0,10)}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // Limpar todos
+        function limparTodos() {
+            document.getElementById('modalText').textContent = 'Deseja realmente apagar TODOS os dados dos shafts?';
+            acaoPendente = 'limpar';
+            document.getElementById('confirmModal').style.display = 'block';
+        }
+        
+        function confirmarAcao() {
+            if (acaoPendente === 'limpar') {
+                for (let andar = 14; andar >= 1; andar--) {
+                    const andarStr = andar.toString().padStart(2, '0');
+                    ['A', 'B'].forEach(shaft => {
+                        const shaftId = `${andarStr}${shaft}`;
+                        
+                        // Resetar itens
+                        ITENS.forEach(item => {
+                            const btn = document.getElementById(`${shaftId}_${item}`);
+                            btn.className = 'btn-status pendente';
+                            btn.textContent = 'PENDENTE';
+                        });
+                        
+                        // Resetar observação
+                        document.getElementById(`obs_${shaftId}`).value = '';
+                        
+                        // Resetar status geral
+                        atualizarStatusGeral(shaftId);
+                    });
+                }
+                
+                localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem(STORAGE_META);
+                
+                atualizarEstatisticas();
+                houveModificacao = false;
+                document.getElementById('statusMsg').className = 'status-msg status-saved';
+                document.getElementById('statusMsg').textContent = '💾 Dados limpos';
+                document.getElementById('lastSave').textContent = 'Último salvamento: Nunca';
+                
+                alert('🗑️ Todos os dados foram apagados!');
+            }
+            fecharModal();
+        }
+        
+        function fecharModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+            acaoPendente = null;
+        }
+        
+        window.onclick = function(event) {
+            const modal = document.getElementById('confirmModal');
+            if (event.target == modal) {
+                fecharModal();
+            }
+        }
+        
+        window.onbeforeunload = function() {
+            if (houveModificacao) {
+                return 'Você tem alterações não salvas. Deseja realmente sair?';
+            }
+        };
+    </script>
+</body>
+</html>
