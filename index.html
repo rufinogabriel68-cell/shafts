@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Shafts - Infraestrutura</title>
+    <title>RM Design e Tecnologia - Sistema de Controle</title>
     <style>
         * {
             margin: 0;
@@ -13,35 +13,259 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            padding: 20px;
+            background: #f5f6fa;
             min-height: 100vh;
         }
         
-        .container {
-            max-width: 100%;
-            overflow-x: auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        /* ==========================================
+           PÁGINA INICIAL / MENU
+           ========================================== */
+        #pagina-inicial {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 20px;
         }
         
-        h1 {
+        .logo-container {
+            text-align: center;
+            margin-bottom: 50px;
+            color: white;
+        }
+        
+        .logo-placeholder {
+            width: 150px;
+            height: 150px;
+            background: rgba(255,255,255,0.2);
+            border: 3px dashed rgba(255,255,255,0.5);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 60px;
+            color: rgba(255,255,255,0.8);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .logo-placeholder:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+        
+        .logo-container h1 {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .logo-container p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .botoes-menu {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn-modulo {
+            background: white;
+            border: none;
+            border-radius: 20px;
+            padding: 40px 50px;
+            cursor: pointer;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 220px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-modulo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+        
+        .btn-modulo.shafts::before {
+            background: #11998e;
+        }
+        
+        .btn-modulo.apartamentos::before {
+            background: #04209c;
+        }
+        
+        .btn-modulo:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        
+        .btn-modulo .icone {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .btn-modulo .titulo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .btn-modulo .descricao {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        /* ==========================================
+           MENU SUPERIOR DAS PLANILHAS
+           ========================================== */
+        .menu-topo {
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .menu-esquerda {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .btn-voltar {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-voltar:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(-3px);
+        }
+        
+        .titulo-sistema {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+        
+        .menu-botoes {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .menu-btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .menu-btn.active {
+            background: white;
+            color: #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .menu-btn:not(.active) {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .menu-btn:not(.active):hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        /* ==========================================
+           SEÇÕES DAS PLANILHAS
+           ========================================== */
+        .secao {
+            display: none;
+            min-height: calc(100vh - 70px);
+        }
+        
+        .secao.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Container das planilhas */
+        .container-planilha {
+            max-width: 100%;
+            overflow-x: auto;
+            background: white;
+            margin: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 25px;
+        }
+        
+        /* ==========================================
+           ESTILOS ESPECÍFICOS - SHAFTS
+           ========================================== */
+        .secao-shafts {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            padding-bottom: 20px;
+        }
+        
+        .secao-shafts h1 {
             text-align: center;
             color: #333;
             margin-bottom: 10px;
             font-size: 24px;
         }
         
-        .subtitle {
+        .secao-shafts .subtitle {
             text-align: center;
             color: #666;
             margin-bottom: 20px;
             font-size: 14px;
         }
         
-        .conexao-info {
+        .secao-shafts .conexao-info {
             background: #e3f2fd;
             border-left: 4px solid #2196f3;
             padding: 15px;
@@ -50,80 +274,35 @@
             font-size: 14px;
         }
         
-        .conexao-info h3 {
+        .secao-shafts .conexao-info h3 {
             margin-bottom: 10px;
             color: #1976d2;
         }
         
-        .status-conexao {
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .online {
-            color: #27ae60;
-        }
-        
-        .offline {
-            color: #e74c3c;
-        }
-        
-        .syncing {
-            color: #f39c12;
-            animation: pulse 1s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        .legenda-status {
+        .secao-shafts .legenda-status {
             display: flex;
             justify-content: center;
             gap: 30px;
-            margin-bottom: 20px;
+            margin-top: 10px;
             flex-wrap: wrap;
             font-size: 13px;
             font-weight: 600;
         }
         
-        .legenda-item {
+        .secao-shafts .legenda-item {
             display: flex;
             align-items: center;
             gap: 8px;
         }
         
-        .legenda-cor {
+        .secao-shafts .legenda-cor {
             width: 24px;
             height: 24px;
             border-radius: 4px;
             border: 2px solid #333;
         }
         
-        .user-count {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #1b5e20;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            z-index: 100;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-        }
-        
-        th {
+        .secao-shafts th {
             background: #1b5e20;
             color: white;
             padding: 12px 6px;
@@ -135,53 +314,27 @@
             border: 1px solid #2e7d32;
         }
         
-        th.andar-col {
-            background: #0d3b11;
-            min-width: 50px;
-        }
+        .secao-shafts th.andar-col { background: #0d3b11; }
+        .secao-shafts th.shaft-col { background: #2e7d32; }
+        .secao-shafts th.item-col { background: #388e3c; }
+        .secao-shafts th.status-geral { background: #1b5e20; }
+        .secao-shafts th.obs-col { background: #2e7d32; }
         
-        th.shaft-col {
-            background: #2e7d32;
-            min-width: 60px;
-        }
-        
-        th.item-col {
-            background: #388e3c;
-            min-width: 90px;
-        }
-        
-        th.status-geral {
-            background: #1b5e20;
-            min-width: 100px;
-        }
-        
-        th.obs-col {
-            background: #2e7d32;
-            min-width: 150px;
-        }
-        
-        td {
-            padding: 8px 4px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        td.andar {
+        .secao-shafts td.andar {
             background: #e8f5e9;
             font-weight: bold;
             color: #1b5e20;
             font-size: 14px;
         }
         
-        td.shaft {
+        .secao-shafts td.shaft {
             background: #f1f8e9;
             font-weight: 700;
             color: #33691e;
             font-size: 13px;
         }
         
-        /* Botões de status */
-        .btn-status {
+        .secao-shafts .btn-status {
             width: 100%;
             padding: 8px 4px;
             border: 2px solid transparent;
@@ -193,31 +346,30 @@
             text-transform: uppercase;
         }
         
-        .btn-status:hover {
+        .secao-shafts .btn-status:hover {
             transform: scale(1.05);
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         
-        .btn-status.ok {
+        .secao-shafts .btn-status.ok {
             background: #27ae60;
             color: white;
             border-color: #1e8449;
         }
         
-        .btn-status.pendente {
+        .secao-shafts .btn-status.pendente {
             background: #f1c40f;
             color: #333;
             border-color: #d4ac0d;
         }
         
-        .btn-status.atencao {
+        .secao-shafts .btn-status.atencao {
             background: #e74c3c;
             color: white;
             border-color: #c0392b;
         }
         
-        /* Status Geral */
-        .status-geral-box {
+        .secao-shafts .status-geral-box {
             padding: 8px;
             border-radius: 4px;
             font-weight: 700;
@@ -225,19 +377,127 @@
             text-transform: uppercase;
         }
         
-        .status-geral-ok {
+        .secao-shafts .status-geral-ok { background: #27ae60; color: white; }
+        .secao-shafts .status-geral-pendente { background: #f1c40f; color: #333; }
+        .secao-shafts .status-geral-atencao { background: #e74c3c; color: white; }
+        
+        /* ==========================================
+           ESTILOS ESPECÍFICOS - APARTAMENTOS
+           ========================================== */
+        .secao-apartamentos {
+            background: linear-gradient(135deg, #04209c 0%, #022faa 100%);
+            padding-bottom: 20px;
+        }
+        
+        .secao-apartamentos h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        
+        .secao-apartamentos th {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 5px;
+            text-align: center;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .secao-apartamentos th.andar-col {
+            background: #1a252f;
+            min-width: 50px;
+        }
+        
+        .secao-apartamentos th.apto-header {
+            background: #34495e;
+            min-width: 80px;
+        }
+        
+        .secao-apartamentos td.andar {
+            background: #ecf0f1;
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+        
+        .secao-apartamentos .apto-num {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 11px;
+        }
+        
+        .secao-apartamentos select {
+            width: 100%;
+            padding: 6px;
+            border: none;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            appearance: none;
+            text-align: center;
+            text-align-last: center;
+            transition: all 0.3s;
+        }
+        
+        .secao-apartamentos select:hover {
+            transform: scale(1.05);
+        }
+        
+        .secao-apartamentos select.concluido {
             background: #27ae60;
             color: white;
         }
         
-        .status-geral-pendente {
-            background: #f1c40f;
-            color: #333;
-        }
-        
-        .status-geral-atencao {
+        .secao-apartamentos select.naoconcluido {
             background: #e74c3c;
             color: white;
+        }
+        
+        .secao-apartamentos select.pendente {
+            background: #95a5a6;
+            color: white;
+        }
+        
+        .secao-apartamentos select.emandamento {
+            background: #f39c12;
+            color: white;
+        }
+        
+        /* ==========================================
+           ELEMENTOS COMUNS
+           ========================================== */
+        .status-conexao {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .online { color: #27ae60; }
+        .offline { color: #e74c3c; }
+        .syncing { color: #f39c12; animation: pulse 1s infinite; }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        
+        td {
+            padding: 8px 4px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
         }
         
         input.obs {
@@ -251,9 +511,8 @@
         }
         
         input.obs:focus {
-            border-color: #4caf50;
             outline: none;
-            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+            box-shadow: 0 0 5px rgba(0,0,0,0.2);
         }
         
         input.obs.saving {
@@ -270,6 +529,19 @@
             background: #f1f8e9;
         }
         
+        .user-count {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 999;
+        }
+        
         .stats {
             margin-top: 20px;
             display: flex;
@@ -279,21 +551,20 @@
         }
         
         .stat-box {
-            background: #2e7d32;
-            color: white;
-            padding: 15px 20px;
+            padding: 15px 25px;
             border-radius: 8px;
             text-align: center;
-            min-width: 100px;
+            color: white;
+            font-weight: 600;
         }
         
         .stat-number {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
         }
         
         .stat-label {
-            font-size: 10px;
+            font-size: 12px;
             opacity: 0.9;
             text-transform: uppercase;
             margin-top: 4px;
@@ -308,7 +579,7 @@
         }
         
         .btn {
-            padding: 12px 25px;
+            padding: 12px 30px;
             border: none;
             border-radius: 6px;
             font-size: 14px;
@@ -320,6 +591,20 @@
             gap: 8px;
         }
         
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+        }
+        
         .btn-download {
             background: #2980b9;
             color: white;
@@ -327,17 +612,15 @@
         
         .btn-download:hover {
             background: #2471a3;
-            transform: translateY(-2px);
         }
         
-        .btn-reset {
-            background: #c0392b;
+        .btn-warning {
+            background: #e74c3c;
             color: white;
         }
         
-        .btn-reset:hover {
-            background: #a93226;
-            transform: translateY(-2px);
+        .btn-warning:hover {
+            background: #c0392b;
         }
         
         .last-update {
@@ -347,10 +630,11 @@
             color: #666;
         }
         
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
-            z-index: 1000;
+            z-index: 2000;
             left: 0;
             top: 0;
             width: 100%;
@@ -374,85 +658,250 @@
             gap: 10px;
             justify-content: center;
         }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .botoes-menu {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .btn-modulo {
+                padding: 30px 40px;
+                min-width: 280px;
+            }
+            
+            .menu-topo {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .menu-botoes {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .logo-container h1 {
+                font-size: 1.8rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="user-count" id="userCount">👥 1 usuário online</div>
-    
-    <div class="container">
-        <h1>🔧 CONTROLE DE SHAFTS - INFRAESTRUTURA</h1>
-        <p class="subtitle">14 Andares × 2 Shafts (A e B) | Sincronização em Tempo Real</p>
-        
-        <div class="conexao-info">
-            <h3>🌐 Sincronização em Tempo Real</h3>
-            <p>Todas as alterações são salvas automaticamente e visíveis para todos os usuários instantaneamente.</p>
-            <div class="legenda-status">
-                <div class="legenda-item">
-                    <div class="legenda-cor" style="background: #27ae60;"></div>
-                    <span>✓ OK</span>
-                </div>
-                <div class="legenda-item">
-                    <div class="legenda-cor" style="background: #f1c40f;"></div>
-                    <span>⏳ PENDENTE</span>
-                </div>
-                <div class="legenda-item">
-                    <div class="legenda-cor" style="background: #e74c3c;"></div>
-                    <span>⚠ ATENÇÃO</span>
-                </div>
+    <!-- ==========================================
+         PÁGINA INICIAL / MENU PRINCIPAL
+         ========================================== -->
+    <div id="pagina-inicial">
+        <div class="logo-container">
+            <!-- ESPAÇO PARA LOGO - Substitua o conteúdo abaixo por uma img tag -->
+            <div class="logo-placeholder" onclick="alert('Clique para adicionar sua logo')" title="Clique para adicionar logo">
+                🏢
+                <!-- 
+                PARA ADICIONAR SUA LOGO, SUBSTITUA O DIV ACIMA POR:
+                <img src="caminho-da-sua-logo.png" alt="RM Design e Tecnologia" style="width: 150px; height: auto;">
+                -->
             </div>
+            <h1>RM DESIGN E TECNOLOGIA</h1>
+            <p>Sistema de Controle de Infraestrutura</p>
         </div>
         
-        <div class="status-conexao" id="statusConexao">🟡 Conectando...</div>
-        
-        <table id="tabelaShafts">
-            <thead>
-                <tr>
-                    <th class="andar-col">ANDAR</th>
-                    <th class="shaft-col">SHAFT</th>
-                    <th class="item-col">TAP</th>
-                    <th class="item-col">DIVISOR</th>
-                    <th class="item-col">BLOCO BARGO</th>
-                    <th class="item-col">CONECTOR ANTENA</th>
-                    <th class="item-col">CABO OK</th>
-                    <th class="status-geral">STATUS GERAL</th>
-                    <th class="obs-col">OBSERVAÇÃO</th>
-                </tr>
-            </thead>
-            <tbody id="tabelaBody">
-            </tbody>
-        </table>
-        
-        <div class="stats">
-            <div class="stat-box">
-                <div class="stat-number" id="totalShafts">28</div>
-                <div class="stat-label">Total Shafts</div>
-            </div>
-            <div class="stat-box" style="background: #27ae60;">
-                <div class="stat-number" id="okCount">0</div>
-                <div class="stat-label">OK</div>
-            </div>
-            <div class="stat-box" style="background: #f1c40f; color: #333;">
-                <div class="stat-number" id="pendenteCount">0</div>
-                <div class="stat-label">Pendentes</div>
-            </div>
-            <div class="stat-box" style="background: #e74c3c;">
-                <div class="stat-number" id="atencaoCount">0</div>
-                <div class="stat-label">Atenção</div>
-            </div>
-        </div>
-        
-        <div class="btn-group">
-            <button class="btn btn-download" onclick="exportarCSV()">
-                📊 Exportar CSV
+        <div class="botoes-menu">
+            <button class="btn-modulo shafts" onclick="mostrarSecao('shafts')">
+                <span class="icone">⚙️</span>
+                <span class="titulo">SHAFTS</span>
+                <span class="descricao">Controle de Infraestrutura Técnica</span>
             </button>
             
-            <button class="btn btn-reset" onclick="limparTodos()">
-                🗑️ Limpar Tudo
+            <button class="btn-modulo apartamentos" onclick="mostrarSecao('apartamentos')">
+                <span class="icone">📞</span>
+                <span class="titulo">APARTAMENTOS</span>
+                <span class="descricao">Gestão de Telefonia Torre 2</span>
             </button>
         </div>
-        
-        <div class="last-update" id="lastUpdate">Última atualização: -</div>
     </div>
+
+    <!-- ==========================================
+         MENU SUPERIOR (Aparece nas planilhas)
+         ========================================== -->
+    <nav id="menu-superior" class="menu-topo" style="display: none;">
+        <div class="menu-esquerda">
+            <button class="btn-voltar" onclick="voltarParaInicio()">
+                ← Voltar ao Início
+            </button>
+            <span class="titulo-sistema">RM DESIGN E TECNOLOGIA</span>
+        </div>
+        
+        <div class="menu-botoes">
+            <button class="menu-btn" id="btn-shafts" onclick="mostrarSecao('shafts')">
+                ⚙️ Shafts
+            </button>
+            <button class="menu-btn" id="btn-apartamentos" onclick="mostrarSecao('apartamentos')">
+                📞 Apartamentos
+            </button>
+        </div>
+    </nav>
+
+    <!-- ==========================================
+         SEÇÃO SHAFTS
+         ========================================== -->
+    <section id="secao-shafts" class="secao secao-shafts">
+        <div class="user-count" id="userCount-shafts">👥 1 usuário online</div>
+        
+        <div class="container-planilha">
+            <h1>🔧 CONTROLE DE SHAFTS - INFRAESTRUTURA</h1>
+            <p class="subtitle">14 Andares × 2 Shafts (A e B) | Sincronização em Tempo Real</p>
+            
+            <div class="conexao-info">
+                <h3>🌐 Sincronização em Tempo Real</h3>
+                <p>Todas as alterações são salvas automaticamente e visíveis para todos os usuários instantaneamente.</p>
+                <div class="legenda-status">
+                    <div class="legenda-item">
+                        <div class="legenda-cor" style="background: #27ae60;"></div>
+                        <span>✓ OK</span>
+                    </div>
+                    <div class="legenda-item">
+                        <div class="legenda-cor" style="background: #f1c40f;"></div>
+                        <span>⏳ PENDENTE</span>
+                    </div>
+                    <div class="legenda-item">
+                        <div class="legenda-cor" style="background: #e74c3c;"></div>
+                        <span>⚠ ATENÇÃO</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="status-conexao" id="statusConexao-shafts">🟡 Conectando...</div>
+            
+            <table id="tabelaShafts">
+                <thead>
+                    <tr>
+                        <th class="andar-col">ANDAR</th>
+                        <th class="shaft-col">SHAFT</th>
+                        <th class="item-col">TAP</th>
+                        <th class="item-col">DIVISOR</th>
+                        <th class="item-col">BLOCO BARGO</th>
+                        <th class="item-col">CONECTOR ANTENA</th>
+                        <th class="item-col">CABO OK</th>
+                        <th class="status-geral">STATUS GERAL</th>
+                        <th class="obs-col">OBSERVAÇÃO</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaBody-shafts">
+                </tbody>
+            </table>
+            
+            <div class="stats">
+                <div class="stat-box" style="background: #2e7d32;">
+                    <div class="stat-number" id="totalShafts">28</div>
+                    <div class="stat-label">Total Shafts</div>
+                </div>
+                <div class="stat-box" style="background: #27ae60;">
+                    <div class="stat-number" id="okCount">0</div>
+                    <div class="stat-label">OK</div>
+                </div>
+                <div class="stat-box" style="background: #f1c40f; color: #333;">
+                    <div class="stat-number" id="pendenteCount">0</div>
+                    <div class="stat-label">Pendentes</div>
+                </div>
+                <div class="stat-box" style="background: #e74c3c;">
+                    <div class="stat-number" id="atencaoCount">0</div>
+                    <div class="stat-label">Atenção</div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-download" onclick="exportarCSV('shafts')">
+                    📊 Exportar CSV
+                </button>
+                <button class="btn btn-warning" onclick="limparTodos('shafts')">
+                    🗑️ Limpar Tudo
+                </button>
+            </div>
+            
+            <div class="last-update" id="lastUpdate-shafts">Última atualização: -</div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SEÇÃO APARTAMENTOS (TELEFONIA)
+         ========================================== -->
+    <section id="secao-apartamentos" class="secao secao-apartamentos">
+        <div class="user-count" id="userCount-apartamentos">👥 1 usuário online</div>
+        
+        <div class="container-planilha">
+            <h1>📋 CONTROLE DE APARTAMENTOS TORRE 2 - TELEFONIA</h1>
+            <div class="status-conexao" id="statusConexao-apartamentos">🟡 Conectando...</div>
+            
+            <table id="tabelaApartamentos">
+                <thead>
+                    <tr>
+                        <th class="andar-col">ANDAR</th>
+                        <th class="apto-header">APTO</th>
+                        <th>STATUS</th>
+                        <th>OBS</th>
+                        <th class="apto-header">APTO</th>
+                        <th>STATUS</th>
+                        <th>OBS</th>
+                        <th class="apto-header">APTO</th>
+                        <th>STATUS</th>
+                        <th>OBS</th>
+                        <th class="apto-header">APTO</th>
+                        <th>STATUS</th>
+                        <th>OBS</th>
+                        <th class="apto-header">APTO</th>
+                        <th>STATUS</th>
+                        <th>OBS</th>
+                        <th class="apto-header">APTO</th>
+                        <th>STATUS</th>
+                        <th>OBS</th>
+                        <th class="apto-header">APTO</th>
+                        <th>STATUS</th>
+                        <th>OBS</th>
+                        <th class="apto-header">APTO</th>
+                        <th>STATUS</th>
+                        <th>OBS</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaBody-apartamentos">
+                </tbody>
+            </table>
+            
+            <div class="stats">
+                <div class="stat-box" style="background: #34495e;">
+                    <div class="stat-number" id="totalAptos">112</div>
+                    <div class="stat-label">TOTAL APARTAMENTOS</div>
+                </div>
+                <div class="stat-box" style="background: #27ae60;">
+                    <div class="stat-number" id="concluidos">0</div>
+                    <div class="stat-label">CONCLUÍDOS</div>
+                </div>
+                <div class="stat-box" style="background: #e74c3c;">
+                    <div class="stat-number" id="naoConcluidos">0</div>
+                    <div class="stat-label">SEM PASSAGEM</div>
+                </div>
+                <div class="stat-box" style="background: #f39c12;">
+                    <div class="stat-number" id="emAndamento">0</div>
+                    <div class="stat-label">INTERNO</div>
+                </div>
+                <div class="stat-box" style="background: #95a5a6;">
+                    <div class="stat-number" id="pendentes">0</div>
+                    <div class="stat-label">PENDENTES</div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="exportarCSV('apartamentos')">
+                    📊 Exportar CSV
+                </button>
+                <button class="btn btn-warning" onclick="limparTodos('apartamentos')">
+                    🗑️ Limpar Tudo
+                </button>
+            </div>
+            
+            <div class="last-update" id="lastUpdate-apartamentos">Última atualização: -</div>
+        </div>
+    </section>
 
     <!-- Modal de confirmação -->
     <div id="confirmModal" class="modal">
@@ -460,7 +909,7 @@
             <h3>⚠️ Atenção</h3>
             <p id="modalText">Deseja realmente limpar todos os dados?</p>
             <div class="modal-buttons">
-                <button class="btn btn-reset" onclick="confirmarAcao()">Sim</button>
+                <button class="btn btn-warning" onclick="confirmarAcao()">Sim</button>
                 <button class="btn" style="background: #95a5a6; color: white;" onclick="fecharModal()">Não</button>
             </div>
         </div>
@@ -471,37 +920,97 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, set, onValue, onDisconnect, push, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        // SUBSTITUA COM SUAS CREDENCIAIS DO FIREBASE
-        const firebaseConfig = {
-  apiKey: "AIzaSyADzp8bQtnmwIiHrTnfI81A5QVwWpFcLl0",
-  authDomain: "shaftsap.firebaseapp.com",
-  projectId: "shaftsap",
-  storageBucket: "shaftsap.firebasestorage.app",
-  messagingSenderId: "494189428737",
-  appId: "1:494189428737:web:c09042589d692deedac000"
-};
+        // ==========================================
+        // CONFIGURAÇÃO FIREBASE - ATUALIZE AQUI
+        // ==========================================
+        
+        // Firebase Shafts (mantenha suas credenciais)
+        const firebaseConfigShafts = {
+            apiKey: "AIzaSyADzp8bQtnmwIiHrTnfI81A5QVwWpFcLl0",
+            authDomain: "shaftsap.firebaseapp.com",
+            projectId: "shaftsap",
+            storageBucket: "shaftsap.firebasestorage.app",
+            messagingSenderId: "494189428737",
+            appId: "1:494189428737:web:c09042589d692deedac000"
+        };
 
+        // Firebase Apartamentos (mantenha suas credenciais)
+        const firebaseConfigAptos = {
+            apiKey: "AIzaSyBR2s2ABlXaP2gGt4xYkm7XAfda2yM2EwE",
+            authDomain: "controle-apartamentos.firebaseapp.com",
+            databaseURL: "https://controle-apartamentos-default-rtdb.firebaseio.com",
+            projectId: "controle-apartamentos",
+            storageBucket: "controle-apartamentos.firebasestorage.app",
+            messagingSenderId: "79173664686",
+            appId: "1:79173664686:web:045f55c061117a9ce6923f"
+        };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        const dadosRef = ref(db, 'shafts');
-        const usuariosRef = ref(db, 'usuarios_shafts');
+        // Inicializar apps Firebase
+        const appShafts = initializeApp(firebaseConfigShafts, 'shafts');
+        const appAptos = initializeApp(firebaseConfigAptos, 'apartamentos');
         
-        const usuarioId = push(usuariosRef).key;
-        const usuarioRef = ref(db, `usuarios_shafts/${usuarioId}`);
+        const dbShafts = getDatabase(appShafts);
+        const dbAptos = getDatabase(appAptos);
         
-        set(usuarioRef, { online: true, timestamp: Date.now() });
-        onDisconnect(usuarioRef).remove();
+        // ==========================================
+        // NAVEGAÇÃO ENTRE SEÇÕES
+        // ==========================================
         
-        onValue(usuariosRef, (snapshot) => {
+        window.mostrarSecao = function(secao) {
+            // Esconde página inicial
+            document.getElementById('pagina-inicial').style.display = 'none';
+            
+            // Mostra menu superior
+            document.getElementById('menu-superior').style.display = 'flex';
+            
+            // Esconde todas as seções
+            document.querySelectorAll('.secao').forEach(s => s.classList.remove('active'));
+            
+            // Mostra seção selecionada
+            document.getElementById(`secao-${secao}`).classList.add('active');
+            
+            // Atualiza botões ativos
+            document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${secao}`).classList.add('active');
+            
+            // Scroll ao topo
+            window.scrollTo(0, 0);
+        };
+        
+        window.voltarParaInicio = function() {
+            // Esconde menu e seções
+            document.getElementById('menu-superior').style.display = 'none';
+            document.querySelectorAll('.secao').forEach(s => s.classList.remove('active'));
+            
+            // Mostra página inicial
+            document.getElementById('pagina-inicial').style.display = 'flex';
+            
+            // Limpa botões ativos
+            document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
+        };
+        
+        // ==========================================
+        // SISTEMA SHAFTS
+        // ==========================================
+        
+        const ITENS_SHAFTS = ['tap', 'divisor', 'bloco', 'conector', 'cabo'];
+        const dadosRefShafts = ref(dbShafts, 'shafts');
+        const usuariosRefShafts = ref(dbShafts, 'usuarios_shafts');
+        
+        // Gerar ID único
+        const usuarioIdShafts = push(usuariosRefShafts).key;
+        const usuarioRefShafts = ref(dbShafts, `usuarios_shafts/${usuarioIdShafts}`);
+        
+        set(usuarioRefShafts, { online: true, timestamp: Date.now() });
+        onDisconnect(usuarioRefShafts).remove();
+        
+        onValue(usuariosRefShafts, (snapshot) => {
             const count = snapshot.size || 0;
-            document.getElementById('userCount').textContent = `👥 ${count} usuário${count !== 1 ? 's' : ''} online`;
+            document.getElementById('userCount-shafts').textContent = `👥 ${count} usuário${count !== 1 ? 's' : ''} online`;
         });
 
-        const ITENS = ['tap', 'divisor', 'bloco', 'conector', 'cabo'];
-        
-        // Gerar tabela
-        const tbody = document.getElementById('tabelaBody');
+        // Gerar tabela Shafts
+        const tbodyShafts = document.getElementById('tabelaBody-shafts');
         
         for (let andar = 14; andar >= 1; andar--) {
             const andarStr = andar.toString().padStart(2, '0');
@@ -518,7 +1027,7 @@
                 
                 html += `<td class="shaft">${andar} ${shaft}</td>`;
                 
-                ITENS.forEach(item => {
+                ITENS_SHAFTS.forEach(item => {
                     const btnId = `${shaftId}_${item}`;
                     html += `
                         <td>
@@ -541,38 +1050,35 @@
                 `;
                 
                 tr.innerHTML = html;
-                tbody.appendChild(tr);
+                tbodyShafts.appendChild(tr);
             });
         }
         
-        // Adicionar event listeners
-        document.querySelectorAll('.btn-status').forEach(btn => {
+        // Event listeners Shafts
+        document.querySelectorAll('#tabelaShafts .btn-status').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const shaftId = e.target.dataset.shaft;
                 const item = e.target.dataset.item;
-                alternarStatus(shaftId, item);
+                alternarStatusShafts(shaftId, item);
             });
         });
         
-        document.querySelectorAll('input.obs').forEach(input => {
+        document.querySelectorAll('#tabelaShafts input.obs').forEach(input => {
             let timeout;
             input.addEventListener('input', (e) => {
                 e.target.classList.add('saving');
                 e.target.classList.remove('saved');
                 clearTimeout(timeout);
-                timeout = setTimeout(() => {
-                    salvarDados();
-                }, 500);
+                timeout = setTimeout(() => salvarDadosShafts(), 500);
             });
         });
         
-        function alternarStatus(shaftId, item) {
+        function alternarStatusShafts(shaftId, item) {
             const btn = document.getElementById(`${shaftId}_${item}`);
             const statusAtual = btn.classList.contains('ok') ? 'ok' : 
                                btn.classList.contains('atencao') ? 'atencao' : 'pendente';
             
-            let novoStatus;
-            let novoTexto;
+            let novoStatus, novoTexto;
             
             if (statusAtual === 'pendente') {
                 novoStatus = 'ok';
@@ -588,21 +1094,20 @@
             btn.className = `btn-status ${novoStatus}`;
             btn.textContent = novoTexto;
             
-            atualizarStatusGeral(shaftId);
-            salvarDados();
+            atualizarStatusGeralShafts(shaftId);
+            salvarDadosShafts();
         }
         
-        function atualizarStatusGeral(shaftId) {
+        function atualizarStatusGeralShafts(shaftId) {
             const geralEl = document.getElementById(`geral_${shaftId}`);
             let temAtencao = false;
             let temPendente = false;
             let todosOk = true;
             
-            ITENS.forEach(item => {
+            ITENS_SHAFTS.forEach(item => {
                 const btn = document.getElementById(`${shaftId}_${item}`);
-                if (btn.classList.contains('atencao')) {
-                    temAtencao = true;
-                } else if (btn.classList.contains('pendente')) {
+                if (btn.classList.contains('atencao')) temAtencao = true;
+                else if (btn.classList.contains('pendente')) {
                     temPendente = true;
                     todosOk = false;
                 } else if (!btn.classList.contains('ok')) {
@@ -625,7 +1130,7 @@
             }
         }
         
-        function coletarDados() {
+        function coletarDadosShafts() {
             const dados = {};
             for (let andar = 14; andar >= 1; andar--) {
                 const andarStr = andar.toString().padStart(2, '0');
@@ -636,7 +1141,7 @@
                         obs: document.getElementById(`obs_${shaftId}`).value
                     };
                     
-                    ITENS.forEach(item => {
+                    ITENS_SHAFTS.forEach(item => {
                         const btn = document.getElementById(`${shaftId}_${item}`);
                         shaftDados.itens[item] = btn.classList.contains('ok') ? 'ok' : 
                                                  btn.classList.contains('atencao') ? 'atencao' : 'pendente';
@@ -648,16 +1153,16 @@
             return dados;
         }
         
-        function salvarDados() {
-            document.getElementById('statusConexao').className = 'status-conexao syncing';
-            document.getElementById('statusConexao').textContent = '⏳ Salvando...';
+        function salvarDadosShafts() {
+            document.getElementById('statusConexao-shafts').className = 'status-conexao syncing';
+            document.getElementById('statusConexao-shafts').textContent = '⏳ Salvando...';
             
-            set(dadosRef, coletarDados())
+            set(dadosRefShafts, coletarDadosShafts())
                 .then(() => {
-                    document.getElementById('statusConexao').className = 'status-conexao online';
-                    document.getElementById('statusConexao').textContent = '✅ Sincronizado em tempo real';
+                    document.getElementById('statusConexao-shafts').className = 'status-conexao online';
+                    document.getElementById('statusConexao-shafts').textContent = '✅ Sincronizado em tempo real';
                     
-                    document.querySelectorAll('input.obs').forEach(input => {
+                    document.querySelectorAll('#tabelaShafts input.obs').forEach(input => {
                         if (input.classList.contains('saving')) {
                             input.classList.remove('saving');
                             input.classList.add('saved');
@@ -665,16 +1170,15 @@
                         }
                     });
                     
-                    atualizarEstatisticas();
+                    atualizarEstatisticasShafts();
                 })
                 .catch((error) => {
-                    document.getElementById('statusConexao').className = 'status-conexao offline';
-                    document.getElementById('statusConexao').textContent = '❌ Erro: ' + error.message;
+                    document.getElementById('statusConexao-shafts').className = 'status-conexao offline';
+                    document.getElementById('statusConexao-shafts').textContent = '❌ Erro: ' + error.message;
                 });
         }
         
-        // Escutar mudanças em tempo real
-        onValue(dadosRef, (snapshot) => {
+        onValue(dadosRefShafts, (snapshot) => {
             const dados = snapshot.val();
             if (!dados) return;
             
@@ -687,7 +1191,7 @@
                 }
                 
                 if (shaftDados.itens) {
-                    ITENS.forEach(item => {
+                    ITENS_SHAFTS.forEach(item => {
                         const btn = document.getElementById(`${shaftId}_${item}`);
                         if (btn && shaftDados.itens[item]) {
                             const status = shaftDados.itens[item];
@@ -700,17 +1204,17 @@
                     });
                 }
                 
-                atualizarStatusGeral(shaftId);
+                atualizarStatusGeralShafts(shaftId);
             });
             
-            atualizarEstatisticas();
+            atualizarEstatisticasShafts();
             const agora = new Date().toLocaleString('pt-BR');
-            document.getElementById('lastUpdate').textContent = `Última atualização: ${agora}`;
-            document.getElementById('statusConexao').className = 'status-conexao online';
-            document.getElementById('statusConexao').textContent = '✅ Sincronizado em tempo real';
+            document.getElementById('lastUpdate-shafts').textContent = `Última atualização: ${agora}`;
+            document.getElementById('statusConexao-shafts').className = 'status-conexao online';
+            document.getElementById('statusConexao-shafts').textContent = '✅ Sincronizado em tempo real';
         });
         
-        function atualizarEstatisticas() {
+        function atualizarEstatisticasShafts() {
             let ok = 0, pendente = 0, atencao = 0;
             
             for (let andar = 14; andar >= 1; andar--) {
@@ -730,59 +1234,261 @@
             document.getElementById('atencaoCount').textContent = atencao;
         }
         
-        // Exportar CSV
-        window.exportarCSV = function() {
-            let csv = 'ANDAR;SHAFT;TAP;DIVISOR;BLOCO_BARGO;CONECTOR_ANTENA;CABO_OK;STATUS_GERAL;OBSERVACAO\n';
+        // ==========================================
+        // SISTEMA APARTAMENTOS
+        // ==========================================
+        
+        const dadosRefAptos = ref(dbAptos, 'apartamentos');
+        const usuariosRefAptos = ref(dbAptos, 'usuarios');
+        
+        const usuarioIdAptos = push(usuariosRefAptos).key;
+        const usuarioRefAptos = ref(dbAptos, `usuarios/${usuarioIdAptos}`);
+        
+        set(usuarioRefAptos, { online: true, timestamp: Date.now() });
+        onDisconnect(usuarioRefAptos).remove();
+        
+        onValue(usuariosRefAptos, (snapshot) => {
+            const count = snapshot.size || 0;
+            document.getElementById('userCount-apartamentos').textContent = `👥 ${count} usuário${count !== 1 ? 's' : ''} online`;
+        });
+
+        // Gerar tabela Apartamentos
+        const tbodyAptos = document.getElementById('tabelaBody-apartamentos');
+        const selects = {};
+        const inputs = {};
+        
+        for (let andar = 14; andar >= 1; andar--) {
+            const tr = document.createElement('tr');
+            const andarStr = andar.toString().padStart(1, '0');
             
-            for (let andar = 14; andar >= 1; andar--) {
-                const andarStr = andar.toString().padStart(2, '0');
-                ['A', 'B'].forEach(shaft => {
-                    const shaftId = `${andarStr}${shaft}`;
-                    const linha = [`${andar}`, `${andar} ${shaft}`];
-                    
-                    ITENS.forEach(item => {
-                        const btn = document.getElementById(`${shaftId}_${item}`);
-                        const status = btn.classList.contains('ok') ? 'OK' : 
-                                      btn.classList.contains('atencao') ? 'ATENCAO' : 'PENDENTE';
-                        linha.push(status);
-                    });
-                    
-                    const geralEl = document.getElementById(`geral_${shaftId}`);
-                    const obs = document.getElementById(`obs_${shaftId}`).value;
-                    
-                    linha.push(geralEl.textContent, `"${obs}"`);
-                    csv += linha.join(';') + '\n';
-                });
+            let html = `<td class="andar">${andar}</td>`;
+            
+            for (let apto = 1; apto <= 8; apto++) {
+                const aptoNum = `${andarStr}${apto.toString().padStart(1, '0')}`;
+                const id = `apto_${aptoNum}`;
+                
+                html += `
+                    <td class="apto-num">${aptoNum}</td>
+                    <td>
+                        <select id="select_${id}" class="pendente" data-apto="${aptoNum}">
+                            <option value="pendente" selected>PENDENTE</option>
+                            <option value="concluido">CONCLUÍDO</option>
+                            <option value="naoconcluido">SEM PASSAGEM</option>
+                            <option value="emandamento">INTERNO</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" id="obs_${id}" class="obs" placeholder="-" data-apto="${aptoNum}">
+                    </td>
+                `;
             }
             
+            tr.innerHTML = html;
+            tbodyAptos.appendChild(tr);
+        }
+        
+        // Registrar elementos Apartamentos
+        document.querySelectorAll('#tabelaApartamentos select').forEach(select => {
+            selects[select.dataset.apto] = select;
+            select.addEventListener('change', (e) => {
+                atualizarCorApto(e.target);
+                salvarDadosAptos();
+            });
+        });
+        
+        document.querySelectorAll('#tabelaApartamentos input.obs').forEach(input => {
+            inputs[input.dataset.apto] = input;
+            let timeout;
+            input.addEventListener('input', (e) => {
+                e.target.classList.add('saving');
+                e.target.classList.remove('saved');
+                clearTimeout(timeout);
+                timeout = setTimeout(() => salvarDadosAptos(), 500);
+            });
+        });
+        
+        function atualizarCorApto(select) {
+            select.className = select.value;
+        }
+        
+        function salvarDadosAptos() {
+            document.getElementById('statusConexao-apartamentos').className = 'status-conexao syncing';
+            document.getElementById('statusConexao-apartamentos').textContent = '⏳ Salvando...';
+            
+            const dados = {};
+            Object.keys(selects).forEach(apto => {
+                dados[apto] = {
+                    status: selects[apto].value,
+                    obs: inputs[apto].value,
+                    ultimaAlteracao: Date.now()
+                };
+            });
+            
+            set(dadosRefAptos, dados)
+                .then(() => {
+                    document.getElementById('statusConexao-apartamentos').className = 'status-conexao online';
+                    document.getElementById('statusConexao-apartamentos').textContent = '✅ Conectado (salvo em tempo real)';
+                    
+                    Object.values(inputs).forEach(input => {
+                        if (input.classList.contains('saving')) {
+                            input.classList.remove('saving');
+                            input.classList.add('saved');
+                            setTimeout(() => input.classList.remove('saved'), 1000);
+                        }
+                    });
+                    
+                    atualizarEstatisticasAptos();
+                })
+                .catch((error) => {
+                    document.getElementById('statusConexao-apartamentos').className = 'status-conexao offline';
+                    document.getElementById('statusConexao-apartamentos').textContent = '❌ Erro ao salvar: ' + error.message;
+                });
+        }
+        
+        onValue(dadosRefAptos, (snapshot) => {
+            const dados = snapshot.val();
+            if (!dados) return;
+            
+            let houveMudanca = false;
+            
+            Object.keys(dados).forEach(apto => {
+                if (selects[apto] && inputs[apto]) {
+                    const select = selects[apto];
+                    const input = inputs[apto];
+                    
+                    if (select.value !== dados[apto].status) {
+                        select.value = dados[apto].status;
+                        atualizarCorApto(select);
+                        houveMudanca = true;
+                    }
+                    
+                    if (input.value !== (dados[apto].obs || '')) {
+                        input.value = dados[apto].obs || '';
+                        houveMudanca = true;
+                    }
+                }
+            });
+            
+            if (houveMudanca) {
+                atualizarEstatisticasAptos();
+                const agora = new Date().toLocaleString('pt-BR');
+                document.getElementById('lastUpdate-apartamentos').textContent = `Última atualização: ${agora}`;
+            }
+            
+            document.getElementById('statusConexao-apartamentos').className = 'status-conexao online';
+            document.getElementById('statusConexao-apartamentos').textContent = '✅ Sincronizado em tempo real';
+        });
+        
+        function atualizarEstatisticasAptos() {
+            const todosSelects = Object.values(selects);
+            let concluidos = 0, naoConcluidos = 0, emAndamento = 0, pendentes = 0;
+            
+            todosSelects.forEach(s => {
+                if (s.value === 'concluido') concluidos++;
+                else if (s.value === 'naoconcluido') naoConcluidos++;
+                else if (s.value === 'emandamento') emAndamento++;
+                else pendentes++;
+            });
+            
+            document.getElementById('concluidos').textContent = concluidos;
+            document.getElementById('naoConcluidos').textContent = naoConcluidos;
+            document.getElementById('emAndamento').textContent = emAndamento;
+            document.getElementById('pendentes').textContent = pendentes;
+        }
+        
+        // ==========================================
+        // FUNÇÕES GLOBAIS (EXPORTAR/LIMPAR)
+        // ==========================================
+        
+        let acaoPendente = null;
+        
+        window.exportarCSV = function(tipo) {
+            if (tipo === 'shafts') {
+                let csv = 'ANDAR;SHAFT;TAP;DIVISOR;BLOCO_BARGO;CONECTOR_ANTENA;CABO_OK;STATUS_GERAL;OBSERVACAO\n';
+                
+                for (let andar = 14; andar >= 1; andar--) {
+                    const andarStr = andar.toString().padStart(2, '0');
+                    ['A', 'B'].forEach(shaft => {
+                        const shaftId = `${andarStr}${shaft}`;
+                        const linha = [`${andar}`, `${andar} ${shaft}`];
+                        
+                        ITENS_SHAFTS.forEach(item => {
+                            const btn = document.getElementById(`${shaftId}_${item}`);
+                            const status = btn.classList.contains('ok') ? 'OK' : 
+                                          btn.classList.contains('atencao') ? 'ATENCAO' : 'PENDENTE';
+                            linha.push(status);
+                        });
+                        
+                        const geralEl = document.getElementById(`geral_${shaftId}`);
+                        const obs = document.getElementById(`obs_${shaftId}`).value;
+                        
+                        linha.push(geralEl.textContent, `"${obs}"`);
+                        csv += linha.join(';') + '\n';
+                    });
+                }
+                
+                downloadCSV(csv, `controle_shafts_${new Date().toISOString().slice(0,10)}.csv`);
+            } else {
+                let csv = 'ANDAR;';
+                for (let i = 1; i <= 8; i++) {
+                    csv += `APTO${i};STATUS${i};OBS${i};`;
+                }
+                csv += '\n';
+                
+                for (let andar = 14; andar >= 1; andar--) {
+                    const andarStr = andar.toString().padStart(2, '0');
+                    csv += `${andar};`;
+                    
+                    for (let apto = 1; apto <= 8; apto++) {
+                        const aptoNum = `${andarStr}${apto.toString().padStart(2, '0')}`;
+                        const status = selects[aptoNum].value;
+                        const obs = inputs[aptoNum].value;
+                        csv += `${aptoNum};${status};${obs};`;
+                    }
+                    csv += '\n';
+                }
+                
+                downloadCSV(csv, `controle_apartamentos_${new Date().toISOString().slice(0,10)}.csv`);
+            }
+        };
+        
+        function downloadCSV(csv, filename) {
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `controle_shafts_${new Date().toISOString().slice(0,10)}.csv`;
+            a.download = filename;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-        };
+        }
         
-        // Limpar todos
-        window.limparTodos = function() {
-            document.getElementById('modalText').textContent = 'Deseja realmente apagar TODOS os dados dos shafts?';
+        window.limparTodos = function(tipo) {
+            acaoPendente = tipo;
+            document.getElementById('modalText').textContent = 
+                `Deseja realmente apagar TODOS os dados ${tipo === 'shafts' ? 'dos shafts' : 'dos apartamentos'}?`;
             document.getElementById('confirmModal').style.display = 'block';
         };
         
         window.confirmarAcao = function() {
-            set(dadosRef, null)
-                .then(() => {
-                    alert('🗑️ Todos os dados foram apagados!');
+            if (acaoPendente === 'shafts') {
+                set(dadosRefShafts, null).then(() => {
+                    alert('🗑️ Todos os dados dos shafts foram apagados!');
                     location.reload();
                 });
+            } else {
+                set(dadosRefAptos, null).then(() => {
+                    alert('🗑️ Todos os dados dos apartamentos foram apagados!');
+                    location.reload();
+                });
+            }
             document.getElementById('confirmModal').style.display = 'none';
         };
         
         window.fecharModal = function() {
             document.getElementById('confirmModal').style.display = 'none';
+            acaoPendente = null;
         };
         
         window.onclick = function(event) {
@@ -791,6 +1497,10 @@
                 fecharModal();
             }
         }
+        
+        // Inicializar estatísticas
+        atualizarEstatisticasShafts();
+        atualizarEstatisticasAptos();
     </script>
 </body>
 </html>
