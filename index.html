@@ -20,13 +20,258 @@
         /* ==========================================
            PÁGINA INICIAL / MENU
            ========================================== */
-        #pagina-inicial {
+        #tela-login {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #000000 100%);
             display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        .login-box {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            animation: slideUp 0.5s ease;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .login-logo {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #312dee 0%, #0f0f0f 100%);
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            color: white;
+            box-shadow: 0 10px 30px rgb(0, 23, 226);
+        }
+        
+        .login-box h2 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        
+        .login-box .empresa {
+            color: #0105eb;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+        
+        .tipo-acesso {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            background: #f8f9fa;
+            padding: 5px;
+            border-radius: 12px;
+        }
+        
+        .btn-tipo {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #666;
+        }
+        
+        .btn-tipo:hover {
+            color: #333;
+        }
+        
+        .btn-tipo.active {
+            background: white;
+            color: #8b8b8b;
+            font-weight: 600;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        #campo-senha, #campo-visualizador {
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        #senha {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        #senha:focus {
+            outline: none;
+            border-color: #2e2e2e;
+            box-shadow: 0 0 0 3px rgba(88, 108, 197, 0.1);
+        }
+        
+        .btn-entrar {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #001d9e 0%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-entrar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+        
+        .btn-entrar.visualizador {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            box-shadow: 0 4px 15px rgba(149, 165, 166, 0.4);
+        }
+        
+        .btn-entrar.visualizador:hover {
+            box-shadow: 0 6px 20px rgba(149, 165, 166, 0.5);
+        }
+        
+        .info-visualizador {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-top: 12px;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .erro {
+            color: #e74c3c;
+            margin-top: 15px;
+            font-size: 0.9rem;
+            min-height: 20px;
+            font-weight: 500;
+        }
+        
+        /* ==========================================
+           MODO LEITURA - BLOQUEIO DE EDIÇÃO
+           ========================================== */
+        body.modo-leitura .btn-status,
+        body.modo-leitura select,
+        body.modo-leitura input.obs,
+        body.modo-leitura .btn-warning,
+        body.modo-leitura .btn-download {
+            pointer-events: none !important;
+            opacity: 0.6;
+            cursor: not-allowed !important;
+            filter: grayscale(5%);
+        }
+        
+        body.modo-leitura .btn-status:hover,
+        body.modo-leitura select:hover {
+            transform: none !important;
+        }
+        
+        body.modo-leitura .menu-botoes {
+            display: none !important;
+        }
+        
+        /* Aviso modo leitura */
+        .aviso-leitura {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(243, 156, 18, 0.4);
+            z-index: 9998;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideInRight 0.5s ease;
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .aviso-leitura::before {
+            content: '👁️';
+            font-size: 1.5rem;
+        }
+        
+        /* ==========================================
+           INDICADOR DE USUÁRIO LOGADO
+           ========================================== */
+        .user-info {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-info.admin {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+        }
+        
+        .user-info.visualizador {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+        }
+        
+        /* ==========================================
+           PÁGINA INICIAL / MENU PRINCIPAL
+           ========================================== */
+        #pagina-inicial {
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #000000;
             padding: 20px;
         }
         
@@ -34,6 +279,7 @@
             text-align: center;
             margin-bottom: 50px;
             color: white;
+            animation: fadeIn 0.8s ease;
         }
         
         .logo-placeholder {
@@ -47,7 +293,7 @@
             justify-content: center;
             margin: 0 auto 30px;
             font-size: 60px;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255,255,255,0.9);
             cursor: pointer;
             transition: all 0.3s;
         }
@@ -214,6 +460,15 @@
             background: rgba(255,255,255,0.2);
         }
         
+        .btn-logout {
+            background: rgba(231, 76, 60, 0.8) !important;
+            border-color: rgba(231, 76, 60, 0.5) !important;
+        }
+        
+        .btn-logout:hover {
+            background: rgba(231, 76, 60, 1) !important;
+        }
+        
         /* ==========================================
            SEÇÕES DAS PLANILHAS
            ========================================== */
@@ -232,7 +487,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Container das planilhas */
         .container-planilha {
             max-width: 100%;
             overflow-x: auto;
@@ -630,7 +884,6 @@
             color: #666;
         }
         
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -659,54 +912,64 @@
             justify-content: center;
         }
         
-        /* Responsividade */
         @media (max-width: 768px) {
-            .botoes-menu {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .btn-modulo {
-                padding: 30px 40px;
-                min-width: 280px;
-            }
-            
-            .menu-topo {
-                flex-direction: column;
-                gap: 15px;
-                padding: 15px;
-            }
-            
-            .menu-botoes {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .logo-container h1 {
-                font-size: 1.8rem;
-            }
+            .login-box { padding: 30px; }
+            .botoes-menu { flex-direction: column; gap: 20px; }
+            .btn-modulo { padding: 30px 40px; min-width: 280px; }
+            .menu-topo { flex-direction: column; gap: 15px; padding: 15px; }
+            .menu-botoes { width: 100%; justify-content: center; }
+            .logo-container h1 { font-size: 1.8rem; }
+            .aviso-leitura { left: 20px; right: 20px; bottom: 20px; }
         }
     </style>
 </head>
 <body>
     <!-- ==========================================
+         TELA DE LOGIN
+         ========================================== -->
+    <div id="tela-login">
+        <div class="login-box">
+            <div class="login-logo">🏢</div>
+            <h2>Acesso ao Sistema</h2>
+            <p class="empresa">RM DESIGN E TECNOLOGIA</p>
+            
+            <div class="tipo-acesso">
+                <button class="btn-tipo active" onclick="selecionarTipo('visualizador')" id="btn-visualizador">
+                    👁️ Visualizador
+                </button>
+                <button class="btn-tipo" onclick="selecionarTipo('admin')" id="btn-admin">
+                    🔧 Administrador
+                </button>
+            </div>
+            
+            <div id="campo-senha" style="display: none;">
+                <input type="password" id="senha" placeholder="Digite a senha..." maxlength="20">
+                <button class="btn-entrar" onclick="verificarSenha()">Entrar</button>
+            </div>
+            
+            <div id="campo-visualizador">
+                <button class="btn-entrar visualizador" onclick="entrarComoVisualizador()">
+                    Acessar como Visualizador
+                </button>
+                <p class="info-visualizador">👁️ Apenas visualização, sem permissão para editar</p>
+            </div>
+            
+            <p id="erro-senha" class="erro"></p>
+        </div>
+    </div>
+
+    <!-- ==========================================
          PÁGINA INICIAL / MENU PRINCIPAL
          ========================================== -->
     <div id="pagina-inicial">
         <div class="logo-container">
-            <!-- ESPAÇO PARA LOGO - Substitua o conteúdo abaixo por uma img tag -->
-            <div class="logo-placeholder" onclick="alert('Clique para adicionar sua logo')" title="Clique para adicionar logo">
-                🏢
-                <!-- 
-                PARA ADICIONAR SUA LOGO, SUBSTITUA O DIV ACIMA POR:
-                <img src="caminho-da-sua-logo.png" alt="RM Design e Tecnologia" style="width: 150px; height: auto;">
-                -->
-            </div>
-            <h1>RM DESIGN E TECNOLOGIA</h1>
+    <img src="logo.png" alt="RM Design e Tecnologia" class="logo-principal">
+    
+    <h1>RM DESIGN E TECNOLOGIA</h1>
+    <p>Sistema de Controle de Infraestrutura</p>
+</div>            <h1>RM DESIGN E TECNOLOGIA</h1>
             <p>Sistema de Controle de Infraestrutura</p>
-        </div>
-        
-        <div class="botoes-menu">
+         <div class="botoes-menu">
             <button class="btn-modulo shafts" onclick="mostrarSecao('shafts')">
                 <span class="icone">⚙️</span>
                 <span class="titulo">SHAFTS</span>
@@ -715,14 +978,14 @@
             
             <button class="btn-modulo apartamentos" onclick="mostrarSecao('apartamentos')">
                 <span class="icone">📞</span>
-                <span class="titulo">APARTAMENTOS</span>
+                <span class="titulo">TELEFONIA</span>
                 <span class="descricao">Gestão de Telefonia Torre 2</span>
             </button>
         </div>
     </div>
 
     <!-- ==========================================
-         MENU SUPERIOR (Aparece nas planilhas)
+         MENU SUPERIOR
          ========================================== -->
     <nav id="menu-superior" class="menu-topo" style="display: none;">
         <div class="menu-esquerda">
@@ -740,6 +1003,10 @@
                 📞 Apartamentos
             </button>
         </div>
+        
+        <button class="btn-voltar btn-logout" onclick="fazerLogout()">
+            🚪 Sair
+        </button>
     </nav>
 
     <!-- ==========================================
@@ -824,7 +1091,7 @@
     </section>
 
     <!-- ==========================================
-         SEÇÃO APARTAMENTOS (TELEFONIA)
+         SEÇÃO APARTAMENTOS
          ========================================== -->
     <section id="secao-apartamentos" class="secao secao-apartamentos">
         <div class="user-count" id="userCount-apartamentos">👥 1 usuário online</div>
@@ -903,7 +1170,6 @@
         </div>
     </section>
 
-    <!-- Modal de confirmação -->
     <div id="confirmModal" class="modal">
         <div class="modal-content">
             <h3>⚠️ Atenção</h3>
@@ -915,16 +1181,13 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getDatabase, ref, set, onValue, onDisconnect, push, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
         // ==========================================
-        // CONFIGURAÇÃO FIREBASE - ATUALIZE AQUI
+        // CONFIGURAÇÕES FIREBASE
         // ==========================================
-        
-        // Firebase Shafts (mantenha suas credenciais)
         const firebaseConfigShafts = {
             apiKey: "AIzaSyADzp8bQtnmwIiHrTnfI81A5QVwWpFcLl0",
             authDomain: "shaftsap.firebaseapp.com",
@@ -934,7 +1197,6 @@
             appId: "1:494189428737:web:c09042589d692deedac000"
         };
 
-        // Firebase Apartamentos (mantenha suas credenciais)
         const firebaseConfigAptos = {
             apiKey: "AIzaSyBR2s2ABlXaP2gGt4xYkm7XAfda2yM2EwE",
             authDomain: "controle-apartamentos.firebaseapp.com",
@@ -945,63 +1207,127 @@
             appId: "1:79173664686:web:045f55c061117a9ce6923f"
         };
 
-        // Inicializar apps Firebase
         const appShafts = initializeApp(firebaseConfigShafts, 'shafts');
         const appAptos = initializeApp(firebaseConfigAptos, 'apartamentos');
-        
         const dbShafts = getDatabase(appShafts);
         const dbAptos = getDatabase(appAptos);
-        
+
         // ==========================================
-        // NAVEGAÇÃO ENTRE SEÇÕES
+        // CONTROLE DE ACESSO E AUTENTICAÇÃO
         // ==========================================
-        
-        window.mostrarSecao = function(secao) {
-            // Esconde página inicial
-            document.getElementById('pagina-inicial').style.display = 'none';
-            
-            // Mostra menu superior
-            document.getElementById('menu-superior').style.display = 'flex';
-            
-            // Esconde todas as seções
-            document.querySelectorAll('.secao').forEach(s => s.classList.remove('active'));
-            
-            // Mostra seção selecionada
-            document.getElementById(`secao-${secao}`).classList.add('active');
-            
-            // Atualiza botões ativos
-            document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`btn-${secao}`).classList.add('active');
-            
-            // Scroll ao topo
-            window.scrollTo(0, 0);
+        const USUARIOS = {
+            admin: { senha: 'rmconfi2026', nome: 'Administrador', permissao: 'editar' },
+            chefe: { senha: 'Chefe2024!', nome: 'Chefe', permissao: 'editar' }
         };
-        
-        window.voltarParaInicio = function() {
-            // Esconde menu e seções
-            document.getElementById('menu-superior').style.display = 'none';
-            document.querySelectorAll('.secao').forEach(s => s.classList.remove('active'));
+
+        let usuarioAtual = null;
+        let modoLeitura = false;
+
+        window.selecionarTipo = function(tipo) {
+            document.querySelectorAll('.btn-tipo').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${tipo}`).classList.add('active');
             
-            // Mostra página inicial
+            if (tipo === 'admin') {
+                document.getElementById('campo-senha').style.display = 'block';
+                document.getElementById('campo-visualizador').style.display = 'none';
+                document.getElementById('senha').focus();
+            } else {
+                document.getElementById('campo-senha').style.display = 'none';
+                document.getElementById('campo-visualizador').style.display = 'block';
+            }
+        };
+
+        window.verificarSenha = function() {
+            const senhaDigitada = document.getElementById('senha').value;
+            const erroEl = document.getElementById('erro-senha');
+            
+            let usuarioEncontrado = null;
+            for (let [login, dados] of Object.entries(USUARIOS)) {
+                if (dados.senha === senhaDigitada) {
+                    usuarioEncontrado = { login, ...dados };
+                    break;
+                }
+            }
+            
+            if (usuarioEncontrado) {
+                usuarioAtual = usuarioEncontrado;
+                modoLeitura = false;
+                entrarNoSistema();
+            } else {
+                erroEl.textContent = '❌ Senha incorreta!';
+                document.getElementById('senha').value = '';
+                setTimeout(() => erroEl.textContent = '', 3000);
+            }
+        };
+
+        window.entrarComoVisualizador = function() {
+            usuarioAtual = { login: 'visualizador', nome: 'Contratante', permissao: 'visualizar' };
+            modoLeitura = true;
+            entrarNoSistema();
+        };
+
+        function entrarNoSistema() {
+            document.getElementById('tela-login').style.display = 'none';
             document.getElementById('pagina-inicial').style.display = 'flex';
             
-            // Limpa botões ativos
+            // Adiciona indicador de usuário
+            const userInfo = document.createElement('div');
+            userInfo.className = `user-info ${modoLeitura ? 'visualizador' : 'admin'}`;
+            userInfo.innerHTML = modoLeitura 
+                ? `👁️ ${usuarioAtual.nome} (Visualização)`
+                : `🔧 ${usuarioAtual.nome} (Admin)`;
+            document.body.appendChild(userInfo);
+            
+            if (modoLeitura) {
+                document.body.classList.add('modo-leitura');
+                
+                const aviso = document.createElement('div');
+                aviso.className = 'aviso-leitura';
+                aviso.innerHTML = `
+                    <span>Modo Visualização</span>
+                    <small>Apenas leitura</small>
+                `;
+                document.body.appendChild(aviso);
+            }
+            
+            console.log(`✅ Usuário: ${usuarioAtual.nome} | Modo: ${usuarioAtual.permissao}`);
+        }
+
+        window.fazerLogout = function() {
+            location.reload();
+        };
+
+        // ==========================================
+        // NAVEGAÇÃO
+        // ==========================================
+        window.mostrarSecao = function(secao) {
+            document.getElementById('pagina-inicial').style.display = 'none';
+            document.getElementById('menu-superior').style.display = 'flex';
+            document.querySelectorAll('.secao').forEach(s => s.classList.remove('active'));
+            document.getElementById(`secao-${secao}`).classList.add('active');
+            document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${secao}`).classList.add('active');
+            window.scrollTo(0, 0);
+        };
+
+        window.voltarParaInicio = function() {
+            document.getElementById('menu-superior').style.display = 'none';
+            document.querySelectorAll('.secao').forEach(s => s.classList.remove('active'));
+            document.getElementById('pagina-inicial').style.display = 'flex';
             document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
         };
-        
+
         // ==========================================
         // SISTEMA SHAFTS
         // ==========================================
-        
         const ITENS_SHAFTS = ['tap', 'divisor', 'bloco', 'conector', 'cabo'];
         const dadosRefShafts = ref(dbShafts, 'shafts');
         const usuariosRefShafts = ref(dbShafts, 'usuarios_shafts');
         
-        // Gerar ID único
         const usuarioIdShafts = push(usuariosRefShafts).key;
         const usuarioRefShafts = ref(dbShafts, `usuarios_shafts/${usuarioIdShafts}`);
         
-        set(usuarioRefShafts, { online: true, timestamp: Date.now() });
+        set(usuarioRefShafts, { online: true, timestamp: Date.now(), tipo: modoLeitura ? 'visualizador' : 'admin' });
         onDisconnect(usuarioRefShafts).remove();
         
         onValue(usuariosRefShafts, (snapshot) => {
@@ -1009,54 +1335,34 @@
             document.getElementById('userCount-shafts').textContent = `👥 ${count} usuário${count !== 1 ? 's' : ''} online`;
         });
 
-        // Gerar tabela Shafts
         const tbodyShafts = document.getElementById('tabelaBody-shafts');
         
         for (let andar = 14; andar >= 1; andar--) {
             const andarStr = andar.toString().padStart(2, '0');
-            
             ['A', 'B'].forEach((shaft, index) => {
                 const tr = document.createElement('tr');
                 const shaftId = `${andarStr}${shaft}`;
-                
                 let html = '';
-                
-                if (index === 0) {
-                    html += `<td class="andar" rowspan="2">${andar}</td>`;
-                }
-                
+                if (index === 0) html += `<td class="andar" rowspan="2">${andar}</td>`;
                 html += `<td class="shaft">${andar} ${shaft}</td>`;
                 
                 ITENS_SHAFTS.forEach(item => {
                     const btnId = `${shaftId}_${item}`;
-                    html += `
-                        <td>
-                            <button id="${btnId}" class="btn-status pendente" data-shaft="${shaftId}" data-item="${item}">
-                                PENDENTE
-                            </button>
-                        </td>
-                    `;
+                    html += `<td><button id="${btnId}" class="btn-status pendente" data-shaft="${shaftId}" data-item="${item}">PENDENTE</button></td>`;
                 });
                 
                 html += `
-                    <td>
-                        <div id="geral_${shaftId}" class="status-geral-box status-geral-pendente">
-                            PENDENTE
-                        </div>
-                    </td>
-                    <td>
-                        <input type="text" id="obs_${shaftId}" class="obs" placeholder="Digite observações..." data-shaft="${shaftId}">
-                    </td>
+                    <td><div id="geral_${shaftId}" class="status-geral-box status-geral-pendente">PENDENTE</div></td>
+                    <td><input type="text" id="obs_${shaftId}" class="obs" placeholder="Digite observações..." data-shaft="${shaftId}"></td>
                 `;
-                
                 tr.innerHTML = html;
                 tbodyShafts.appendChild(tr);
             });
         }
         
-        // Event listeners Shafts
         document.querySelectorAll('#tabelaShafts .btn-status').forEach(btn => {
             btn.addEventListener('click', (e) => {
+                if (modoLeitura) return;
                 const shaftId = e.target.dataset.shaft;
                 const item = e.target.dataset.item;
                 alternarStatusShafts(shaftId, item);
@@ -1066,94 +1372,65 @@
         document.querySelectorAll('#tabelaShafts input.obs').forEach(input => {
             let timeout;
             input.addEventListener('input', (e) => {
+                if (modoLeitura) return;
                 e.target.classList.add('saving');
                 e.target.classList.remove('saved');
                 clearTimeout(timeout);
                 timeout = setTimeout(() => salvarDadosShafts(), 500);
             });
         });
-        
+
         function alternarStatusShafts(shaftId, item) {
             const btn = document.getElementById(`${shaftId}_${item}`);
-            const statusAtual = btn.classList.contains('ok') ? 'ok' : 
-                               btn.classList.contains('atencao') ? 'atencao' : 'pendente';
-            
+            const statusAtual = btn.classList.contains('ok') ? 'ok' : btn.classList.contains('atencao') ? 'atencao' : 'pendente';
             let novoStatus, novoTexto;
             
-            if (statusAtual === 'pendente') {
-                novoStatus = 'ok';
-                novoTexto = 'OK';
-            } else if (statusAtual === 'ok') {
-                novoStatus = 'atencao';
-                novoTexto = 'ATENÇÃO';
-            } else {
-                novoStatus = 'pendente';
-                novoTexto = 'PENDENTE';
-            }
+            if (statusAtual === 'pendente') { novoStatus = 'ok'; novoTexto = 'OK'; }
+            else if (statusAtual === 'ok') { novoStatus = 'atencao'; novoTexto = 'ATENÇÃO'; }
+            else { novoStatus = 'pendente'; novoTexto = 'PENDENTE'; }
             
             btn.className = `btn-status ${novoStatus}`;
             btn.textContent = novoTexto;
-            
             atualizarStatusGeralShafts(shaftId);
             salvarDadosShafts();
         }
-        
+
         function atualizarStatusGeralShafts(shaftId) {
             const geralEl = document.getElementById(`geral_${shaftId}`);
-            let temAtencao = false;
-            let temPendente = false;
-            let todosOk = true;
+            let temAtencao = false, temPendente = false, todosOk = true;
             
             ITENS_SHAFTS.forEach(item => {
                 const btn = document.getElementById(`${shaftId}_${item}`);
                 if (btn.classList.contains('atencao')) temAtencao = true;
-                else if (btn.classList.contains('pendente')) {
-                    temPendente = true;
-                    todosOk = false;
-                } else if (!btn.classList.contains('ok')) {
-                    todosOk = false;
-                }
+                else if (btn.classList.contains('pendente')) { temPendente = true; todosOk = false; }
+                else if (!btn.classList.contains('ok')) todosOk = false;
             });
             
-            if (temAtencao) {
-                geralEl.className = 'status-geral-box status-geral-atencao';
-                geralEl.textContent = 'ATENÇÃO';
-            } else if (temPendente) {
-                geralEl.className = 'status-geral-box status-geral-pendente';
-                geralEl.textContent = 'PENDENTE';
-            } else if (todosOk) {
-                geralEl.className = 'status-geral-box status-geral-ok';
-                geralEl.textContent = 'OK';
-            } else {
-                geralEl.className = 'status-geral-box status-geral-pendente';
-                geralEl.textContent = 'PENDENTE';
-            }
+            geralEl.className = 'status-geral-box';
+            if (temAtencao) { geralEl.classList.add('status-geral-atencao'); geralEl.textContent = 'ATENÇÃO'; }
+            else if (todosOk) { geralEl.classList.add('status-geral-ok'); geralEl.textContent = 'OK'; }
+            else { geralEl.classList.add('status-geral-pendente'); geralEl.textContent = 'PENDENTE'; }
         }
-        
+
         function coletarDadosShafts() {
             const dados = {};
             for (let andar = 14; andar >= 1; andar--) {
                 const andarStr = andar.toString().padStart(2, '0');
                 ['A', 'B'].forEach(shaft => {
                     const shaftId = `${andarStr}${shaft}`;
-                    const shaftDados = {
-                        itens: {},
-                        obs: document.getElementById(`obs_${shaftId}`).value
-                    };
-                    
+                    const shaftDados = { itens: {}, obs: document.getElementById(`obs_${shaftId}`).value };
                     ITENS_SHAFTS.forEach(item => {
                         const btn = document.getElementById(`${shaftId}_${item}`);
-                        shaftDados.itens[item] = btn.classList.contains('ok') ? 'ok' : 
-                                                 btn.classList.contains('atencao') ? 'atencao' : 'pendente';
+                        shaftDados.itens[item] = btn.classList.contains('ok') ? 'ok' : btn.classList.contains('atencao') ? 'atencao' : 'pendente';
                     });
-                    
                     dados[shaftId] = shaftDados;
                 });
             }
             return dados;
         }
-        
+
         function salvarDadosShafts() {
+            if (modoLeitura) return;
             document.getElementById('statusConexao-shafts').className = 'status-conexao syncing';
             document.getElementById('statusConexao-shafts').textContent = '⏳ Salvando...';
             
@@ -1161,7 +1438,6 @@
                 .then(() => {
                     document.getElementById('statusConexao-shafts').className = 'status-conexao online';
                     document.getElementById('statusConexao-shafts').textContent = '✅ Sincronizado em tempo real';
-                    
                     document.querySelectorAll('#tabelaShafts input.obs').forEach(input => {
                         if (input.classList.contains('saving')) {
                             input.classList.remove('saving');
@@ -1169,7 +1445,6 @@
                             setTimeout(() => input.classList.remove('saved'), 1000);
                         }
                     });
-                    
                     atualizarEstatisticasShafts();
                 })
                 .catch((error) => {
@@ -1177,7 +1452,7 @@
                     document.getElementById('statusConexao-shafts').textContent = '❌ Erro: ' + error.message;
                 });
         }
-        
+
         onValue(dadosRefShafts, (snapshot) => {
             const dados = snapshot.val();
             if (!dados) return;
@@ -1185,10 +1460,7 @@
             Object.keys(dados).forEach(shaftId => {
                 const shaftDados = dados[shaftId];
                 const obsEl = document.getElementById(`obs_${shaftId}`);
-                
-                if (obsEl && obsEl.value !== (shaftDados.obs || '')) {
-                    obsEl.value = shaftDados.obs || '';
-                }
+                if (obsEl && obsEl.value !== (shaftDados.obs || '')) obsEl.value = shaftDados.obs || '';
                 
                 if (shaftDados.itens) {
                     ITENS_SHAFTS.forEach(item => {
@@ -1203,7 +1475,6 @@
                         }
                     });
                 }
-                
                 atualizarStatusGeralShafts(shaftId);
             });
             
@@ -1213,38 +1484,34 @@
             document.getElementById('statusConexao-shafts').className = 'status-conexao online';
             document.getElementById('statusConexao-shafts').textContent = '✅ Sincronizado em tempo real';
         });
-        
+
         function atualizarEstatisticasShafts() {
             let ok = 0, pendente = 0, atencao = 0;
-            
             for (let andar = 14; andar >= 1; andar--) {
                 const andarStr = andar.toString().padStart(2, '0');
                 ['A', 'B'].forEach(shaft => {
                     const shaftId = `${andarStr}${shaft}`;
                     const geralEl = document.getElementById(`geral_${shaftId}`);
-                    
                     if (geralEl.classList.contains('status-geral-ok')) ok++;
                     else if (geralEl.classList.contains('status-geral-atencao')) atencao++;
                     else pendente++;
                 });
             }
-            
             document.getElementById('okCount').textContent = ok;
             document.getElementById('pendenteCount').textContent = pendente;
             document.getElementById('atencaoCount').textContent = atencao;
         }
-        
+
         // ==========================================
         // SISTEMA APARTAMENTOS
         // ==========================================
-        
         const dadosRefAptos = ref(dbAptos, 'apartamentos');
         const usuariosRefAptos = ref(dbAptos, 'usuarios');
         
         const usuarioIdAptos = push(usuariosRefAptos).key;
         const usuarioRefAptos = ref(dbAptos, `usuarios/${usuarioIdAptos}`);
         
-        set(usuarioRefAptos, { online: true, timestamp: Date.now() });
+        set(usuarioRefAptos, { online: true, timestamp: Date.now(), tipo: modoLeitura ? 'visualizador' : 'admin' });
         onDisconnect(usuarioRefAptos).remove();
         
         onValue(usuariosRefAptos, (snapshot) => {
@@ -1252,7 +1519,6 @@
             document.getElementById('userCount-apartamentos').textContent = `👥 ${count} usuário${count !== 1 ? 's' : ''} online`;
         });
 
-        // Gerar tabela Apartamentos
         const tbodyAptos = document.getElementById('tabelaBody-apartamentos');
         const selects = {};
         const inputs = {};
@@ -1260,13 +1526,11 @@
         for (let andar = 14; andar >= 1; andar--) {
             const tr = document.createElement('tr');
             const andarStr = andar.toString().padStart(1, '0');
-            
             let html = `<td class="andar">${andar}</td>`;
             
             for (let apto = 1; apto <= 8; apto++) {
                 const aptoNum = `${andarStr}${apto.toString().padStart(1, '0')}`;
                 const id = `apto_${aptoNum}`;
-                
                 html += `
                     <td class="apto-num">${aptoNum}</td>
                     <td>
@@ -1277,20 +1541,17 @@
                             <option value="emandamento">INTERNO</option>
                         </select>
                     </td>
-                    <td>
-                        <input type="text" id="obs_${id}" class="obs" placeholder="-" data-apto="${aptoNum}">
-                    </td>
+                    <td><input type="text" id="obs_${id}" class="obs" placeholder="-" data-apto="${aptoNum}"></td>
                 `;
             }
-            
             tr.innerHTML = html;
             tbodyAptos.appendChild(tr);
         }
         
-        // Registrar elementos Apartamentos
         document.querySelectorAll('#tabelaApartamentos select').forEach(select => {
             selects[select.dataset.apto] = select;
             select.addEventListener('change', (e) => {
+                if (modoLeitura) return;
                 atualizarCorApto(e.target);
                 salvarDadosAptos();
             });
@@ -1300,35 +1561,32 @@
             inputs[input.dataset.apto] = input;
             let timeout;
             input.addEventListener('input', (e) => {
+                if (modoLeitura) return;
                 e.target.classList.add('saving');
                 e.target.classList.remove('saved');
                 clearTimeout(timeout);
                 timeout = setTimeout(() => salvarDadosAptos(), 500);
             });
         });
-        
+
         function atualizarCorApto(select) {
             select.className = select.value;
         }
-        
+
         function salvarDadosAptos() {
+            if (modoLeitura) return;
             document.getElementById('statusConexao-apartamentos').className = 'status-conexao syncing';
             document.getElementById('statusConexao-apartamentos').textContent = '⏳ Salvando...';
             
             const dados = {};
             Object.keys(selects).forEach(apto => {
-                dados[apto] = {
-                    status: selects[apto].value,
-                    obs: inputs[apto].value,
-                    ultimaAlteracao: Date.now()
-                };
+                dados[apto] = { status: selects[apto].value, obs: inputs[apto].value, ultimaAlteracao: Date.now() };
             });
             
             set(dadosRefAptos, dados)
                 .then(() => {
                     document.getElementById('statusConexao-apartamentos').className = 'status-conexao online';
                     document.getElementById('statusConexao-apartamentos').textContent = '✅ Conectado (salvo em tempo real)';
-                    
                     Object.values(inputs).forEach(input => {
                         if (input.classList.contains('saving')) {
                             input.classList.remove('saving');
@@ -1336,7 +1594,6 @@
                             setTimeout(() => input.classList.remove('saved'), 1000);
                         }
                     });
-                    
                     atualizarEstatisticasAptos();
                 })
                 .catch((error) => {
@@ -1344,13 +1601,12 @@
                     document.getElementById('statusConexao-apartamentos').textContent = '❌ Erro ao salvar: ' + error.message;
                 });
         }
-        
+
         onValue(dadosRefAptos, (snapshot) => {
             const dados = snapshot.val();
             if (!dados) return;
             
             let houveMudanca = false;
-            
             Object.keys(dados).forEach(apto => {
                 if (selects[apto] && inputs[apto]) {
                     const select = selects[apto];
@@ -1378,7 +1634,7 @@
             document.getElementById('statusConexao-apartamentos').className = 'status-conexao online';
             document.getElementById('statusConexao-apartamentos').textContent = '✅ Sincronizado em tempo real';
         });
-        
+
         function atualizarEstatisticasAptos() {
             const todosSelects = Object.values(selects);
             let concluidos = 0, naoConcluidos = 0, emAndamento = 0, pendentes = 0;
@@ -1395,63 +1651,50 @@
             document.getElementById('emAndamento').textContent = emAndamento;
             document.getElementById('pendentes').textContent = pendentes;
         }
-        
+
         // ==========================================
-        // FUNÇÕES GLOBAIS (EXPORTAR/LIMPAR)
+        // FUNÇÕES GLOBAIS
         // ==========================================
-        
         let acaoPendente = null;
-        
+
         window.exportarCSV = function(tipo) {
             if (tipo === 'shafts') {
                 let csv = 'ANDAR;SHAFT;TAP;DIVISOR;BLOCO_BARGO;CONECTOR_ANTENA;CABO_OK;STATUS_GERAL;OBSERVACAO\n';
-                
                 for (let andar = 14; andar >= 1; andar--) {
                     const andarStr = andar.toString().padStart(2, '0');
                     ['A', 'B'].forEach(shaft => {
                         const shaftId = `${andarStr}${shaft}`;
                         const linha = [`${andar}`, `${andar} ${shaft}`];
-                        
                         ITENS_SHAFTS.forEach(item => {
                             const btn = document.getElementById(`${shaftId}_${item}`);
-                            const status = btn.classList.contains('ok') ? 'OK' : 
-                                          btn.classList.contains('atencao') ? 'ATENCAO' : 'PENDENTE';
+                            const status = btn.classList.contains('ok') ? 'OK' : btn.classList.contains('atencao') ? 'ATENCAO' : 'PENDENTE';
                             linha.push(status);
                         });
-                        
                         const geralEl = document.getElementById(`geral_${shaftId}`);
                         const obs = document.getElementById(`obs_${shaftId}`).value;
-                        
                         linha.push(geralEl.textContent, `"${obs}"`);
                         csv += linha.join(';') + '\n';
                     });
                 }
-                
                 downloadCSV(csv, `controle_shafts_${new Date().toISOString().slice(0,10)}.csv`);
             } else {
                 let csv = 'ANDAR;';
-                for (let i = 1; i <= 8; i++) {
-                    csv += `APTO${i};STATUS${i};OBS${i};`;
-                }
+                for (let i = 1; i <= 8; i++) csv += `APTO${i};STATUS${i};OBS${i};`;
                 csv += '\n';
                 
                 for (let andar = 14; andar >= 1; andar--) {
                     const andarStr = andar.toString().padStart(2, '0');
                     csv += `${andar};`;
-                    
                     for (let apto = 1; apto <= 8; apto++) {
                         const aptoNum = `${andarStr}${apto.toString().padStart(2, '0')}`;
-                        const status = selects[aptoNum].value;
-                        const obs = inputs[aptoNum].value;
-                        csv += `${aptoNum};${status};${obs};`;
+                        csv += `${aptoNum};${selects[aptoNum].value};${inputs[aptoNum].value};`;
                     }
                     csv += '\n';
                 }
-                
                 downloadCSV(csv, `controle_apartamentos_${new Date().toISOString().slice(0,10)}.csv`);
             }
         };
-        
+
         function downloadCSV(csv, filename) {
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
@@ -1463,14 +1706,17 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
         }
-        
+
         window.limparTodos = function(tipo) {
+            if (modoLeitura) {
+                alert('❌ Apenas administradores podem limpar dados!');
+                return;
+            }
             acaoPendente = tipo;
-            document.getElementById('modalText').textContent = 
-                `Deseja realmente apagar TODOS os dados ${tipo === 'shafts' ? 'dos shafts' : 'dos apartamentos'}?`;
+            document.getElementById('modalText').textContent = `Deseja realmente apagar TODOS os dados ${tipo === 'shafts' ? 'dos shafts' : 'dos apartamentos'}?`;
             document.getElementById('confirmModal').style.display = 'block';
         };
-        
+
         window.confirmarAcao = function() {
             if (acaoPendente === 'shafts') {
                 set(dadosRefShafts, null).then(() => {
@@ -1485,20 +1731,18 @@
             }
             document.getElementById('confirmModal').style.display = 'none';
         };
-        
+
         window.fecharModal = function() {
             document.getElementById('confirmModal').style.display = 'none';
             acaoPendente = null;
         };
-        
+
         window.onclick = function(event) {
             const modal = document.getElementById('confirmModal');
-            if (event.target == modal) {
-                fecharModal();
-            }
+            if (event.target == modal) fecharModal();
         }
-        
-        // Inicializar estatísticas
+
+        // Inicializar
         atualizarEstatisticasShafts();
         atualizarEstatisticasAptos();
     </script>
