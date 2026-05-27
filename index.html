@@ -348,13 +348,14 @@
         table { width: 100%; border-collapse: collapse; font-size: 12px; }
 
         thead th {
-            background: #0f1035 !important;
-            color: rgba(255,255,255,0.8);
-            padding: 12px 6px; text-align: center; font-weight: 600;
-            font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase;
-            position: sticky; top: 148px; z-index: 100;
-            border: 1px solid rgba(255,255,255,0.08);
-        }
+    background: #0f1035; color: rgba(255,255,255,0.8);
+    padding: 12px 6px; text-align: center; font-weight: 600;
+    font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase;
+    position: sticky; 
+    top: 0; /* Fixa o cabeçalho exatamente no topo do .table-wrap */
+    z-index: 10;
+    border: 1px solid rgba(255,255,255,0.08);
+}
         thead th.andar-col { background: #080820; min-width: 55px; }
         thead th.apto-col { background: #0d1040; min-width: 70px; }
         thead th.status-col { background: #0f1035; min-width: 130px; }
