@@ -197,10 +197,18 @@
         .container-planilha {
             background: #0a0a14;
             padding: 30px 20px;
+            padding-top: 64px;
             min-height: calc(100vh - 64px);
         }
         .secao-header {
-            text-align: center; margin-bottom: 25px;
+            position: sticky;
+            top: 64px;
+            z-index: 900;
+            background: #0a0a14;
+            text-align: center;
+            padding: 18px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
         .secao-header h1 { color: white; font-size: 1.6rem; font-weight: 300; letter-spacing: 2px; margin-bottom: 6px; }
         .secao-header p { color: rgba(255,255,255,0.5); font-size: 13px; }
@@ -328,22 +336,25 @@
         /* ==========================================
            TABELA DE INTERFONES
         ========================================== */
-.table-wrap { 
-    overflow-x: auto; 
-    overflow-y: auto; /* Permite rolagem vertical interna */
-    max-height: 70vh; /* Limita a altura da tabela para ativar a rolagem (ajuste como preferir) */
-    border-radius: 12px; 
-    border: 1px solid rgba(255,255,255,0.08);
-}
+        .table-scroll {
+            overflow-x: auto;
+            border-radius: 12px;
+            -webkit-overflow-scrolling: touch;
+        }
+        .table-wrap {
+            border-radius: 12px;
+            min-width: max-content;
+        }
+        table { width: 100%; border-collapse: collapse; font-size: 12px; }
+
         thead th {
-    background: #0f1035; color: rgba(255,255,255,0.8);
-    padding: 12px 6px; text-align: center; font-weight: 600;
-    font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase;
-    position: sticky; 
-    top: 0; /* Fixa o cabeçalho exatamente no topo do .table-wrap */
-    z-index: 10;
-    border: 1px solid rgba(255,255,255,0.08);
-}
+            background: #0f1035 !important;
+            color: rgba(255,255,255,0.8);
+            padding: 12px 6px; text-align: center; font-weight: 600;
+            font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase;
+            position: sticky; top: 148px; z-index: 100;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
         thead th.andar-col { background: #080820; min-width: 55px; }
         thead th.apto-col { background: #0d1040; min-width: 70px; }
         thead th.status-col { background: #0f1035; min-width: 130px; }
@@ -457,6 +468,7 @@
             .toolbar input[type="text"] { min-width: 160px; }
         }
     </style>
+<base target="_blank">
 </head>
 <body>
 
@@ -629,6 +641,7 @@
         <div class="last-update" id="lastupdate-torre1">Última atualização: —</div>
 
         <!-- Tabela -->
+        <div class="table-scroll">
         <div class="table-wrap">
             <table id="tabela-torre1">
                 <thead>
@@ -662,6 +675,7 @@
                 </thead>
                 <tbody id="tbody-torre1"></tbody>
             </table>
+        </div>
         </div>
 
         <!-- Histórico -->
@@ -767,6 +781,7 @@
         <div class="last-update" id="lastupdate-torre2">Última atualização: —</div>
 
         <!-- Tabela -->
+        <div class="table-scroll">
         <div class="table-wrap">
             <table id="tabela-torre2">
                 <thead>
@@ -794,6 +809,7 @@
                 </thead>
                 <tbody id="tbody-torre2"></tbody>
             </table>
+        </div>
         </div>
 
         <!-- Histórico -->
@@ -826,22 +842,22 @@
     // Crie um projeto em: https://console.firebase.google.com
     // ==========================================
     const firebaseConfig = {
-  apiKey: "AIzaSyBR2s2ABlXaP2gGt4xYkm7XAfda2yM2EwE",
-  authDomain: "controle-apartamentos.firebaseapp.com",
-  databaseURL: "https://controle-apartamentos-default-rtdb.firebaseio.com",
-  projectId: "controle-apartamentos",
-  storageBucket: "controle-apartamentos.firebasestorage.app",
-  messagingSenderId: "79173664686",
-  appId: "1:79173664686:web:045f55c061117a9ce6923f"
-};
-    
+        apiKey: "AIzaSyBR2s2ABlXaP2gGt4xYkm7XAfda2yM2EwE",
+        authDomain: "controle-apartamentos.firebaseapp.com",
+        databaseURL: "https://controle-apartamentos-default-rtdb.firebaseio.com",
+        projectId: "controle-apartamentos",
+        storageBucket: "controle-apartamentos.firebasestorage.app",
+        messagingSenderId: "79173664686",
+        appId: "1:79173664686:web:045f55c061117a9ce6923f"
+    };
+
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
     // ==========================================
     // CONTROLE DE ACESSO
     // ==========================================
-    const SENHA_ADMIN = 'rmconf2026'; // ← ALTERE A SENHA AQUI
+    const SENHA_ADMIN = 'rmconfi2026'; // ← ALTERE A SENHA AQUI
     let modoLeitura = false;
     let usuarioNome = '';
 
