@@ -3,1752 +3,1316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RM Design e Tecnologia - Sistema de Controle</title>
-    <link rel="icon" type="image/png" href="C:\Users\usuario\Documents\planilha shafts\favicon-32x32.png?v=2">
-    <link rel="icon" type="image/png" href="C:\Users\usuario\Documents\planilha shafts\favicon-32x32.png?v=2">
-
-<link rel="apple-touch-icon" href="C:\Users\usuario\Documents\planilha shafts\apple-touch-icon.png?v=2">
+    <title>RM Design e Tecnologia - Controle de Interfones</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f6fa;
             min-height: 100vh;
         }
-        
+
         /* ==========================================
-           PÁGINA INICIAL / MENU
-           ========================================== */
+           TELA DE LOGIN
+        ========================================== */
         #tela-login {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #000000 0%, #000000 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #000000 0%, #0a0a1a 100%);
+            display: flex; align-items: center; justify-content: center; z-index: 9999;
         }
-        
         .login-box {
-            background: white;
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
-            animation: slideUp 0.5s ease;
+            background: white; padding: 50px; border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4); text-align: center;
+            max-width: 450px; width: 90%; animation: slideUp 0.5s ease;
         }
-        
         @keyframes slideUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
         .login-logo {
-            width: 100px;
-            height: 100px;
+            width: 100px; height: 100px;
             background: linear-gradient(135deg, #312dee 0%, #0f0f0f 100%);
-            border-radius: 50%;
-            margin: 0 auto 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 50px;
-            color: white;
-            box-shadow: 0 10px 30px rgb(0, 23, 226);
+            border-radius: 50%; margin: 0 auto 25px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 48px; color: white;
+            box-shadow: 0 10px 30px rgba(0, 23, 226, 0.4);
         }
-        
-        .login-box h2 {
-            color: #333;
-            margin-bottom: 8px;
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
-        
-        .login-box .empresa {
-            color: #0105eb;
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            letter-spacing: 1px;
-        }
-        
+        .login-box h2 { color: #333; margin-bottom: 8px; font-size: 1.8rem; font-weight: 600; }
+        .login-box .empresa { color: #0105eb; font-weight: 700; font-size: 1.1rem; margin-bottom: 30px; letter-spacing: 1px; }
         .tipo-acesso {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            background: #f8f9fa;
-            padding: 5px;
-            border-radius: 12px;
+            display: flex; gap: 10px; margin-bottom: 25px;
+            background: #f8f9fa; padding: 5px; border-radius: 12px;
         }
-        
         .btn-tipo {
-            flex: 1;
-            padding: 15px;
-            border: none;
-            background: transparent;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #666;
+            flex: 1; padding: 15px; border: none; background: transparent;
+            border-radius: 8px; cursor: pointer; transition: all 0.3s;
+            font-size: 0.9rem; font-weight: 500; color: #666;
         }
-        
-        .btn-tipo:hover {
-            color: #333;
-        }
-        
         .btn-tipo.active {
-            background: white;
-            color: #8b8b8b;
-            font-weight: 600;
+            background: white; color: #333; font-weight: 600;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        
-        #campo-senha, #campo-visualizador {
-            animation: fadeIn 0.3s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
+        #campo-senha { animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         #senha {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 1rem;
-            margin-bottom: 15px;
-            text-align: center;
-            transition: all 0.3s;
+            width: 100%; padding: 15px; border: 2px solid #e0e0e0;
+            border-radius: 10px; font-size: 1rem; margin-bottom: 15px;
+            text-align: center; transition: all 0.3s;
         }
-        
-        #senha:focus {
-            outline: none;
-            border-color: #2e2e2e;
-            box-shadow: 0 0 0 3px rgba(88, 108, 197, 0.1);
-        }
-        
+        #senha:focus { outline: none; border-color: #2e2e2e; box-shadow: 0 0 0 3px rgba(49,45,238,0.1); }
         .btn-entrar {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #001d9e 0%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            width: 100%; padding: 16px;
+            background: linear-gradient(135deg, #001d9e 0%, #312dee 100%);
+            color: white; border: none; border-radius: 10px;
+            font-size: 1rem; font-weight: 600; cursor: pointer;
+            transition: all 0.3s; box-shadow: 0 4px 15px rgba(49,45,238,0.4);
         }
-        
-        .btn-entrar:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
-        }
-        
+        .btn-entrar:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(49,45,238,0.5); }
         .btn-entrar.visualizador {
             background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
-            box-shadow: 0 4px 15px rgba(149, 165, 166, 0.4);
+            box-shadow: 0 4px 15px rgba(149,165,166,0.4);
         }
-        
-        .btn-entrar.visualizador:hover {
-            box-shadow: 0 6px 20px rgba(149, 165, 166, 0.5);
-        }
-        
         .info-visualizador {
-            font-size: 0.85rem;
-            color: #7f8c8d;
-            margin-top: 12px;
-            font-style: italic;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
+            font-size: 0.85rem; color: #7f8c8d; margin-top: 12px;
+            font-style: italic; display: flex; align-items: center;
+            justify-content: center; gap: 5px;
         }
-        
-        .erro {
-            color: #e74c3c;
-            margin-top: 15px;
-            font-size: 0.9rem;
-            min-height: 20px;
-            font-weight: 500;
-        }
-        
+        .erro { color: #e74c3c; margin-top: 15px; font-size: 0.9rem; min-height: 20px; font-weight: 500; }
+
         /* ==========================================
-           MODO LEITURA - BLOQUEIO DE EDIÇÃO
-           ========================================== */
-        body.modo-leitura .btn-status,
+           MODO LEITURA
+        ========================================== */
         body.modo-leitura select,
         body.modo-leitura input.obs,
-        body.modo-leitura .btn-warning,
-        body.modo-leitura .btn-download {
-            pointer-events: none !important;
-            opacity: 0.6;
-            cursor: not-allowed !important;
-            filter: grayscale(5%);
+        body.modo-leitura .btn-admin-only {
+            pointer-events: none !important; opacity: 0.65; cursor: not-allowed !important;
         }
-        
-        body.modo-leitura .btn-status:hover,
-        body.modo-leitura select:hover {
-            transform: none !important;
+        body.modo-leitura .menu-botoes-admin { display: none !important; }
+
+        /* ==========================================
+           USER INFO / AVISO LEITURA
+        ========================================== */
+        .user-info {
+            position: fixed; top: 75px; right: 20px;
+            background: rgba(0,0,0,0.85); color: white;
+            padding: 10px 20px; border-radius: 20px; font-size: 13px;
+            font-weight: 500; z-index: 999; display: flex; align-items: center; gap: 5px;
         }
-        
-        body.modo-leitura .menu-botoes {
-            display: none !important;
-        }
-        
-        /* Aviso modo leitura */
+        .user-info.admin { background: linear-gradient(135deg, #27ae60 0%, #229954 100%); }
+        .user-info.visualizador { background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); }
         .aviso-leitura {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
+            position: fixed; bottom: 25px; right: 25px;
             background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(243, 156, 18, 0.4);
-            z-index: 9998;
-            font-weight: 600;
-            display: outside;
-            align-items: center;
-            gap: 5px;
-            animation: slideInRight 0.5s ease;
+            color: white; padding: 15px 25px; border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(243,156,18,0.4); z-index: 9998;
+            font-weight: 600; animation: slideInRight 0.5s ease; font-size: 14px;
         }
-        
         @keyframes slideInRight {
             from { opacity: 0; transform: translateX(100px); }
             to { opacity: 1; transform: translateX(0); }
         }
-        
-        .aviso-leitura::before {
-            content: '👁️';
-            font-size: 1.5rem;
-        }
-        
+
         /* ==========================================
-           INDICADOR DE USUÁRIO LOGADO
-           ========================================== */
-        .user-info {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
-            z-index: 999;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .user-info.admin {
-            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
-        }
-        
-        .user-info.visualizador {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-        }
-        
-        /* ==========================================
-           PÁGINA INICIAL / MENU PRINCIPAL
-           ========================================== */
+           PÁGINA INICIAL
+        ========================================== */
         #pagina-inicial {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: #000000;
-            padding: 20px;
+            display: none; flex-direction: column;
+            align-items: center; justify-content: center;
+            min-height: 100vh; background: #000000; padding: 20px;
         }
-        
-        .logo-container {
-            text-align: center;
-            margin-bottom: 50px;
-            color: white;
-            animation: fadeIn 0.8s ease;
+        .logo-container { text-align: center; margin-bottom: 50px; color: white; animation: fadeIn 0.8s ease; }
+        .logo-icon {
+            width: 130px; height: 130px;
+            background: linear-gradient(135deg, #312dee 0%, #0f0f0f 100%);
+            border-radius: 24px; display: flex; align-items: center;
+            justify-content: center; margin: 0 auto 25px; font-size: 64px;
+            box-shadow: 0 15px 40px rgba(49,45,238,0.5);
         }
-        
-        .logo-placeholder {
-            width: 150px;
-            height: 150px;
-            background: rgba(255,255,255,0.2);
-            border: 3px dashed rgba(255,255,255,0.5);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 30px;
-            font-size: 60px;
-            color: rgba(255,255,255,0.9);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .logo-placeholder:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.05);
-        }
-        
-        .logo-container h1 {
-            font-size: 2.5rem;
-            font-weight: 300;
-            letter-spacing: 3px;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        
-        .logo-container p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            font-weight: 300;
-        }
-        
-        .botoes-menu {
-            display: flex;
-            gap: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
+        .logo-container h1 { font-size: 2.3rem; font-weight: 300; letter-spacing: 3px; margin-bottom: 8px; }
+        .logo-container p { font-size: 1rem; opacity: 0.7; font-weight: 300; }
+        .botoes-menu { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; }
         .btn-modulo {
-            background: white;
-            border: none;
-            border-radius: 20px;
-            padding: 40px 50px;
-            cursor: pointer;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 220px;
-            position: relative;
-            overflow: hidden;
+            background: white; border: none; border-radius: 20px;
+            padding: 40px 50px; cursor: pointer;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3); transition: all 0.3s ease;
+            display: flex; flex-direction: column; align-items: center;
+            min-width: 220px; position: relative; overflow: hidden;
         }
-        
         .btn-modulo::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 100%; height: 5px;
         }
-        
-        .btn-modulo.shafts::before {
-            background: #11998e;
+        .btn-modulo.torre1::before { background: linear-gradient(90deg, #312dee, #0052cc); }
+        .btn-modulo.torre2::before { background: linear-gradient(90deg, #0052cc, #00b4d8); }
+        .btn-modulo:hover { transform: translateY(-10px); box-shadow: 0 25px 50px rgba(0,0,0,0.4); }
+        .btn-modulo .icone { font-size: 3.5rem; margin-bottom: 15px; }
+        .btn-modulo .titulo { font-size: 1.4rem; font-weight: bold; color: #333; margin-bottom: 8px; }
+        .btn-modulo .descricao { font-size: 0.85rem; color: #888; }
+        .btn-modulo .badge {
+            position: absolute; top: 15px; right: 15px;
+            background: #312dee; color: white; font-size: 10px;
+            padding: 3px 8px; border-radius: 10px; font-weight: 700;
         }
-        
-        .btn-modulo.apartamentos::before {
-            background: #04209c;
-        }
-        
-        .btn-modulo:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-        }
-        
-        .btn-modulo .icone {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-        }
-        
-        .btn-modulo .titulo {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 8px;
-        }
-        
-        .btn-modulo .descricao {
-            font-size: 0.9rem;
-            color: #666;
-        }
-        
+
         /* ==========================================
-           MENU SUPERIOR DAS PLANILHAS
-           ========================================== */
+           MENU SUPERIOR
+        ========================================== */
         .menu-topo {
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(10px);
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: static;
-            top: 0;
-            z-index: 1000;
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);
+            padding: 15px 30px; display: flex; justify-content: space-between;
+            align-items: center; position: sticky; top: 0; z-index: 1000;
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
-        
-        .menu-esquerda {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
+        .menu-esquerda { display: flex; align-items: center; gap: 20px; }
         .btn-voltar {
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(97, 97, 97, 0.3);
-            color: rgb(199, 199, 199);
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(150,150,150,0.3);
+            color: #ccc; padding: 10px 20px; border-radius: 8px;
+            cursor: pointer; font-size: 14px; transition: all 0.3s;
+            display: flex; align-items: center; gap: 8px;
         }
-        
-        .btn-voltar:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateX(-3px);
-        }
-        
-        .titulo-sistema {
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
-        
-        .menu-botoes {
-            display: flex;
-            gap: 15px;
-        }
-        
+        .btn-voltar:hover { background: rgba(255,255,255,0.2); transform: translateX(-3px); }
+        .titulo-sistema { color: white; font-size: 1.1rem; font-weight: 300; letter-spacing: 1px; }
+        .menu-botoes { display: flex; gap: 10px; flex-wrap: wrap; }
         .menu-btn {
-            padding: 10px 25px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding: 10px 22px; border: none; border-radius: 8px;
+            font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s;
+            display: flex; align-items: center; gap: 6px;
         }
-        
-        .menu-btn.active {
-            background: white;
-            color: #333;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        
-        .menu-btn:not(.active) {
-            background: rgba(255,255,255,0.1);
-            color: white;
-        }
-        
-        .menu-btn:not(.active):hover {
-            background: rgba(255,255,255,0.2);
-        }
-        
-        .btn-logout {
-            background: rgba(231, 76, 60, 0.8) !important;
-            border-color: rgba(231, 76, 60, 0.5) !important;
-        }
-        
-        .btn-logout:hover {
-            background: rgba(231, 76, 60, 1) !important;
-        }
-        
+        .menu-btn.active { background: white; color: #333; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .menu-btn:not(.active) { background: rgba(255,255,255,0.1); color: white; }
+        .menu-btn:not(.active):hover { background: rgba(255,255,255,0.2); }
+        .btn-logout { background: rgba(231,76,60,0.8) !important; color: white !important; }
+        .btn-logout:hover { background: rgba(231,76,60,1) !important; }
+
         /* ==========================================
-           SEÇÕES DAS PLANILHAS
-           ========================================== */
-        .secao {
-            display: none;
-            min-height: calc(100vh - 70px);
-        }
-        
-        .secao.active {
-            display: block;
-            animation: fadeIn 0.4s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+           SECÃO PRINCIPAL
+        ========================================== */
+        .secao { display: none; min-height: calc(100vh - 64px); }
+        .secao.active { display: block; animation: fadePage 0.4s ease; }
+        @keyframes fadePage {
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
         .container-planilha {
-            max-width: 100%;
-            overflow-x: auto;
-            background: white;
-            margin: 20px;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            padding: 25px;
+            background: #0a0a14;
+            padding: 30px 20px;
+            min-height: calc(100vh - 64px);
         }
-        
+        .secao-header {
+            text-align: center; margin-bottom: 25px;
+        }
+        .secao-header h1 { color: white; font-size: 1.6rem; font-weight: 300; letter-spacing: 2px; margin-bottom: 6px; }
+        .secao-header p { color: rgba(255,255,255,0.5); font-size: 13px; }
+
         /* ==========================================
-           ESTILOS ESPECÍFICOS - SHAFTS
-           ========================================== */
-        .secao-shafts {
-            background: linear-gradient(135deg, #000000 100%);
-            padding-bottom: 20px;
-        }
-        
-        .secao-shafts h1 {
-            text-align: center;
-            color: #000000;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-        
-        .secao-shafts .subtitle {
-            text-align: center;
-            color: #000000;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-        
-        .secao-shafts .conexao-info {
-            background: #d4d4d4;
-            border-left: 4px solid #2196f3;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        
-        .secao-shafts .conexao-info h3 {
-            margin-bottom: 10px;
-            color: #1976d2;
-        }
-        
-        .secao-shafts .legenda-status {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-top: 10px;
-            flex-wrap: wrap;
-            font-size: 13px;
-            font-weight: 600;
-        }
-        
-        .secao-shafts .legenda-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .secao-shafts .legenda-cor {
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            border: 2px solid #333;
-        }
-        
-        .secao-shafts th {
-            background: #1b5e20;
-            color: white;
-            padding: 12px 6px;
-            text-align: center;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            border: 1px solid #2e7d32;
-        }
-        
-        .secao-shafts th.andar-col { background: #0d3b11; }
-        .secao-shafts th.shaft-col { background: #2e7d32; }
-        .secao-shafts th.item-col { background: #388e3c; }
-        .secao-shafts th.status-geral { background: #1b5e20; }
-        .secao-shafts th.obs-col { background: #2e7d32; }
-        
-        .secao-shafts td.andar {
-            background: #e8f5e9;
-            font-weight: bold;
-            color: #1b5e20;
-            font-size: 14px;
-        }
-        
-        .secao-shafts td.shaft {
-            background: #f1f8e9;
-            font-weight: 700;
-            color: #33691e;
-            font-size: 13px;
-        }
-        
-        .secao-shafts .btn-status {
-            width: 100%;
-            padding: 8px 4px;
-            border: 2px solid transparent;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-        }
-        
-        .secao-shafts .btn-status:hover {
-            transform: scale(1.05);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-        
-        .secao-shafts .btn-status.ok {
-            background: #27ae60;
-            color: white;
-            border-color: #1e8449;
-        }
-        
-        .secao-shafts .btn-status.pendente {
-            background: #f1c40f;
-            color: #333;
-            border-color: #d4ac0d;
-        }
-        
-        .secao-shafts .btn-status.atencao {
-            background: #e74c3c;
-            color: white;
-            border-color: #c0392b;
-        }
-        
-        .secao-shafts .status-geral-box {
-            padding: 8px;
-            border-radius: 4px;
-            font-weight: 700;
-            font-size: 11px;
-            text-transform: uppercase;
-        }
-        
-        .secao-shafts .status-geral-ok { background: #27ae60; color: white; }
-        .secao-shafts .status-geral-pendente { background: #f1c40f; color: #333; }
-        .secao-shafts .status-geral-atencao { background: #e74c3c; color: white; }
-        
-        /* ==========================================
-           ESTILOS ESPECÍFICOS - APARTAMENTOS
-           ========================================== */
-        .secao-apartamentos {
-            background: linear-gradient(135deg,#000000 100%);
-            padding-bottom: 20px;
-        }
-        
-        .secao-apartamentos h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-        
-        .secao-apartamentos th {
-            background: #2c3e50;
-            color: white;
-            padding: 10px 5px;
-            text-align: center;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        
-        .secao-apartamentos th.andar-col {
-            background: #1a252f;
-            min-width: 50px;
-        }
-        
-        .secao-apartamentos th.apto-header {
-            background: #34495e;
-            min-width: 80px;
-        }
-        
-        .secao-apartamentos td.andar {
-            background: #ecf0f1;
-            font-weight: bold;
-            color: #2c3e50;
-            font-size: 14px;
-        }
-        
-        .secao-apartamentos .apto-num {
-            background: #f8f9fa;
-            font-weight: 600;
-            color: #2c3e50;
-            font-size: 11px;
-        }
-        
-        .secao-apartamentos select {
-            width: 100%;
-            padding: 6px;
-            border: none;
-            border-radius: 4px;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            appearance: none;
-            text-align: center;
-            text-align-last: center;
-            transition: all 0.3s;
-        }
-        
-        .secao-apartamentos select:hover {
-            transform: scale(1.05);
-        }
-        
-        .secao-apartamentos select.concluido {
-            background: #27ae60;
-            color: white;
-        }
-        
-        .secao-apartamentos select.naoconcluido {
-            background: #e74c3c;
-            color: white;
-        }
-        
-        .secao-apartamentos select.pendente {
-            background: #95a5a6;
-            color: white;
-        }
-        
-        .secao-apartamentos select.emandamento {
-            background: #f39c12;
-            color: white;
-        }
-        
-        /* ==========================================
-           ELEMENTOS COMUNS
-           ========================================== */
+           STATUS CONEXÃO
+        ========================================== */
         .status-conexao {
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 14px;
-            font-weight: 600;
+            text-align: center; margin-bottom: 20px;
+            font-size: 13px; font-weight: 600;
+            padding: 8px 20px; border-radius: 20px; display: inline-block;
         }
-        
+        .conexao-wrap { text-align: center; margin-bottom: 20px; }
         .online { color: #27ae60; }
         .offline { color: #e74c3c; }
         .syncing { color: #f39c12; animation: pulse 1s infinite; }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        /* ==========================================
+           BARRA DE FERRAMENTAS
+        ========================================== */
+        .toolbar {
+            display: flex; gap: 10px; flex-wrap: wrap;
+            justify-content: center; margin-bottom: 25px; align-items: center;
         }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
+        .toolbar input[type="text"] {
+            padding: 10px 16px; border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 8px; font-size: 13px; background: rgba(255,255,255,0.08);
+            color: white; min-width: 200px; transition: all 0.3s;
         }
-        
-        td {
-            padding: 8px 4px;
-            text-align: center;
-            border: 1px solid #e0e0e0;
-        }
-        
-        input.obs {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 11px;
-            text-align: left;
+        .toolbar input[type="text"]::placeholder { color: rgba(255,255,255,0.35); }
+        .toolbar input[type="text"]:focus { outline: none; border-color: #312dee; background: rgba(49,45,238,0.15); }
+        .filter-btn {
+            padding: 9px 16px; border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.7);
+            border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600;
             transition: all 0.3s;
         }
-        
-        input.obs:focus {
-            outline: none;
-            box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        .filter-btn.active, .filter-btn:hover { background: rgba(255,255,255,0.2); color: white; border-color: rgba(255,255,255,0.4); }
+        .filter-btn.fok.active { background: #1e6b3a; border-color: #27ae60; color: white; }
+        .filter-btn.fsemlinha.active { background: #7b1515; border-color: #e74c3c; color: white; }
+        .filter-btn.fseminterfone.active { background: #7a4200; border-color: #e67e22; color: white; }
+        .filter-btn.fpendente.active { background: #4a4a4a; border-color: #888; color: white; }
+
+        /* ==========================================
+           PAINEL ESTATÍSTICAS
+        ========================================== */
+        .stats-panel {
+            display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+            margin-bottom: 25px;
         }
-        
-        input.obs.saving {
-            background: #fff3cd;
-            border-color: #f39c12;
-        }
-        
-        input.obs.saved {
-            background: #d4edda;
-            border-color: #27ae60;
-        }
-        
-        tr:hover {
-            background: #f1f8e9;
-        }
-        
-        .user-count {
-            position: fixed;
-            top: 125px;
-            right: 20px;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            z-index: 999;
-        }
-        
-        .stats {
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
         .stat-box {
-            padding: 15px 25px;
-            border-radius: 8px;
-            text-align: center;
-            color: white;
-            font-weight: 600;
+            padding: 16px 22px; border-radius: 12px; text-align: center;
+            color: white; font-weight: 600; min-width: 110px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.2s;
         }
-        
-        .stat-number {
-            font-size: 28px;
-            font-weight: bold;
+        .stat-box:hover { transform: translateY(-3px); }
+        .stat-number { font-size: 2rem; font-weight: 800; line-height: 1; }
+        .stat-label { font-size: 10px; opacity: 0.85; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 5px; }
+        .stat-total { background: linear-gradient(135deg, #1a1a3e, #2d2d6e); }
+        .stat-ok { background: linear-gradient(135deg, #1a5e35, #27ae60); }
+        .stat-semlinha { background: linear-gradient(135deg, #6b1515, #e74c3c); }
+        .stat-seminterfone { background: linear-gradient(135deg, #7a4200, #e67e22); }
+        .stat-pendente { background: linear-gradient(135deg, #3a3a3a, #666); }
+
+        /* ==========================================
+           DASHBOARD GRÁFICO
+        ========================================== */
+        .dashboard-wrap {
+            background: rgba(255,255,255,0.04); border-radius: 12px;
+            padding: 20px; margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.08);
         }
-        
-        .stat-label {
-            font-size: 12px;
-            opacity: 0.9;
-            text-transform: uppercase;
-            margin-top: 4px;
+        .dashboard-title { color: rgba(255,255,255,0.6); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; }
+        .chart-bars { display: flex; align-items: flex-end; gap: 8px; height: 80px; }
+        .chart-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .chart-bar {
+            width: 100%; border-radius: 4px 4px 0 0;
+            transition: height 0.6s cubic-bezier(.34,1.56,.64,1);
+            min-height: 4px;
         }
-        
+        .chart-bar-label { color: rgba(255,255,255,0.5); font-size: 10px; text-align: center; }
+        .chart-bar-val { color: white; font-size: 11px; font-weight: 700; }
+
+        /* ==========================================
+           BOTÕES DE AÇÃO
+        ========================================== */
         .btn-group {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
-            flex-wrap: wrap;
+            display: flex; gap: 10px; justify-content: center;
+            margin-bottom: 20px; flex-wrap: wrap;
         }
-        
         .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 6px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding: 11px 22px; border: none; border-radius: 8px;
+            font-size: 13px; cursor: pointer; transition: all 0.3s;
+            font-weight: 600; display: flex; align-items: center; gap: 7px;
         }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .btn-primary { background: #2980b9; color: white; }
+        .btn-success { background: #27ae60; color: white; }
+        .btn-warning { background: #e74c3c; color: white; }
+        .btn-backup { background: #8e44ad; color: white; }
+        .btn-restore { background: #16a085; color: white; }
+        .last-update { text-align: center; color: rgba(255,255,255,0.35); font-size: 12px; margin-bottom: 10px; }
+
+        /* ==========================================
+           HISTÓRICO
+        ========================================== */
+        .historico-panel {
+            background: rgba(255,255,255,0.04); border-radius: 12px;
+            padding: 20px; margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.08);
+            max-height: 200px; overflow-y: auto;
         }
-        
-        .btn-primary {
-            background: #3498db;
-            color: white;
+        .historico-title { color: rgba(255,255,255,0.5); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+        .historico-item {
+            display: flex; gap: 10px; padding: 7px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 12px; color: rgba(255,255,255,0.6); align-items: center;
         }
-        
-        .btn-primary:hover {
-            background: #2980b9;
+        .historico-item:last-child { border-bottom: none; }
+        .hist-time { color: rgba(255,255,255,0.3); white-space: nowrap; }
+        .hist-apto { color: #7eb8f7; font-weight: 700; }
+        .hist-status { font-weight: 600; }
+
+        /* ==========================================
+           TABELA DE INTERFONES
+        ========================================== */
+.table-wrap { 
+    overflow-x: auto; 
+    overflow-y: auto; /* Permite rolagem vertical interna */
+    max-height: 70vh; /* Limita a altura da tabela para ativar a rolagem (ajuste como preferir) */
+    border-radius: 12px; 
+    border: 1px solid rgba(255,255,255,0.08);
+}
+        thead th {
+    background: #0f1035; color: rgba(255,255,255,0.8);
+    padding: 12px 6px; text-align: center; font-weight: 600;
+    font-size: 11px; letter-spacing: 0.5px; text-transform: uppercase;
+    position: sticky; 
+    top: 0; /* Fixa o cabeçalho exatamente no topo do .table-wrap */
+    z-index: 10;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+        thead th.andar-col { background: #080820; min-width: 55px; }
+        thead th.apto-col { background: #0d1040; min-width: 70px; }
+        thead th.status-col { background: #0f1035; min-width: 130px; }
+        thead th.obs-col { background: #0d1040; min-width: 140px; }
+
+        tbody tr { transition: background 0.2s; }
+        tbody tr:hover td { background: rgba(49,45,238,0.08) !important; }
+
+        td {
+            padding: 8px 6px; text-align: center;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: #0e0e22;
         }
-        
-        .btn-download {
-            background: #2980b9;
-            color: white;
+        td.andar {
+            background: #080818 !important; font-weight: 700;
+            color: rgba(255,255,255,0.5); font-size: 13px;
         }
-        
-        .btn-download:hover {
-            background: #2471a3;
+        td.apto-num {
+            background: #0c0c20 !important; color: rgba(255,255,255,0.7);
+            font-weight: 700; font-size: 12px;
         }
-        
-        .btn-warning {
-            background: #e74c3c;
-            color: white;
+
+        /* ==========================================
+           SELECT DE STATUS
+        ========================================== */
+        select.status-sel {
+            width: 100%; padding: 7px 4px; border: none; border-radius: 6px;
+            font-size: 11px; font-weight: 700; cursor: pointer;
+            text-align: center; transition: all 0.3s;
+            appearance: none; -webkit-appearance: none;
         }
-        
-        .btn-warning:hover {
-            background: #c0392b;
+        select.status-sel:hover { transform: scale(1.03); filter: brightness(1.1); }
+        select.ok { background: #1a5e35; color: #7fff9e; border: 1px solid #27ae60; }
+        select.semlinha { background: #5e1515; color: #ffaaaa; border: 1px solid #e74c3c; }
+        select.seminterfone { background: #5e3000; color: #ffcc80; border: 1px solid #e67e22; }
+        select.pendente { background: #2e2e2e; color: #bbbbbb; border: 1px solid #666; }
+
+        /* Piscando para problemas */
+        @keyframes blink-problem {
+            0%, 100% { box-shadow: 0 0 0 0 transparent; }
+            50% { box-shadow: 0 0 8px 2px rgba(231,76,60,0.5); }
         }
-        
-        .last-update {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 12px;
-            color: #666;
+        select.semlinha { animation: blink-problem 2s ease-in-out infinite; }
+        @keyframes blink-orange {
+            0%, 100% { box-shadow: 0 0 0 0 transparent; }
+            50% { box-shadow: 0 0 8px 2px rgba(230,126,34,0.5); }
         }
-        
+        select.seminterfone { animation: blink-orange 2.5s ease-in-out infinite; }
+
+        /* ==========================================
+           INPUT OBS
+        ========================================== */
+        input.obs {
+            width: 100%; padding: 7px 8px; border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px; font-size: 11px; background: rgba(255,255,255,0.05);
+            color: rgba(255,255,255,0.8); transition: all 0.3s;
+        }
+        input.obs::placeholder { color: rgba(255,255,255,0.2); }
+        input.obs:focus { outline: none; border-color: #312dee; background: rgba(49,45,238,0.1); }
+        input.obs.saving { background: rgba(243,156,18,0.15); border-color: #f39c12; }
+        input.obs.saved { background: rgba(39,174,96,0.15); border-color: #27ae60; }
+
+        /* ==========================================
+           LINHA OCULTA POR FILTRO
+        ========================================== */
+        tr.row-hidden { display: none; }
+
+        /* ==========================================
+           MODAL CONFIRMAÇÃO
+        ========================================== */
         .modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
+            display: none; position: fixed; z-index: 2000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            align-items: center; justify-content: center;
         }
-        
+        .modal.open { display: flex; }
         .modal-content {
-            background-color: white;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 400px;
-            text-align: center;
+            background: #1a1a2e; border: 1px solid rgba(255,255,255,0.1);
+            padding: 35px; border-radius: 16px; width: 90%; max-width: 420px;
+            text-align: center; color: white; animation: slideUp 0.3s ease;
         }
-        
-        .modal-buttons {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
+        .modal-content h3 { font-size: 1.2rem; margin-bottom: 12px; }
+        .modal-content p { color: rgba(255,255,255,0.6); margin-bottom: 25px; font-size: 14px; }
+        .modal-buttons { display: flex; gap: 10px; justify-content: center; }
+
+        /* ==========================================
+           LEGENDA
+        ========================================== */
+        .legenda {
+            display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+            margin-bottom: 20px;
         }
-        
+        .legenda-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: rgba(255,255,255,0.6); }
+        .legenda-cor { width: 14px; height: 14px; border-radius: 3px; }
+
+        /* ==========================================
+           RESPONSIVO
+        ========================================== */
         @media (max-width: 768px) {
             .login-box { padding: 30px; }
             .botoes-menu { flex-direction: column; gap: 20px; }
             .btn-modulo { padding: 30px 40px; min-width: 280px; }
-            .menu-topo { flex-direction: column; gap: 15px; padding: 15px; }
+            .menu-topo { flex-direction: column; gap: 12px; padding: 12px 15px; }
             .menu-botoes { width: 100%; justify-content: center; }
-            .logo-container h1 { font-size: 1.8rem; }
-            .aviso-leitura { left: 20px; right: 20px; bottom: 20px; }
+            .logo-container h1 { font-size: 1.6rem; }
+            .aviso-leitura { left: 15px; right: 15px; bottom: 15px; text-align: center; }
+            .stat-number { font-size: 1.5rem; }
+            .stat-box { padding: 12px 16px; min-width: 85px; }
+            .toolbar { gap: 7px; }
+            .toolbar input[type="text"] { min-width: 160px; }
         }
     </style>
 </head>
 <body>
-    <!-- ==========================================
-         TELA DE LOGIN
-         ========================================== -->
-    <div id="tela-login">
-        <div class="login-box">
-            <div class="login-logo">🏢</div>
-            <h2>Acesso ao Sistema</h2>
-            <p class="empresa">RM DESIGN E TECNOLOGIA</p>
-            
-            <div class="tipo-acesso">
-                <button class="btn-tipo active" onclick="selecionarTipo('visualizador')" id="btn-visualizador">
-                    👁️ Visualizador
-                </button>
-                <button class="btn-tipo" onclick="selecionarTipo('admin')" id="btn-admin">
-                    🔧 Administrador
-                </button>
-            </div>
-            
-            <div id="campo-senha" style="display: none;">
-                <input type="password" id="senha" placeholder="Digite a senha..." maxlength="20">
-                <button class="btn-entrar" onclick="verificarSenha()">Entrar</button>
-            </div>
-            
-            <div id="campo-visualizador">
-                <button class="btn-entrar visualizador" onclick="entrarComoVisualizador()">
-                    Acessar como Visualizador
-                </button>
-                <p class="info-visualizador">👁️ Apenas visualização, sem permissão para editar</p>
-            </div>
-            
-            <p id="erro-senha" class="erro"></p>
-        </div>
-    </div>
 
-    <!-- ==========================================
-         PÁGINA INICIAL / MENU PRINCIPAL
-         ========================================== -->
-    <div id="pagina-inicial">
-        <div class="logo-container">
-    <img src="logo.png" alt="RM Design e Tecnologia" class="logo-principal">
-    
-    <h1>RM DESIGN E TECNOLOGIA</h1>
-    <p>Sistema de Controle de Infraestrutura</p>
-</div>            <h1>RM DESIGN E TECNOLOGIA</h1>
-            <p>Sistema de Controle de Infraestrutura</p>
-         <div class="botoes-menu">
-            <button class="btn-modulo shafts" onclick="mostrarSecao('shafts')">
-                <span class="icone">📡</span>
-                <span class="titulo">SHAFTS</span>
-                <span class="descricao"></span>
-            </button>
-            
-            <button class="btn-modulo apartamentos" onclick="mostrarSecao('apartamentos')">
-                <span class="icone">📞</span>
-                <span class="titulo">TELEFONIA</span>
-                <span class="descricao"></span>
-            </button>
-        </div>
-    </div>
+<!-- ==========================================
+     TELA DE LOGIN
+========================================== -->
+<div id="tela-login">
+    <div class="login-box">
+        <div class="login-logo">📞</div>
+        <h2>Acesso ao Sistema</h2>
+        <p class="empresa">RM DESIGN E TECNOLOGIA</p>
 
-    <!-- ==========================================
-         MENU SUPERIOR
-         ========================================== -->
-    <nav id="menu-superior" class="menu-topo" style="display: none;">
-        <div class="menu-esquerda">
-            <button class="btn-voltar" onclick="voltarParaInicio()">
-                ← Voltar ao Início
+        <div class="tipo-acesso">
+            <button class="btn-tipo active" onclick="selecionarTipo('visualizador')" id="btn-visualizador">
+                👁️ Visualizador
             </button>
-            <span class="titulo-sistema">RM DESIGN E TECNOLOGIA</span>
-        </div>
-        
-        <div class="menu-botoes">
-            <button class="menu-btn" id="btn-shafts" onclick="mostrarSecao('shafts')">
-                📡 Shafts
-            </button>
-            <button class="menu-btn" id="btn-apartamentos" onclick="mostrarSecao('apartamentos')">
-                📞 Apartamentos
+            <button class="btn-tipo" onclick="selecionarTipo('admin')" id="btn-admin">
+                🔧 Administrador
             </button>
         </div>
-        
-        <button class="btn-voltar btn-logout" onclick="fazerLogout()">
-            🚪 Sair
+
+        <div id="campo-senha" style="display:none;">
+            <input type="password" id="senha" placeholder="Digite a senha..." maxlength="30" onkeydown="if(event.key==='Enter') verificarSenha()">
+            <button class="btn-entrar" onclick="verificarSenha()">Entrar como Administrador</button>
+        </div>
+
+        <div id="campo-visualizador">
+            <button class="btn-entrar visualizador" onclick="entrarComoVisualizador()">
+                Acessar como Visualizador
+            </button>
+            <p class="info-visualizador">👁️ Apenas visualização, sem permissão para editar</p>
+        </div>
+
+        <p id="erro-senha" class="erro"></p>
+    </div>
+</div>
+
+<!-- ==========================================
+     PÁGINA INICIAL
+========================================== -->
+<div id="pagina-inicial">
+    <div class="logo-container">
+        <div class="logo-icon">📞</div>
+        <h1>RM DESIGN E TECNOLOGIA</h1>
+        <p>Controle de Interfones — Condomínio</p>
+    </div>
+    <div class="botoes-menu">
+        <button class="btn-modulo torre1" onclick="mostrarSecao('torre1')">
+            <span class="badge">14×8</span>
+            <span class="icone">🏢</span>
+            <span class="titulo">TORRE 1</span>
+            <span class="descricao">112 apartamentos</span>
         </button>
-    </nav>
+        <button class="btn-modulo torre2" onclick="mostrarSecao('torre2')">
+            <span class="badge">14×6</span>
+            <span class="icone">🏗️</span>
+            <span class="titulo">TORRE 2</span>
+            <span class="descricao">84 apartamentos</span>
+        </button>
+    </div>
+</div>
 
-    <!-- ==========================================
-         SEÇÃO SHAFTS
-         ========================================== -->
-    <section id="secao-shafts" class="secao secao-shafts">
-        <div class="user-count" id="userCount-shafts">👥 1 usuário online</div>
-        
-        <div class="container-planilha">
-            <h1>🔧 CONTROLE DE SHAFTS - INFRAESTRUTURA</h1>
-            <p class="subtitle">14 Andares × 2 Shafts (A e B) | Sincronização em Tempo Real</p>
-            
-            <div class="conexao-info">
-                <h3>🌐 Sincronização em Tempo Real</h3>
-                <p>Todas as alterações são salvas automaticamente e visíveis para todos os usuários instantaneamente.</p>
-                <div class="legenda-status">
-                    <div class="legenda-item">
-                        <div class="legenda-cor" style="background: #27ae60;"></div>
-                        <span>✓ OK</span>
-                    </div>
-                    <div class="legenda-item">
-                        <div class="legenda-cor" style="background: #f1c40f;"></div>
-                        <span>⏳ PENDENTE</span>
-                    </div>
-                    <div class="legenda-item">
-                        <div class="legenda-cor" style="background: #e74c3c;"></div>
-                        <span>⚠ ATENÇÃO</span>
-                    </div>
+<!-- ==========================================
+     MENU SUPERIOR
+========================================== -->
+<nav id="menu-superior" class="menu-topo" style="display:none;">
+    <div class="menu-esquerda">
+        <button class="btn-voltar" onclick="voltarParaInicio()">← Voltar</button>
+        <span class="titulo-sistema">RM · CONTROLE DE INTERFONES</span>
+    </div>
+    <div class="menu-botoes">
+        <button class="menu-btn" id="btn-nav-torre1" onclick="mostrarSecao('torre1')">🏢 Torre 1</button>
+        <button class="menu-btn" id="btn-nav-torre2" onclick="mostrarSecao('torre2')">🏗️ Torre 2</button>
+    </div>
+    <button class="btn-voltar btn-logout" onclick="fazerLogout()">🚪 Sair</button>
+</nav>
+
+<!-- ==========================================
+     SEÇÃO TORRE 1
+========================================== -->
+<section id="secao-torre1" class="secao">
+    <div class="container-planilha">
+        <div class="secao-header">
+            <h1>🏢 TORRE 1 — CONTROLE DE INTERFONES</h1>
+            <p>14 andares · 8 apartamentos por andar · 112 unidades no total</p>
+        </div>
+
+        <div class="conexao-wrap">
+            <span class="status-conexao" id="status-torre1">🟡 Conectando...</span>
+        </div>
+
+        <!-- Estatísticas -->
+        <div class="stats-panel">
+            <div class="stat-box stat-total">
+                <div class="stat-number" id="t1-total">112</div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat-box stat-ok">
+                <div class="stat-number" id="t1-ok">0</div>
+                <div class="stat-label">✅ OK</div>
+            </div>
+            <div class="stat-box stat-semlinha">
+                <div class="stat-number" id="t1-semlinha">0</div>
+                <div class="stat-label">❌ Sem Linha</div>
+            </div>
+            <div class="stat-box stat-seminterfone">
+                <div class="stat-number" id="t1-seminterfone">0</div>
+                <div class="stat-label">⚠️ Sem Interfone</div>
+            </div>
+            <div class="stat-box stat-pendente">
+                <div class="stat-number" id="t1-pendente">0</div>
+                <div class="stat-label">⏳ Pendente</div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="dashboard-wrap">
+            <div class="dashboard-title">📊 Distribuição de Status</div>
+            <div class="chart-bars" id="chart-torre1">
+                <div class="chart-bar-wrap">
+                    <div class="chart-bar-val" id="cv-t1-ok">0</div>
+                    <div class="chart-bar" id="cb-t1-ok" style="background:#27ae60; height:4px;"></div>
+                    <div class="chart-bar-label">✅ OK</div>
+                </div>
+                <div class="chart-bar-wrap">
+                    <div class="chart-bar-val" id="cv-t1-semlinha">0</div>
+                    <div class="chart-bar" id="cb-t1-semlinha" style="background:#e74c3c; height:4px;"></div>
+                    <div class="chart-bar-label">❌ S.Linha</div>
+                </div>
+                <div class="chart-bar-wrap">
+                    <div class="chart-bar-val" id="cv-t1-seminterfone">0</div>
+                    <div class="chart-bar" id="cb-t1-seminterfone" style="background:#e67e22; height:4px;"></div>
+                    <div class="chart-bar-label">⚠️ S.Interf.</div>
+                </div>
+                <div class="chart-bar-wrap">
+                    <div class="chart-bar-val" id="cv-t1-pendente">0</div>
+                    <div class="chart-bar" id="cb-t1-pendente" style="background:#888; height:4px;"></div>
+                    <div class="chart-bar-label">⏳ Pend.</div>
                 </div>
             </div>
-            
-            <div class="status-conexao" id="statusConexao-shafts">🟡 Conectando...</div>
-            
-            <table id="tabelaShafts">
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <input type="text" id="busca-torre1" placeholder="🔍 Buscar apartamento..." oninput="filtrarTabela('torre1')">
+            <button class="filter-btn" id="fbtn-t1-todos" onclick="setFiltro('torre1','todos')" style="background:rgba(255,255,255,0.2);color:white;">Todos</button>
+            <button class="filter-btn fok" id="fbtn-t1-ok" onclick="setFiltro('torre1','ok')">✅ OK</button>
+            <button class="filter-btn fsemlinha" id="fbtn-t1-semlinha" onclick="setFiltro('torre1','semlinha')">❌ Sem Linha</button>
+            <button class="filter-btn fseminterfone" id="fbtn-t1-seminterfone" onclick="setFiltro('torre1','seminterfone')">⚠️ Sem Interfone</button>
+            <button class="filter-btn fpendente" id="fbtn-t1-pendente" onclick="setFiltro('torre1','pendente')">⏳ Pendente</button>
+        </div>
+
+        <!-- Legenda -->
+        <div class="legenda">
+            <div class="legenda-item"><div class="legenda-cor" style="background:#27ae60;"></div> OK</div>
+            <div class="legenda-item"><div class="legenda-cor" style="background:#e74c3c;"></div> Sem Linha</div>
+            <div class="legenda-item"><div class="legenda-cor" style="background:#e67e22;"></div> Sem Interfone</div>
+            <div class="legenda-item"><div class="legenda-cor" style="background:#888;"></div> Pendente</div>
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="btn-group menu-botoes-admin">
+            <button class="btn btn-primary btn-admin-only" onclick="exportarCSV('torre1')">📊 Exportar CSV</button>
+            <button class="btn btn-backup btn-admin-only" onclick="exportarBackup('torre1')">💾 Backup JSON</button>
+            <button class="btn btn-restore btn-admin-only" onclick="importarBackup('torre1')">📂 Restaurar Backup</button>
+            <button class="btn btn-warning btn-admin-only" onclick="confirmarLimpar('torre1')">🗑️ Limpar Tudo</button>
+        </div>
+        <input type="file" id="file-restore-torre1" accept=".json" style="display:none" onchange="processarBackup(event,'torre1')">
+
+        <div class="last-update" id="lastupdate-torre1">Última atualização: —</div>
+
+        <!-- Tabela -->
+        <div class="table-wrap">
+            <table id="tabela-torre1">
                 <thead>
                     <tr>
                         <th class="andar-col">ANDAR</th>
-                        <th class="shaft-col">SHAFT</th>
-                        <th class="item-col">TAP</th>
-                        <th class="item-col">DIVISOR</th>
-                        <th class="item-col">BLOCO BARGO</th>
-                        <th class="item-col">CONECTOR ANTENA</th>
-                        <th class="item-col">CABO OK</th>
-                        <th class="status-geral">STATUS GERAL</th>
+                        <th class="apto-col">APTO</th>
+                        <th class="status-col">STATUS</th>
+                        <th class="obs-col">OBSERVAÇÃO</th>
+                        <th class="apto-col">APTO</th>
+                        <th class="status-col">STATUS</th>
+                        <th class="obs-col">OBSERVAÇÃO</th>
+                        <th class="apto-col">APTO</th>
+                        <th class="status-col">STATUS</th>
+                        <th class="obs-col">OBSERVAÇÃO</th>
+                        <th class="apto-col">APTO</th>
+                        <th class="status-col">STATUS</th>
+                        <th class="obs-col">OBSERVAÇÃO</th>
+                        <th class="apto-col">APTO</th>
+                        <th class="status-col">STATUS</th>
+                        <th class="obs-col">OBSERVAÇÃO</th>
+                        <th class="apto-col">APTO</th>
+                        <th class="status-col">STATUS</th>
+                        <th class="obs-col">OBSERVAÇÃO</th>
+                        <th class="apto-col">APTO</th>
+                        <th class="status-col">STATUS</th>
+                        <th class="obs-col">OBSERVAÇÃO</th>
+                        <th class="apto-col">APTO</th>
+                        <th class="status-col">STATUS</th>
                         <th class="obs-col">OBSERVAÇÃO</th>
                     </tr>
                 </thead>
-                <tbody id="tabelaBody-shafts">
-                </tbody>
+                <tbody id="tbody-torre1"></tbody>
             </table>
-            
-            <div class="stats">
-                <div class="stat-box" style="background: #2e7d32;">
-                    <div class="stat-number" id="totalShafts">28</div>
-                    <div class="stat-label">Total Shafts</div>
-                </div>
-                <div class="stat-box" style="background: #27ae60;">
-                    <div class="stat-number" id="okCount">0</div>
-                    <div class="stat-label">OK</div>
-                </div>
-                <div class="stat-box" style="background: #f1c40f; color: #333;">
-                    <div class="stat-number" id="pendenteCount">0</div>
-                    <div class="stat-label">Pendentes</div>
-                </div>
-                <div class="stat-box" style="background: #e74c3c;">
-                    <div class="stat-number" id="atencaoCount">0</div>
-                    <div class="stat-label">Atenção</div>
-                </div>
-            </div>
-            
-            <div class="btn-group">
-                <button class="btn btn-download" onclick="exportarCSV('shafts')">
-                    📊 Exportar CSV
-                </button>
-                <button class="btn btn-warning" onclick="limparTodos('shafts')">
-                    🗑️ Limpar Tudo
-                </button>
-            </div>
-            
-            <div class="last-update" id="lastUpdate-shafts">Última atualização: -</div>
         </div>
-    </section>
 
-    <!-- ==========================================
-         SEÇÃO APARTAMENTOS
-         ========================================== -->
-    <section id="secao-apartamentos" class="secao secao-apartamentos">
-        <div class="user-count" id="userCount-apartamentos">👥 1 usuário online</div>
-        
-        <div class="container-planilha">
-            <h1>📋 CONTROLE DE APARTAMENTOS TORRE 2 - TELEFONIA</h1>
-            <div class="status-conexao" id="statusConexao-apartamentos">🟡 Conectando...</div>
-            
-            <table id="tabelaApartamentos">
+        <!-- Histórico -->
+        <div class="historico-panel" style="margin-top:25px;">
+            <div class="historico-title">🕐 Histórico de Alterações</div>
+            <div id="historico-torre1"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ==========================================
+     SEÇÃO TORRE 2
+========================================== -->
+<section id="secao-torre2" class="secao">
+    <div class="container-planilha">
+        <div class="secao-header">
+            <h1>🏗️ TORRE 2 — CONTROLE DE INTERFONES</h1>
+            <p>14 andares · 6 apartamentos por andar · 84 unidades no total</p>
+        </div>
+
+        <div class="conexao-wrap">
+            <span class="status-conexao" id="status-torre2">🟡 Conectando...</span>
+        </div>
+
+        <!-- Estatísticas -->
+        <div class="stats-panel">
+            <div class="stat-box stat-total">
+                <div class="stat-number" id="t2-total">84</div>
+                <div class="stat-label">Total</div>
+            </div>
+            <div class="stat-box stat-ok">
+                <div class="stat-number" id="t2-ok">0</div>
+                <div class="stat-label">✅ OK</div>
+            </div>
+            <div class="stat-box stat-semlinha">
+                <div class="stat-number" id="t2-semlinha">0</div>
+                <div class="stat-label">❌ Sem Linha</div>
+            </div>
+            <div class="stat-box stat-seminterfone">
+                <div class="stat-number" id="t2-seminterfone">0</div>
+                <div class="stat-label">⚠️ Sem Interfone</div>
+            </div>
+            <div class="stat-box stat-pendente">
+                <div class="stat-number" id="t2-pendente">0</div>
+                <div class="stat-label">⏳ Pendente</div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="dashboard-wrap">
+            <div class="dashboard-title">📊 Distribuição de Status</div>
+            <div class="chart-bars" id="chart-torre2">
+                <div class="chart-bar-wrap">
+                    <div class="chart-bar-val" id="cv-t2-ok">0</div>
+                    <div class="chart-bar" id="cb-t2-ok" style="background:#27ae60; height:4px;"></div>
+                    <div class="chart-bar-label">✅ OK</div>
+                </div>
+                <div class="chart-bar-wrap">
+                    <div class="chart-bar-val" id="cv-t2-semlinha">0</div>
+                    <div class="chart-bar" id="cb-t2-semlinha" style="background:#e74c3c; height:4px;"></div>
+                    <div class="chart-bar-label">❌ S.Linha</div>
+                </div>
+                <div class="chart-bar-wrap">
+                    <div class="chart-bar-val" id="cv-t2-seminterfone">0</div>
+                    <div class="chart-bar" id="cb-t2-seminterfone" style="background:#e67e22; height:4px;"></div>
+                    <div class="chart-bar-label">⚠️ S.Interf.</div>
+                </div>
+                <div class="chart-bar-wrap">
+                    <div class="chart-bar-val" id="cv-t2-pendente">0</div>
+                    <div class="chart-bar" id="cb-t2-pendente" style="background:#888; height:4px;"></div>
+                    <div class="chart-bar-label">⏳ Pend.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="toolbar">
+            <input type="text" id="busca-torre2" placeholder="🔍 Buscar apartamento..." oninput="filtrarTabela('torre2')">
+            <button class="filter-btn" id="fbtn-t2-todos" onclick="setFiltro('torre2','todos')" style="background:rgba(255,255,255,0.2);color:white;">Todos</button>
+            <button class="filter-btn fok" id="fbtn-t2-ok" onclick="setFiltro('torre2','ok')">✅ OK</button>
+            <button class="filter-btn fsemlinha" id="fbtn-t2-semlinha" onclick="setFiltro('torre2','semlinha')">❌ Sem Linha</button>
+            <button class="filter-btn fseminterfone" id="fbtn-t2-seminterfone" onclick="setFiltro('torre2','seminterfone')">⚠️ Sem Interfone</button>
+            <button class="filter-btn fpendente" id="fbtn-t2-pendente" onclick="setFiltro('torre2','pendente')">⏳ Pendente</button>
+        </div>
+
+        <!-- Legenda -->
+        <div class="legenda">
+            <div class="legenda-item"><div class="legenda-cor" style="background:#27ae60;"></div> OK</div>
+            <div class="legenda-item"><div class="legenda-cor" style="background:#e74c3c;"></div> Sem Linha</div>
+            <div class="legenda-item"><div class="legenda-cor" style="background:#e67e22;"></div> Sem Interfone</div>
+            <div class="legenda-item"><div class="legenda-cor" style="background:#888;"></div> Pendente</div>
+        </div>
+
+        <!-- Botões de Ação -->
+        <div class="btn-group menu-botoes-admin">
+            <button class="btn btn-primary btn-admin-only" onclick="exportarCSV('torre2')">📊 Exportar CSV</button>
+            <button class="btn btn-backup btn-admin-only" onclick="exportarBackup('torre2')">💾 Backup JSON</button>
+            <button class="btn btn-restore btn-admin-only" onclick="importarBackup('torre2')">📂 Restaurar Backup</button>
+            <button class="btn btn-warning btn-admin-only" onclick="confirmarLimpar('torre2')">🗑️ Limpar Tudo</button>
+        </div>
+        <input type="file" id="file-restore-torre2" accept=".json" style="display:none" onchange="processarBackup(event,'torre2')">
+
+        <div class="last-update" id="lastupdate-torre2">Última atualização: —</div>
+
+        <!-- Tabela -->
+        <div class="table-wrap">
+            <table id="tabela-torre2">
                 <thead>
                     <tr>
                         <th class="andar-col">ANDAR</th>
-                        <th class="apto-header">APTO</th>
-                        <th>STATUS</th>
-                        <th>OBS</th>
-                        <th class="apto-header">APTO</th>
-                        <th>STATUS</th>
-                        <th>OBS</th>
-                        <th class="apto-header">APTO</th>
-                        <th>STATUS</th>
-                        <th>OBS</th>
-                        <th class="apto-header">APTO</th>
-                        <th>STATUS</th>
-                        <th>OBS</th>
-                        <th class="apto-header">APTO</th>
-                        <th>STATUS</th>
-                        <th>OBS</th>
-                        <th class="apto-header">APTO</th>
-                        <th>STATUS</th>
-                        <th>OBS</th>
-                        <th class="apto-header">APTO</th>
-                        <th>STATUS</th>
-                        <th>OBS</th>
-                        <th class="apto-header">APTO</th>
-                        <th>STATUS</th>
-                        <th>OBS</th>
+                        <th class="apto-col">APTO</th>
+                        <th class="status-col">STATUS</th>
+                        <th class="obs-col">OBSERVAÇÃO</th>
+                        <th class="apto-col">APTO</th>
+                        <th class="status-col">STATUS</th>
+                        <th class="obs-col">OBSERVAÇÃO</th>
+                        <th class="apto-col">APTO</th>
+                        <th class="status-col">STATUS</th>
+                        <th class="obs-col">OBSERVAÇÃO</th>
+                        <th class="apto-col">APTO</th>
+                        <th class="status-col">STATUS</th>
+                        <th class="obs-col">OBSERVAÇÃO</th>
+                        <th class="apto-col">APTO</th>
+                        <th class="status-col">STATUS</th>
+                        <th class="obs-col">OBSERVAÇÃO</th>
+                        <th class="apto-col">APTO</th>
+                        <th class="status-col">STATUS</th>
+                        <th class="obs-col">OBSERVAÇÃO</th>
                     </tr>
                 </thead>
-                <tbody id="tabelaBody-apartamentos">
-                </tbody>
+                <tbody id="tbody-torre2"></tbody>
             </table>
-            
-            <div class="stats">
-                <div class="stat-box" style="background: #34495e;">
-                    <div class="stat-number" id="totalAptos">112</div>
-                    <div class="stat-label">TOTAL APARTAMENTOS</div>
-                </div>
-                <div class="stat-box" style="background: #27ae60;">
-                    <div class="stat-number" id="concluidos">0</div>
-                    <div class="stat-label">CONCLUÍDOS</div>
-                </div>
-                <div class="stat-box" style="background: #e74c3c;">
-                    <div class="stat-number" id="naoConcluidos">0</div>
-                    <div class="stat-label">SEM PASSAGEM</div>
-                </div>
-                <div class="stat-box" style="background: #f39c12;">
-                    <div class="stat-number" id="emAndamento">0</div>
-                    <div class="stat-label">INTERNO</div>
-                </div>
-                <div class="stat-box" style="background: #95a5a6;">
-                    <div class="stat-number" id="pendentes">0</div>
-                    <div class="stat-label">PENDENTES</div>
-                </div>
-            </div>
-            
-            <div class="btn-group">
-                <button class="btn btn-primary" onclick="exportarCSV('apartamentos')">
-                    📊 Exportar CSV
-                </button>
-                <button class="btn btn-warning" onclick="limparTodos('apartamentos')">
-                    🗑️ Limpar Tudo
-                </button>
-            </div>
-            
-            <div class="last-update" id="lastUpdate-apartamentos">Última atualização: -</div>
         </div>
-    </section>
 
-    <div id="confirmModal" class="modal">
-        <div class="modal-content">
-            <h3>⚠️ Atenção</h3>
-            <p id="modalText">Deseja realmente limpar todos os dados?</p>
-            <div class="modal-buttons">
-                <button class="btn btn-warning" onclick="confirmarAcao()">Sim</button>
-                <button class="btn" style="background: #95a5a6; color: white;" onclick="fecharModal()">Não</button>
-            </div>
+        <!-- Histórico -->
+        <div class="historico-panel" style="margin-top:25px;">
+            <div class="historico-title">🕐 Histórico de Alterações</div>
+            <div id="historico-torre2"></div>
         </div>
     </div>
+</section>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, set, onValue, onDisconnect, push, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+<!-- Modal confirmação -->
+<div id="modal-confirmacao" class="modal">
+    <div class="modal-content">
+        <h3>⚠️ Atenção</h3>
+        <p id="modal-texto">Deseja realmente apagar todos os dados desta torre?</p>
+        <div class="modal-buttons">
+            <button class="btn btn-warning" onclick="executarLimpar()">Sim, apagar</button>
+            <button class="btn" style="background:#555;color:white;" onclick="fecharModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
 
-        // ==========================================
-        // CONFIGURAÇÕES FIREBASE
-        // ==========================================
-        const firebaseConfigShafts = {
-            apiKey: "AIzaSyADzp8bQtnmwIiHrTnfI81A5QVwWpFcLl0",
-            authDomain: "shaftsap.firebaseapp.com",
-            projectId: "shaftsap",
-            storageBucket: "shaftsap.firebasestorage.app",
-            messagingSenderId: "494189428737",
-            appId: "1:494189428737:web:c09042589d692deedac000"
-        };
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, set, onValue, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        const firebaseConfigAptos = {
-            apiKey: "AIzaSyBR2s2ABlXaP2gGt4xYkm7XAfda2yM2EwE",
-            authDomain: "controle-apartamentos.firebaseapp.com",
-            databaseURL: "https://controle-apartamentos-default-rtdb.firebaseio.com",
-            projectId: "controle-apartamentos",
-            storageBucket: "controle-apartamentos.firebasestorage.app",
-            messagingSenderId: "79173664686",
-            appId: "1:79173664686:web:045f55c061117a9ce6923f"
-        };
+    // ==========================================
+    // ⚠️  CONFIGURE SEU FIREBASE AQUI  ⚠️
+    // Substitua com as credenciais do seu projeto Firebase
+    // Crie um projeto em: https://console.firebase.google.com
+    // ==========================================
+    const firebaseConfig = {
+        apiKey: "AIzaSyBR2s2ABlXaP2gGt4xYkm7XAfda2yM2EwE",
+        authDomain: "controle-apartamentos.firebaseapp.com",
+        databaseURL: "https://controle-apartamentos-default-rtdb.firebaseio.com",
+        projectId: "controle-apartamentos",
+        storageBucket: "controle-apartamentos.firebasestorage.app",
+        messagingSenderId: "79173664686",
+        appId: "1:79173664686:web:045f55c061117a9ce6923f"
+    };
 
-        const appShafts = initializeApp(firebaseConfigShafts, 'shafts');
-        const appAptos = initializeApp(firebaseConfigAptos, 'apartamentos');
-        const dbShafts = getDatabase(appShafts);
-        const dbAptos = getDatabase(appAptos);
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
 
-        // ==========================================
-        // CONTROLE DE ACESSO E AUTENTICAÇÃO
-        // ==========================================
-        const USUARIOS = {
-            admin: { senha: 'rmconfi2026', nome: 'Administrador', permissao: 'editar' },
-            chefe: { senha: 'Chefe2024!', nome: 'Chefe', permissao: 'editar' }
-        };
+    // ==========================================
+    // CONTROLE DE ACESSO
+    // ==========================================
+    const SENHA_ADMIN = 'rmconfi2026'; // ← ALTERE A SENHA AQUI
+    let modoLeitura = false;
+    let usuarioNome = '';
 
-        let usuarioAtual = null;
-        let modoLeitura = false;
+    window.selecionarTipo = function(tipo) {
+        document.querySelectorAll('.btn-tipo').forEach(b => b.classList.remove('active'));
+        document.getElementById(`btn-${tipo}`).classList.add('active');
+        if (tipo === 'admin') {
+            document.getElementById('campo-senha').style.display = 'block';
+            document.getElementById('campo-visualizador').style.display = 'none';
+            setTimeout(() => document.getElementById('senha').focus(), 100);
+        } else {
+            document.getElementById('campo-senha').style.display = 'none';
+            document.getElementById('campo-visualizador').style.display = 'block';
+        }
+    };
 
-        window.selecionarTipo = function(tipo) {
-            document.querySelectorAll('.btn-tipo').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`btn-${tipo}`).classList.add('active');
-            
-            if (tipo === 'admin') {
-                document.getElementById('campo-senha').style.display = 'block';
-                document.getElementById('campo-visualizador').style.display = 'none';
-                document.getElementById('senha').focus();
-            } else {
-                document.getElementById('campo-senha').style.display = 'none';
-                document.getElementById('campo-visualizador').style.display = 'block';
-            }
-        };
-
-        window.verificarSenha = function() {
-            const senhaDigitada = document.getElementById('senha').value;
-            const erroEl = document.getElementById('erro-senha');
-            
-            let usuarioEncontrado = null;
-            for (let [login, dados] of Object.entries(USUARIOS)) {
-                if (dados.senha === senhaDigitada) {
-                    usuarioEncontrado = { login, ...dados };
-                    break;
-                }
-            }
-            
-            if (usuarioEncontrado) {
-                usuarioAtual = usuarioEncontrado;
-                modoLeitura = false;
-                entrarNoSistema();
-            } else {
-                erroEl.textContent = '❌ Senha incorreta!';
-                document.getElementById('senha').value = '';
-                setTimeout(() => erroEl.textContent = '', 3000);
-            }
-        };
-
-        window.entrarComoVisualizador = function() {
-            usuarioAtual = { login: 'visualizador', nome: 'Contratante', permissao: 'visualizar' };
-            modoLeitura = true;
+    window.verificarSenha = function() {
+        const v = document.getElementById('senha').value;
+        if (v === SENHA_ADMIN) {
+            modoLeitura = false;
+            usuarioNome = 'Administrador';
             entrarNoSistema();
-        };
+        } else {
+            const el = document.getElementById('erro-senha');
+            el.textContent = '❌ Senha incorreta!';
+            document.getElementById('senha').value = '';
+            setTimeout(() => el.textContent = '', 3000);
+        }
+    };
 
-        function entrarNoSistema() {
-            document.getElementById('tela-login').style.display = 'none';
-            document.getElementById('pagina-inicial').style.display = 'flex';
-            
-            // Adiciona indicador de usuário
-            const userInfo = document.createElement('div');
-            userInfo.className = `user-info ${modoLeitura ? 'visualizador' : 'admin'}`;
-            userInfo.innerHTML = modoLeitura 
-                ? `👁️ ${usuarioAtual.nome} (Visualização)`
-                : `🔧 ${usuarioAtual.nome} (Admin)`;
-            document.body.appendChild(userInfo);
-            
-            if (modoLeitura) {
-                document.body.classList.add('modo-leitura');
-                
-                const aviso = document.createElement('div');
-                aviso.className = 'aviso-leitura';
-                aviso.innerHTML = `
-                    <span>Modo Visualização</span>
-                    <small>Apenas leitura</small>
-                `;
-                document.body.appendChild(aviso);
-            }
-            
-            console.log(`✅ Usuário: ${usuarioAtual.nome} | Modo: ${usuarioAtual.permissao}`);
+    window.entrarComoVisualizador = function() {
+        modoLeitura = true;
+        usuarioNome = 'Visualizador';
+        entrarNoSistema();
+    };
+
+    function entrarNoSistema() {
+        document.getElementById('tela-login').style.display = 'none';
+        document.getElementById('pagina-inicial').style.display = 'flex';
+
+        const userEl = document.createElement('div');
+        userEl.className = `user-info ${modoLeitura ? 'visualizador' : 'admin'}`;
+        userEl.innerHTML = modoLeitura ? `👁️ Visualizador` : `🔧 Administrador`;
+        document.body.appendChild(userEl);
+
+        if (modoLeitura) {
+            document.body.classList.add('modo-leitura');
+            const av = document.createElement('div');
+            av.className = 'aviso-leitura';
+            av.innerHTML = '👁️ Modo Visualização — Apenas leitura';
+            document.body.appendChild(av);
         }
 
-        window.fazerLogout = function() {
-            location.reload();
-        };
+        inicializarTorres();
+    }
 
-        // ==========================================
-        // NAVEGAÇÃO
-        // ==========================================
-        window.mostrarSecao = function(secao) {
-            document.getElementById('pagina-inicial').style.display = 'none';
-            document.getElementById('menu-superior').style.display = 'flex';
-            document.querySelectorAll('.secao').forEach(s => s.classList.remove('active'));
-            document.getElementById(`secao-${secao}`).classList.add('active');
-            document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`btn-${secao}`).classList.add('active');
-            window.scrollTo(0, 0);
-        };
+    window.fazerLogout = function() { location.reload(); };
 
-        window.voltarParaInicio = function() {
-            document.getElementById('menu-superior').style.display = 'none';
-            document.querySelectorAll('.secao').forEach(s => s.classList.remove('active'));
-            document.getElementById('pagina-inicial').style.display = 'flex';
-            document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
-        };
+    // ==========================================
+    // NAVEGAÇÃO
+    // ==========================================
+    window.mostrarSecao = function(torre) {
+        document.getElementById('pagina-inicial').style.display = 'none';
+        document.getElementById('menu-superior').style.display = 'flex';
+        document.querySelectorAll('.secao').forEach(s => s.classList.remove('active'));
+        document.getElementById(`secao-${torre}`).classList.add('active');
+        document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(`btn-nav-${torre}`).classList.add('active');
+        window.scrollTo(0, 0);
+    };
 
-        // ==========================================
-        // SISTEMA SHAFTS
-        // ==========================================
-        const ITENS_SHAFTS = ['tap', 'divisor', 'bloco', 'conector', 'cabo'];
-        const dadosRefShafts = ref(dbShafts, 'shafts');
-        const usuariosRefShafts = ref(dbShafts, 'usuarios_shafts');
-        
-        const usuarioIdShafts = push(usuariosRefShafts).key;
-        const usuarioRefShafts = ref(dbShafts, `usuarios_shafts/${usuarioIdShafts}`);
-        
-        set(usuarioRefShafts, { online: true, timestamp: Date.now(), tipo: modoLeitura ? 'visualizador' : 'admin' });
-        onDisconnect(usuarioRefShafts).remove();
-        
-        onValue(usuariosRefShafts, (snapshot) => {
-            const count = snapshot.size || 0;
-            document.getElementById('userCount-shafts').textContent = `👥 ${count} usuário${count !== 1 ? 's' : ''} online`;
-        });
+    window.voltarParaInicio = function() {
+        document.getElementById('menu-superior').style.display = 'none';
+        document.querySelectorAll('.secao').forEach(s => s.classList.remove('active'));
+        document.getElementById('pagina-inicial').style.display = 'flex';
+        document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
+    };
 
-        const tbodyShafts = document.getElementById('tabelaBody-shafts');
-        
-        for (let andar = 14; andar >= 1; andar--) {
-            const andarStr = andar.toString().padStart(2, '0');
-            ['A', 'B'].forEach((shaft, index) => {
-                const tr = document.createElement('tr');
-                const shaftId = `${andarStr}${shaft}`;
-                let html = '';
-                if (index === 0) html += `<td class="andar" rowspan="2">${andar}</td>`;
-                html += `<td class="shaft">${andar} ${shaft}</td>`;
-                
-                ITENS_SHAFTS.forEach(item => {
-                    const btnId = `${shaftId}_${item}`;
-                    html += `<td><button id="${btnId}" class="btn-status pendente" data-shaft="${shaftId}" data-item="${item}">PENDENTE</button></td>`;
-                });
-                
-                html += `
-                    <td><div id="geral_${shaftId}" class="status-geral-box status-geral-pendente">PENDENTE</div></td>
-                    <td><input type="text" id="obs_${shaftId}" class="obs" placeholder="Digite observações..." data-shaft="${shaftId}"></td>
-                `;
-                tr.innerHTML = html;
-                tbodyShafts.appendChild(tr);
-            });
-        }
-        
-        document.querySelectorAll('#tabelaShafts .btn-status').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                if (modoLeitura) return;
-                const shaftId = e.target.dataset.shaft;
-                const item = e.target.dataset.item;
-                alternarStatusShafts(shaftId, item);
-            });
-        });
-        
-        document.querySelectorAll('#tabelaShafts input.obs').forEach(input => {
-            let timeout;
-            input.addEventListener('input', (e) => {
-                if (modoLeitura) return;
-                e.target.classList.add('saving');
-                e.target.classList.remove('saved');
-                clearTimeout(timeout);
-                timeout = setTimeout(() => salvarDadosShafts(), 500);
-            });
-        });
+    // ==========================================
+    // ESTRUTURA DAS TORRES
+    // ==========================================
+    // Torre 1: andares 1-14, apts XX1 a XX8
+    // Torre 2: andares 1-14, apts XX1 a XX6
 
-        function alternarStatusShafts(shaftId, item) {
-            const btn = document.getElementById(`${shaftId}_${item}`);
-            const statusAtual = btn.classList.contains('ok') ? 'ok' : btn.classList.contains('atencao') ? 'atencao' : 'pendente';
-            let novoStatus, novoTexto;
-            
-            if (statusAtual === 'pendente') { novoStatus = 'ok'; novoTexto = 'OK'; }
-            else if (statusAtual === 'ok') { novoStatus = 'atencao'; novoTexto = 'ATENÇÃO'; }
-            else { novoStatus = 'pendente'; novoTexto = 'PENDENTE'; }
-            
-            btn.className = `btn-status ${novoStatus}`;
-            btn.textContent = novoTexto;
-            atualizarStatusGeralShafts(shaftId);
-            salvarDadosShafts();
-        }
+    const TORRES = {
+        torre1: { aptos: 8, total: 112 },
+        torre2: { aptos: 6, total: 84  }
+    };
 
-        function atualizarStatusGeralShafts(shaftId) {
-            const geralEl = document.getElementById(`geral_${shaftId}`);
-            let temAtencao = false, temPendente = false, todosOk = true;
-            
-            ITENS_SHAFTS.forEach(item => {
-                const btn = document.getElementById(`${shaftId}_${item}`);
-                if (btn.classList.contains('atencao')) temAtencao = true;
-                else if (btn.classList.contains('pendente')) { temPendente = true; todosOk = false; }
-                else if (!btn.classList.contains('ok')) todosOk = false;
-            });
-            
-            geralEl.className = 'status-geral-box';
-            if (temAtencao) { geralEl.classList.add('status-geral-atencao'); geralEl.textContent = 'ATENÇÃO'; }
-            else if (todosOk) { geralEl.classList.add('status-geral-ok'); geralEl.textContent = 'OK'; }
-            else { geralEl.classList.add('status-geral-pendente'); geralEl.textContent = 'PENDENTE'; }
-        }
+    const selects = { torre1: {}, torre2: {} };
+    const inputs  = { torre1: {}, torre2: {} };
+    const filtros  = { torre1: 'todos', torre2: 'todos' };
+    const historicos = { torre1: [], torre2: [] };
 
-        function coletarDadosShafts() {
-            const dados = {};
-            for (let andar = 14; andar >= 1; andar--) {
-                const andarStr = andar.toString().padStart(2, '0');
-                ['A', 'B'].forEach(shaft => {
-                    const shaftId = `${andarStr}${shaft}`;
-                    const shaftDados = { itens: {}, obs: document.getElementById(`obs_${shaftId}`).value };
-                    ITENS_SHAFTS.forEach(item => {
-                        const btn = document.getElementById(`${shaftId}_${item}`);
-                        shaftDados.itens[item] = btn.classList.contains('ok') ? 'ok' : btn.classList.contains('atencao') ? 'atencao' : 'pendente';
-                    });
-                    dados[shaftId] = shaftDados;
-                });
-            }
-            return dados;
-        }
+    function gerarId(andar, apto) {
+        return `${andar.toString().padStart(2,'0')}${apto.toString().padStart(2,'0')}`;
+    }
 
-        function salvarDadosShafts() {
-            if (modoLeitura) return;
-            document.getElementById('statusConexao-shafts').className = 'status-conexao syncing';
-            document.getElementById('statusConexao-shafts').textContent = '⏳ Salvando...';
-            
-            set(dadosRefShafts, coletarDadosShafts())
-                .then(() => {
-                    document.getElementById('statusConexao-shafts').className = 'status-conexao online';
-                    document.getElementById('statusConexao-shafts').textContent = '✅ Sincronizado em tempo real';
-                    document.querySelectorAll('#tabelaShafts input.obs').forEach(input => {
-                        if (input.classList.contains('saving')) {
-                            input.classList.remove('saving');
-                            input.classList.add('saved');
-                            setTimeout(() => input.classList.remove('saved'), 1000);
-                        }
-                    });
-                    atualizarEstatisticasShafts();
-                })
-                .catch((error) => {
-                    document.getElementById('statusConexao-shafts').className = 'status-conexao offline';
-                    document.getElementById('statusConexao-shafts').textContent = '❌ Erro: ' + error.message;
-                });
-        }
+    function statusLabel(v) {
+        if (v === 'ok') return '✅ OK';
+        if (v === 'semlinha') return '❌ Sem Linha';
+        if (v === 'seminterfone') return '⚠️ Sem Interfone';
+        return '⏳ Pendente';
+    }
 
-        onValue(dadosRefShafts, (snapshot) => {
-            const dados = snapshot.val();
-            if (!dados) return;
-            
-            Object.keys(dados).forEach(shaftId => {
-                const shaftDados = dados[shaftId];
-                const obsEl = document.getElementById(`obs_${shaftId}`);
-                if (obsEl && obsEl.value !== (shaftDados.obs || '')) obsEl.value = shaftDados.obs || '';
-                
-                if (shaftDados.itens) {
-                    ITENS_SHAFTS.forEach(item => {
-                        const btn = document.getElementById(`${shaftId}_${item}`);
-                        if (btn && shaftDados.itens[item]) {
-                            const status = shaftDados.itens[item];
-                            const novoTexto = status === 'ok' ? 'OK' : status === 'atencao' ? 'ATENÇÃO' : 'PENDENTE';
-                            if (btn.textContent !== novoTexto) {
-                                btn.className = `btn-status ${status}`;
-                                btn.textContent = novoTexto;
-                            }
-                        }
-                    });
-                }
-                atualizarStatusGeralShafts(shaftId);
-            });
-            
-            atualizarEstatisticasShafts();
-            const agora = new Date().toLocaleString('pt-BR');
-            document.getElementById('lastUpdate-shafts').textContent = `Última atualização: ${agora}`;
-            document.getElementById('statusConexao-shafts').className = 'status-conexao online';
-            document.getElementById('statusConexao-shafts').textContent = '✅ Sincronizado em tempo real';
-        });
+    // ==========================================
+    // CONSTRUÇÃO DAS TABELAS
+    // ==========================================
+    function buildTabela(torre) {
+        const numAptos = TORRES[torre].aptos;
+        const tbody = document.getElementById(`tbody-${torre}`);
+        tbody.innerHTML = '';
 
-        function atualizarEstatisticasShafts() {
-            let ok = 0, pendente = 0, atencao = 0;
-            for (let andar = 14; andar >= 1; andar--) {
-                const andarStr = andar.toString().padStart(2, '0');
-                ['A', 'B'].forEach(shaft => {
-                    const shaftId = `${andarStr}${shaft}`;
-                    const geralEl = document.getElementById(`geral_${shaftId}`);
-                    if (geralEl.classList.contains('status-geral-ok')) ok++;
-                    else if (geralEl.classList.contains('status-geral-atencao')) atencao++;
-                    else pendente++;
-                });
-            }
-            document.getElementById('okCount').textContent = ok;
-            document.getElementById('pendenteCount').textContent = pendente;
-            document.getElementById('atencaoCount').textContent = atencao;
-        }
-
-        // ==========================================
-        // SISTEMA APARTAMENTOS
-        // ==========================================
-        const dadosRefAptos = ref(dbAptos, 'apartamentos');
-        const usuariosRefAptos = ref(dbAptos, 'usuarios');
-        
-        const usuarioIdAptos = push(usuariosRefAptos).key;
-        const usuarioRefAptos = ref(dbAptos, `usuarios/${usuarioIdAptos}`);
-        
-        set(usuarioRefAptos, { online: true, timestamp: Date.now(), tipo: modoLeitura ? 'visualizador' : 'admin' });
-        onDisconnect(usuarioRefAptos).remove();
-        
-        onValue(usuariosRefAptos, (snapshot) => {
-            const count = snapshot.size || 0;
-            document.getElementById('userCount-apartamentos').textContent = `👥 ${count} usuário${count !== 1 ? 's' : ''} online`;
-        });
-
-        const tbodyAptos = document.getElementById('tabelaBody-apartamentos');
-        const selects = {};
-        const inputs = {};
-        
         for (let andar = 14; andar >= 1; andar--) {
             const tr = document.createElement('tr');
-            const andarStr = andar.toString().padStart(1, '0');
-            let html = `<td class="andar">${andar}</td>`;
-            
-            for (let apto = 1; apto <= 8; apto++) {
-                const aptoNum = `${andarStr}${apto.toString().padStart(1, '0')}`;
-                const id = `apto_${aptoNum}`;
+            tr.setAttribute('data-andar', andar);
+
+            let html = `<td class="andar">${andar}º</td>`;
+            for (let apt = 1; apt <= numAptos; apt++) {
+                const id = gerarId(andar, apt);
+                const aptoNum = `${andar.toString().padStart(2,'0')}${apt.toString().padStart(2,'0')}`;
                 html += `
                     <td class="apto-num">${aptoNum}</td>
                     <td>
-                        <select id="select_${id}" class="pendente" data-apto="${aptoNum}">
-                            <option value="pendente" selected>PENDENTE</option>
-                            <option value="concluido">CONCLUÍDO</option>
-                            <option value="naoconcluido">SEM PASSAGEM</option>
-                            <option value="emandamento">INTERNO</option>
+                        <select class="status-sel pendente" id="sel-${torre}-${id}" data-torre="${torre}" data-id="${id}" data-apto="${aptoNum}">
+                            <option value="ok">✅ OK</option>
+                            <option value="semlinha">❌ SEM LINHA</option>
+                            <option value="seminterfone">⚠️ SEM INTERFONE</option>
+                            <option value="pendente" selected>⏳ PENDENTE</option>
                         </select>
                     </td>
-                    <td><input type="text" id="obs_${id}" class="obs" placeholder="-" data-apto="${aptoNum}"></td>
+                    <td><input type="text" class="obs" id="obs-${torre}-${id}" data-torre="${torre}" data-id="${id}" placeholder="—"></td>
                 `;
             }
             tr.innerHTML = html;
-            tbodyAptos.appendChild(tr);
+            tbody.appendChild(tr);
         }
-        
-        document.querySelectorAll('#tabelaApartamentos select').forEach(select => {
-            selects[select.dataset.apto] = select;
-            select.addEventListener('change', (e) => {
+
+        // Eventos
+        document.querySelectorAll(`#tbody-${torre} select.status-sel`).forEach(sel => {
+            selects[torre][sel.dataset.id] = sel;
+            sel.addEventListener('change', e => {
                 if (modoLeitura) return;
-                atualizarCorApto(e.target);
-                salvarDadosAptos();
+                atualizarCorSelect(e.target);
+                const id = e.target.dataset.id;
+                const apto = e.target.dataset.apto;
+                adicionarHistorico(torre, apto, e.target.value);
+                salvar(torre);
             });
         });
-        
-        document.querySelectorAll('#tabelaApartamentos input.obs').forEach(input => {
-            inputs[input.dataset.apto] = input;
-            let timeout;
-            input.addEventListener('input', (e) => {
+
+        document.querySelectorAll(`#tbody-${torre} input.obs`).forEach(inp => {
+            inputs[torre][inp.dataset.id] = inp;
+            let t;
+            inp.addEventListener('input', e => {
                 if (modoLeitura) return;
                 e.target.classList.add('saving');
                 e.target.classList.remove('saved');
-                clearTimeout(timeout);
-                timeout = setTimeout(() => salvarDadosAptos(), 500);
+                clearTimeout(t);
+                t = setTimeout(() => salvar(torre), 600);
             });
         });
+    }
 
-        function atualizarCorApto(select) {
-            select.className = select.value;
-        }
+    function atualizarCorSelect(sel) {
+        sel.className = `status-sel ${sel.value}`;
+    }
 
-        function salvarDadosAptos() {
-            if (modoLeitura) return;
-            document.getElementById('statusConexao-apartamentos').className = 'status-conexao syncing';
-            document.getElementById('statusConexao-apartamentos').textContent = '⏳ Salvando...';
-            
-            const dados = {};
-            Object.keys(selects).forEach(apto => {
-                dados[apto] = { status: selects[apto].value, obs: inputs[apto].value, ultimaAlteracao: Date.now() };
-            });
-            
-            set(dadosRefAptos, dados)
-                .then(() => {
-                    document.getElementById('statusConexao-apartamentos').className = 'status-conexao online';
-                    document.getElementById('statusConexao-apartamentos').textContent = '✅ Conectado (salvo em tempo real)';
-                    Object.values(inputs).forEach(input => {
-                        if (input.classList.contains('saving')) {
-                            input.classList.remove('saving');
-                            input.classList.add('saved');
-                            setTimeout(() => input.classList.remove('saved'), 1000);
-                        }
-                    });
-                    atualizarEstatisticasAptos();
-                })
-                .catch((error) => {
-                    document.getElementById('statusConexao-apartamentos').className = 'status-conexao offline';
-                    document.getElementById('statusConexao-apartamentos').textContent = '❌ Erro ao salvar: ' + error.message;
+    // ==========================================
+    // FIREBASE — SALVAR / CARREGAR
+    // ==========================================
+    const refs = {
+        torre1: ref(db, 'torre1_interfones'),
+        torre2: ref(db, 'torre2_interfones')
+    };
+
+    function salvar(torre) {
+        if (modoLeitura) return;
+        const statusEl = document.getElementById(`status-${torre}`);
+        statusEl.textContent = '⏳ Salvando...';
+        statusEl.className = 'status-conexao syncing';
+
+        const dados = {};
+        Object.keys(selects[torre]).forEach(id => {
+            dados[id] = {
+                status: selects[torre][id].value,
+                obs: inputs[torre][id].value,
+                ts: Date.now(),
+                user: usuarioNome
+            };
+        });
+
+        set(refs[torre], dados)
+            .then(() => {
+                statusEl.textContent = '✅ Salvo em tempo real';
+                statusEl.className = 'status-conexao online';
+                Object.values(inputs[torre]).forEach(inp => {
+                    if (inp.classList.contains('saving')) {
+                        inp.classList.remove('saving');
+                        inp.classList.add('saved');
+                        setTimeout(() => inp.classList.remove('saved'), 1200);
+                    }
                 });
-        }
-
-        onValue(dadosRefAptos, (snapshot) => {
-            const dados = snapshot.val();
-            if (!dados) return;
-            
-            let houveMudanca = false;
-            Object.keys(dados).forEach(apto => {
-                if (selects[apto] && inputs[apto]) {
-                    const select = selects[apto];
-                    const input = inputs[apto];
-                    
-                    if (select.value !== dados[apto].status) {
-                        select.value = dados[apto].status;
-                        atualizarCorApto(select);
-                        houveMudanca = true;
-                    }
-                    
-                    if (input.value !== (dados[apto].obs || '')) {
-                        input.value = dados[apto].obs || '';
-                        houveMudanca = true;
-                    }
-                }
-            });
-            
-            if (houveMudanca) {
-                atualizarEstatisticasAptos();
                 const agora = new Date().toLocaleString('pt-BR');
-                document.getElementById('lastUpdate-apartamentos').textContent = `Última atualização: ${agora}`;
-            }
-            
-            document.getElementById('statusConexao-apartamentos').className = 'status-conexao online';
-            document.getElementById('statusConexao-apartamentos').textContent = '✅ Sincronizado em tempo real';
-        });
-
-        function atualizarEstatisticasAptos() {
-            const todosSelects = Object.values(selects);
-            let concluidos = 0, naoConcluidos = 0, emAndamento = 0, pendentes = 0;
-            
-            todosSelects.forEach(s => {
-                if (s.value === 'concluido') concluidos++;
-                else if (s.value === 'naoconcluido') naoConcluidos++;
-                else if (s.value === 'emandamento') emAndamento++;
-                else pendentes++;
+                document.getElementById(`lastupdate-${torre}`).textContent = `Última atualização: ${agora} por ${usuarioNome}`;
+                atualizarStats(torre);
+            })
+            .catch(err => {
+                statusEl.textContent = '❌ Erro: ' + err.message;
+                statusEl.className = 'status-conexao offline';
             });
-            
-            document.getElementById('concluidos').textContent = concluidos;
-            document.getElementById('naoConcluidos').textContent = naoConcluidos;
-            document.getElementById('emAndamento').textContent = emAndamento;
-            document.getElementById('pendentes').textContent = pendentes;
-        }
+    }
 
-        // ==========================================
-        // FUNÇÕES GLOBAIS
-        // ==========================================
-        let acaoPendente = null;
-
-        window.exportarCSV = function(tipo) {
-            if (tipo === 'shafts') {
-                let csv = 'ANDAR;SHAFT;TAP;DIVISOR;BLOCO_BARGO;CONECTOR_ANTENA;CABO_OK;STATUS_GERAL;OBSERVACAO\n';
-                for (let andar = 14; andar >= 1; andar--) {
-                    const andarStr = andar.toString().padStart(2, '0');
-                    ['A', 'B'].forEach(shaft => {
-                        const shaftId = `${andarStr}${shaft}`;
-                        const linha = [`${andar}`, `${andar} ${shaft}`];
-                        ITENS_SHAFTS.forEach(item => {
-                            const btn = document.getElementById(`${shaftId}_${item}`);
-                            const status = btn.classList.contains('ok') ? 'OK' : btn.classList.contains('atencao') ? 'ATENCAO' : 'PENDENTE';
-                            linha.push(status);
-                        });
-                        const geralEl = document.getElementById(`geral_${shaftId}`);
-                        const obs = document.getElementById(`obs_${shaftId}`).value;
-                        linha.push(geralEl.textContent, `"${obs}"`);
-                        csv += linha.join(';') + '\n';
-                    });
-                }
-                downloadCSV(csv, `controle_shafts_${new Date().toISOString().slice(0,10)}.csv`);
-            } else {
-                let csv = 'ANDAR;';
-                for (let i = 1; i <= 8; i++) csv += `APTO${i};STATUS${i};OBS${i};`;
-                csv += '\n';
-                
-                for (let andar = 14; andar >= 1; andar--) {
-                    const andarStr = andar.toString().padStart(2, '0');
-                    csv += `${andar};`;
-                    for (let apto = 1; apto <= 8; apto++) {
-                        const aptoNum = `${andarStr}${apto.toString().padStart(2, '0')}`;
-                        csv += `${aptoNum};${selects[aptoNum].value};${inputs[aptoNum].value};`;
-                    }
-                    csv += '\n';
-                }
-                downloadCSV(csv, `controle_apartamentos_${new Date().toISOString().slice(0,10)}.csv`);
-            }
-        };
-
-        function downloadCSV(csv, filename) {
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        }
-
-        window.limparTodos = function(tipo) {
-            if (modoLeitura) {
-                alert('❌ Apenas administradores podem limpar dados!');
+    function carregarTorre(torre) {
+        onValue(refs[torre], snap => {
+            const dados = snap.val();
+            if (!dados) {
+                document.getElementById(`status-${torre}`).textContent = '✅ Conectado (sem dados ainda)';
+                document.getElementById(`status-${torre}`).className = 'status-conexao online';
+                atualizarStats(torre);
                 return;
             }
-            acaoPendente = tipo;
-            document.getElementById('modalText').textContent = `Deseja realmente apagar TODOS os dados ${tipo === 'shafts' ? 'dos shafts' : 'dos apartamentos'}?`;
-            document.getElementById('confirmModal').style.display = 'block';
-        };
 
-        window.confirmarAcao = function() {
-            if (acaoPendente === 'shafts') {
-                set(dadosRefShafts, null).then(() => {
-                    alert('🗑️ Todos os dados dos shafts foram apagados!');
-                    location.reload();
-                });
-            } else {
-                set(dadosRefAptos, null).then(() => {
-                    alert('🗑️ Todos os dados dos apartamentos foram apagados!');
-                    location.reload();
-                });
+            let mudou = false;
+            Object.keys(dados).forEach(id => {
+                if (selects[torre][id] && inputs[torre][id]) {
+                    const s = selects[torre][id];
+                    const i = inputs[torre][id];
+                    if (s.value !== dados[id].status) { s.value = dados[id].status; atualizarCorSelect(s); mudou = true; }
+                    if (i.value !== (dados[id].obs || '')) { i.value = dados[id].obs || ''; mudou = true; }
+                }
+            });
+
+            if (mudou) {
+                atualizarStats(torre);
+                const ts = Object.values(dados).reduce((a, b) => (b.ts > a ? b.ts : a), 0);
+                if (ts) {
+                    const dt = new Date(ts).toLocaleString('pt-BR');
+                    const user = Object.values(dados).find(d => d.ts === ts)?.user || '';
+                    document.getElementById(`lastupdate-${torre}`).textContent = `Última atualização: ${dt}${user ? ' por ' + user : ''}`;
+                }
             }
-            document.getElementById('confirmModal').style.display = 'none';
-        };
 
-        window.fecharModal = function() {
-            document.getElementById('confirmModal').style.display = 'none';
-            acaoPendente = null;
-        };
+            document.getElementById(`status-${torre}`).textContent = '✅ Sincronizado';
+            document.getElementById(`status-${torre}`).className = 'status-conexao online';
+        }, err => {
+            document.getElementById(`status-${torre}`).textContent = '❌ Sem conexão Firebase';
+            document.getElementById(`status-${torre}`).className = 'status-conexao offline';
+        });
+    }
 
-        window.onclick = function(event) {
-            const modal = document.getElementById('confirmModal');
-            if (event.target == modal) fecharModal();
+    // ==========================================
+    // ESTATÍSTICAS & GRÁFICO
+    // ==========================================
+    function atualizarStats(torre) {
+        const sels = Object.values(selects[torre]);
+        let ok = 0, semlinha = 0, seminterfone = 0, pendente = 0;
+        sels.forEach(s => {
+            if (s.value === 'ok') ok++;
+            else if (s.value === 'semlinha') semlinha++;
+            else if (s.value === 'seminterfone') seminterfone++;
+            else pendente++;
+        });
+        const t = torre === 'torre1' ? 't1' : 't2';
+        document.getElementById(`${t}-ok`).textContent = ok;
+        document.getElementById(`${t}-semlinha`).textContent = semlinha;
+        document.getElementById(`${t}-seminterfone`).textContent = seminterfone;
+        document.getElementById(`${t}-pendente`).textContent = pendente;
+
+        // Gráfico
+        const total = sels.length || 1;
+        const maxH = 60;
+        const vals = { ok, semlinha, seminterfone, pendente };
+        ['ok','semlinha','seminterfone','pendente'].forEach(k => {
+            const h = Math.max(4, Math.round((vals[k] / total) * maxH));
+            const bar = document.getElementById(`cb-${t}-${k}`);
+            const val = document.getElementById(`cv-${t}-${k}`);
+            if (bar) bar.style.height = h + 'px';
+            if (val) val.textContent = vals[k];
+        });
+
+        aplicarFiltro(torre);
+    }
+
+    // ==========================================
+    // FILTROS E BUSCA
+    // ==========================================
+    window.setFiltro = function(torre, f) {
+        filtros[torre] = f;
+        document.querySelectorAll(`[id^="fbtn-${torre === 'torre1' ? 't1' : 't2'}-"]`).forEach(b => b.classList.remove('active'));
+        const tShort = torre === 'torre1' ? 't1' : 't2';
+        const btn = document.getElementById(`fbtn-${tShort}-${f}`);
+        if (btn) btn.classList.add('active');
+        aplicarFiltro(torre);
+    };
+
+    window.filtrarTabela = function(torre) { aplicarFiltro(torre); };
+
+    function aplicarFiltro(torre) {
+        const busca = (document.getElementById(`busca-${torre}`)?.value || '').toLowerCase();
+        const f = filtros[torre];
+        const tbody = document.getElementById(`tbody-${torre}`);
+        const rows = tbody.querySelectorAll('tr');
+
+        rows.forEach(tr => {
+            const aptos = tr.querySelectorAll('td.apto-num');
+            const sels = tr.querySelectorAll('select.status-sel');
+
+            let show = false;
+            aptos.forEach((td, i) => {
+                const aptoStr = td.textContent.toLowerCase();
+                const st = sels[i]?.value || 'pendente';
+
+                const matchBusca = !busca || aptoStr.includes(busca);
+                const matchFiltro = f === 'todos' || st === f;
+
+                if (matchBusca && matchFiltro) show = true;
+            });
+
+            tr.classList.toggle('row-hidden', !show);
+        });
+    }
+
+    // ==========================================
+    // HISTÓRICO
+    // ==========================================
+    function adicionarHistorico(torre, apto, status) {
+        const hist = historicos[torre];
+        hist.unshift({ apto, status, ts: new Date().toLocaleString('pt-BR'), user: usuarioNome });
+        if (hist.length > 30) hist.pop();
+        renderHistorico(torre);
+    }
+
+    function renderHistorico(torre) {
+        const el = document.getElementById(`historico-${torre}`);
+        if (!el) return;
+        const colors = { ok: '#27ae60', semlinha: '#e74c3c', seminterfone: '#e67e22', pendente: '#888' };
+        el.innerHTML = historicos[torre].map(h => `
+            <div class="historico-item">
+                <span class="hist-time">${h.ts}</span>
+                <span class="hist-apto">Apt ${h.apto}</span>
+                <span class="hist-status" style="color:${colors[h.status] || '#fff'}">${statusLabel(h.status)}</span>
+                <span style="color:rgba(255,255,255,0.3)">por ${h.user}</span>
+            </div>
+        `).join('') || '<div style="color:rgba(255,255,255,0.25);font-size:12px;">Nenhuma alteração nesta sessão.</div>';
+    }
+
+    // ==========================================
+    // EXPORTAR CSV
+    // ==========================================
+    window.exportarCSV = function(torre) {
+        const numAptos = TORRES[torre].aptos;
+        let csv = 'ANDAR;';
+        for (let a = 1; a <= numAptos; a++) csv += `APTO${a};STATUS${a};OBS${a};`;
+        csv += '\n';
+
+        for (let andar = 14; andar >= 1; andar--) {
+            csv += `${andar}º;`;
+            for (let apt = 1; apt <= numAptos; apt++) {
+                const id = gerarId(andar, apt);
+                const sel = selects[torre][id];
+                const inp = inputs[torre][id];
+                const aptoNum = `${andar.toString().padStart(2,'0')}${apt.toString().padStart(2,'0')}`;
+                csv += `${aptoNum};${sel ? statusLabel(sel.value) : 'PENDENTE'};"${inp ? inp.value : ''}";`;
+            }
+            csv += '\n';
         }
 
-        // Inicializar
-        atualizarEstatisticasShafts();
-        atualizarEstatisticasAptos();
-    </script>
+        const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = `interfones_${torre}_${new Date().toISOString().slice(0,10)}.csv`;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
+    // ==========================================
+    // BACKUP / RESTAURAR JSON
+    // ==========================================
+    window.exportarBackup = function(torre) {
+        const dados = {};
+        Object.keys(selects[torre]).forEach(id => {
+            dados[id] = {
+                status: selects[torre][id].value,
+                obs: inputs[torre][id].value
+            };
+        });
+        const json = JSON.stringify({ torre, data: new Date().toISOString(), dados }, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = `backup_${torre}_${new Date().toISOString().slice(0,10)}.json`;
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
+    window.importarBackup = function(torre) {
+        document.getElementById(`file-restore-${torre}`).click();
+    };
+
+    window.processarBackup = function(event, torre) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = e => {
+            try {
+                const json = JSON.parse(e.target.result);
+                const dados = json.dados;
+                if (!dados) { alert('❌ Arquivo inválido!'); return; }
+                Object.keys(dados).forEach(id => {
+                    if (selects[torre][id]) {
+                        selects[torre][id].value = dados[id].status || 'pendente';
+                        atualizarCorSelect(selects[torre][id]);
+                    }
+                    if (inputs[torre][id]) {
+                        inputs[torre][id].value = dados[id].obs || '';
+                    }
+                });
+                salvar(torre);
+                alert('✅ Backup restaurado com sucesso!');
+            } catch {
+                alert('❌ Erro ao ler o arquivo JSON!');
+            }
+        };
+        reader.readAsText(file);
+        event.target.value = '';
+    };
+
+    // ==========================================
+    // LIMPAR DADOS
+    // ==========================================
+    let torrePendenteLimpar = null;
+
+    window.confirmarLimpar = function(torre) {
+        if (modoLeitura) { alert('❌ Apenas administradores podem limpar dados!'); return; }
+        torrePendenteLimpar = torre;
+        document.getElementById('modal-texto').textContent =
+            `Deseja apagar TODOS os dados de ${torre === 'torre1' ? 'Torre 1' : 'Torre 2'}? Esta ação não pode ser desfeita.`;
+        document.getElementById('modal-confirmacao').classList.add('open');
+    };
+
+    window.executarLimpar = function() {
+        fecharModal();
+        if (!torrePendenteLimpar) return;
+        set(refs[torrePendenteLimpar], null).then(() => {
+            location.reload();
+        });
+    };
+
+    window.fecharModal = function() {
+        document.getElementById('modal-confirmacao').classList.remove('open');
+        torrePendenteLimpar = null;
+    };
+
+    window.onclick = function(e) {
+        if (e.target === document.getElementById('modal-confirmacao')) fecharModal();
+    };
+
+    // ==========================================
+    // INICIALIZAÇÃO
+    // ==========================================
+    function inicializarTorres() {
+        buildTabela('torre1');
+        buildTabela('torre2');
+        carregarTorre('torre1');
+        carregarTorre('torre2');
+        atualizarStats('torre1');
+        atualizarStats('torre2');
+        setFiltro('torre1', 'todos');
+        setFiltro('torre2', 'todos');
+    }
+</script>
 </body>
 </html>
