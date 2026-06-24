@@ -935,7 +935,6 @@
     };
 
     const selects = { torre1: {}, torre2: {} };
-    const inputs  = { torre1: {}, torre2: {} };
     const filtros  = { torre1: 'todos', torre2: 'todos' };
     const historicos = { torre1: [], torre2: [] };
 
@@ -995,17 +994,6 @@
             });
         });
 
-        document.querySelectorAll(`#tbody-${torre} input.obs`).forEach(inp => {
-            inputs[torre][inp.dataset.id] = inp;
-            let t;
-            inp.addEventListener('input', e => {
-                if (modoLeitura) return;
-                e.target.classList.add('saving');
-                e.target.classList.remove('saved');
-                clearTimeout(t);
-                t = setTimeout(() => salvar(torre), 600);
-            });
-        });
     }
 
     function atualizarCorSelect(sel) {
@@ -1030,7 +1018,6 @@
         Object.keys(selects[torre]).forEach(id => {
             dados[id] = {
                 status: selects[torre][id].value,
-                obs: inputs[torre][id].value,
                 ts: Date.now(),
                 user: usuarioNome
             };
@@ -1040,13 +1027,6 @@
             .then(() => {
                 statusEl.textContent = '✅ Salvo em tempo real';
                 statusEl.className = 'status-conexao online';
-                Object.values(inputs[torre]).forEach(inp => {
-                    if (inp.classList.contains('saving')) {
-                        inp.classList.remove('saving');
-                        inp.classList.add('saved');
-                        setTimeout(() => inp.classList.remove('saved'), 1200);
-                    }
-                });
                 const agora = new Date().toLocaleString('pt-BR');
                 document.getElementById(`lastupdate-${torre}`).textContent = `Última atualização: ${agora} por ${usuarioNome}`;
                 atualizarStats(torre);
@@ -1069,11 +1049,9 @@
 
             let mudou = false;
             Object.keys(dados).forEach(id => {
-                if (selects[torre][id] && inputs[torre][id]) {
+                if (selects[torre][id]) {
                     const s = selects[torre][id];
-                    const i = inputs[torre][id];
                     if (s.value !== dados[id].status) { s.value = dados[id].status; atualizarCorSelect(s); mudou = true; }
-                    if (i.value !== (dados[id].obs || '')) { i.value = dados[id].obs || ''; mudou = true; }
                 }
             });
 
@@ -1197,7 +1175,7 @@
     window.exportarCSV = function(torre) {
         const numAptos = TORRES[torre].aptos;
         let csv = 'ANDAR;';
-        for (let a = 1; a <= numAptos; a++) csv += `APTO${a};STATUS${a};OBS${a};`;
+        for (let a = 1; a <= numAptos; a++) csv += `APTO${a};STATUS${a};`;
         csv += '\n';
 
         for (let andar = 14; andar >= 1; andar--) {
@@ -1205,9 +1183,8 @@
             for (let apt = 1; apt <= numAptos; apt++) {
                 const id = gerarId(andar, apt);
                 const sel = selects[torre][id];
-                const inp = inputs[torre][id];
-                const aptoNum = `${andar.toString().padStart(2,'0')}${apt.toString().padStart(2,'0')}`;
-                csv += `${aptoNum};${sel ? statusLabel(sel.value) : 'PENDENTE'};"${inp ? inp.value : ''}";`;
+                const aptoNum = `${andar}${apt.toString().padStart(2,'0')}`;
+                csv += `${aptoNum};${sel ? statusLabel(sel.value) : 'PENDENTE'};`;
             }
             csv += '\n';
         }
@@ -1227,8 +1204,7 @@
         const dados = {};
         Object.keys(selects[torre]).forEach(id => {
             dados[id] = {
-                status: selects[torre][id].value,
-                obs: inputs[torre][id].value
+                status: selects[torre][id].value
             };
         });
         const json = JSON.stringify({ torre, data: new Date().toISOString(), dados }, null, 2);
@@ -1257,9 +1233,6 @@
                     if (selects[torre][id]) {
                         selects[torre][id].value = dados[id].status || 'pendente';
                         atualizarCorSelect(selects[torre][id]);
-                    }
-                    if (inputs[torre][id]) {
-                        inputs[torre][id].value = dados[id].obs || '';
                     }
                 });
                 salvar(torre);
